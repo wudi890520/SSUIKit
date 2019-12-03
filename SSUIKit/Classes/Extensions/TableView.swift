@@ -155,7 +155,7 @@ extension SSUITableViewCompatible where Self: UITableView {
     @discardableResult
     public func ss_estimatedRowHeight(_ rowHeight: CGFloat = CGFloat.screenHeight) -> Self {
         self.estimatedRowHeight = rowHeight
-        self.rowHeight = UITableViewAutomaticDimension
+        self.rowHeight = UITableView.automaticDimension
         return self
     }
 

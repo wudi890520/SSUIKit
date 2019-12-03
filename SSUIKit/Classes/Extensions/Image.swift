@@ -58,7 +58,7 @@ extension UIImage {
     var ss_base64: String? {
         let maxWidth: CGFloat = 500
         guard let resized = self.qmui_imageResized(inLimitedSize: CGSize(width: maxWidth, height: maxWidth)) else { return nil }
-        guard let data = UIImagePNGRepresentation(resized) else { return nil }
+        guard let data = resized.pngData() else { return nil }
         let base64String = data.base64EncodedString(options: .lineLength64Characters)
         return base64String
             .replacingOccurrences(of: "\n", with: "")
