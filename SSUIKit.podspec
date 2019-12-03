@@ -55,13 +55,13 @@ TODO: Add long description of the pod here.
   s.dependency 'Kingfisher', '~> 5.7.1'
   
   # 弹出视图，类似微信首页右上角“+” https://github.com/liufengting/FTPopOverMenu_Swift
-  s.dependency 'FTPopOverMenu_Swift', '~> 0.1.4'
+  s.dependency 'FTPopOverMenu_Swift', '~> 0.2.1'
   
   # 显示器 https://github.com/search?q=NVActivityIndicatorView
-  s.dependency 'NVActivityIndicatorView', '~> 4.5.1'
+  s.dependency 'NVActivityIndicatorView', '~> 4.8.0'
   
   # 提示 https://github.com/scalessec/Toast-Swift
-  s.dependency 'Toast-Swift', '~> 4.0.1'
+  s.dependency 'Toast-Swift', '~> 5.0.0'
   
   # 警示框（alertViewController）https://github.com/HJaycee/JCAlertController
   s.dependency 'JCAlertController', '~> 3.0.4'
