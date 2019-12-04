@@ -11,7 +11,7 @@ import UIKit
 public protocol OptionalArray {}
 extension Array: OptionalArray {}
 public extension Optional where Wrapped: OptionalArray {
-    public var orEmpty: Wrapped {
+    var orEmpty: Wrapped {
         if self == nil {
             return [] as! Wrapped
         }else{
@@ -24,7 +24,7 @@ public extension Array {
     
     /// 数组去重
     /// - Parameter filter: 根据什么参照物去过滤
-    public func filterDuplicates<E: Equatable>(_ filter: (Element) -> E) -> [Element] {
+    func filterDuplicates<E: Equatable>(_ filter: (Element) -> E) -> [Element] {
         
         var result = [Element]()
         
@@ -39,7 +39,7 @@ public extension Array {
     }
     
     /// 数组切片(从0开始，到某个index结束)
-    public func sliceTo(_ to: Int) -> [Element] {
+    func sliceTo(_ to: Int) -> [Element] {
         if (0 ..< count).contains(to) {
             return Array(self[0 ..< to])
         }else{
@@ -48,7 +48,7 @@ public extension Array {
     }
     
     /// 数组切片(从某个index开始，到数组末尾结束)
-    public func sliceFrom(_ from: Int) -> [Element] {
+    func sliceFrom(_ from: Int) -> [Element] {
         if (0 ..< count).contains(from) {
             return Array(self[from ..< count])
         }else{
@@ -57,7 +57,7 @@ public extension Array {
     }
      
     /// 数组切片
-    public func slice(_ range: Range<Int>) -> [Element] {
+    func slice(_ range: Range<Int>) -> [Element] {
         if self.count < range.startIndex {
             return []
         }else if self.count < range.endIndex {
@@ -69,7 +69,7 @@ public extension Array {
     
     /// 添加一个元素
     /// - Parameter element: 元素
-    public func add(_ element: Element) -> [Element] {
+    func add(_ element: Element) -> [Element] {
         var sequence = self
         sequence.append(element)
         return sequence
@@ -77,7 +77,7 @@ public extension Array {
     
     /// 追加一个数组
     /// - Parameter element: 元素
-    public func add(_ elements: [Element]) -> [Element] {
+    func add(_ elements: [Element]) -> [Element] {
         var sequence = self
         sequence.append(contentsOf: elements)
         return sequence

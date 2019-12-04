@@ -18,17 +18,19 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+                       SSUIKit是一个UIKit的扩展
                        DESC
 
-  s.homepage         = 'https://github.com/wudi890520/SSUIKit'
+  s.homepage         = 'http://192.168.10.174/wudi/SSUIKit'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'wudi890520' => '593154883@qq.com' }
-  s.source           = { :git => 'https://github.com/wudi890520/SSUIKit.git', :tag => s.version.to_s }
+  s.source           = { :git => 'http://192.168.10.174/wudi/SSUIKit.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-
-  s.ios.deployment_target = '10.0'
+  
+  s.swift_version    = '5.0'
+  s.platform         = :ios, '10.0'
+  # s.ios.deployment_target = '10.0'
 
   s.source_files = 'SSUIKit/Classes/Extensions/**/*.{h,m,swift}', 'SSUIKit/Classes/Components/**/**/*.{h,m,swift}'
   
