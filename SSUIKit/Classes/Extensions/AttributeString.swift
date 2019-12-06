@@ -157,9 +157,28 @@ public extension NSMutableAttributedString {
         addAttribute(.paragraphStyle, value: paragraph, range: NSMakeRange(0, string.count))
         return self
     }
+    
+    /// 计算富文本尺寸
+    /// - Parameter maxWidth: 最大宽度
+    func ss_size(_ maxWidth: CGFloat) -> CGSize {
+        if self.length > 0 {
+            let rect = self.boundingRect(
+                with: CGSize(width: maxWidth, height: CGFloat.infinity),
+                options: [.usesLineFragmentOrigin, .usesFontLeading],
+                context: nil
+            )
+            return CGSize(
+                width: rect.size.width+2,
+                height: rect.size.height+2
+            )
+        }else{
+            return .zero
+        }
+    }
 }
 
 public extension NSMutableAttributedString {
+    
     var ss_layout: YYTextLayout? {
         let conteiner = YYTextContainer(size: CGSize(width: CGFloat.infinity, height:  CGFloat.infinity))
         let layout = YYTextLayout(container: conteiner, text: self)

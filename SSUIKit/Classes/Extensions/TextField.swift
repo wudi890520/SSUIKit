@@ -208,7 +208,11 @@ public extension SSUITextFieldCompatible where Self: TextField {
     @discardableResult
     func ss_keyboardType(_ keyboardType: SSKeyboardType) -> Self {
         self.ss_keyboardType = keyboardType
-        inputView = SSKeyboardView(keyboardType, input: self)
+        if keyboardType == .default {
+            inputView = nil
+        }else{
+            inputView = SSKeyboardView(keyboardType, input: self)
+        }
         return self
     }
 
@@ -217,11 +221,15 @@ public extension SSUITextFieldCompatible where Self: TextField {
     /// - Parameter keyboardType: SSKeyboardType
     /// - Returns: UITextField
     @discardableResult
-    func ss_showDismissButtonItem() -> Self {
-        self.ss_dismissKeyboardEnable = true
-        let inputAccessoryView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.screenWith, height: 44))
-        self.inputAccessoryView = inputAccessoryView
-        SSKeyboardDoneButtonManager.setup()
+    func ss_showDismissButtonItem(_ enable: Bool = true) -> Self {
+        self.ss_dismissKeyboardEnable = enable
+        if enable {
+            let inputAccessoryView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.screenWith, height: 44))
+            self.inputAccessoryView = inputAccessoryView
+            SSKeyboardDoneButtonManager.setup()
+        }else{
+            self.inputAccessoryView = nil
+        }
         return self
     }
 

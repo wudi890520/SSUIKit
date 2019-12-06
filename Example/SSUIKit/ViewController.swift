@@ -11,38 +11,78 @@ import CoreLocation
 import SSUIKit
 import RxCocoa
 import RxSwift
+import SnapKit
+import QMUIKit
 
 class ViewController: UIViewController {
 
-    let demoView = TextField()
-        .ss_keyboardType(.decimal)
+    let tableView = UITableView()
+        .ss_frame(rect: UIScreen.main.bounds)
+    
+    let dataSource: [String] = [
+        "基本用法",
+        "键盘",
+        "Action Sheet",
+        "Alert"
+    ]
+    
+    let textField = TextField()
+        .ss_keyboardType(.number)
         .ss_showDismissButtonItem()
         .ss_frame(x: 40, y: 50, width: 120, height: 44)
         .ss_layerCornerRadius()
         .ss_backgroundColor(.ss_background)
-
-    let fontA = UIFont.Title.large.bold
-
-    let fontB: UIFont = .largeTitle
-
-    let fontC: UIFont = UIFont.with(10).bold
-
-    let fontD: UIFont = .bold(10)
-
-    let now = TimeInterval.ss_current
     
-    let coor = CLLocationCoordinate2DMake(23.123456, 113.987654)
-
-    let attribute = ""
+    let actionSheetButton = Button()
+        .ss_style(.filled(tintColor: .ss_main))
+        .ss_title("弹出ActionSheet")
+    
+    let alertButton = Button()
+        .ss_style(.filled(tintColor: .ss_red))
+        .ss_title("弹出alert")
     
     let dispose = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.ss_add(demoView)
-    
-        perform(#selector(showActionSheet), afterDelay: 3)
+        title = "SSUIKit"
+        view.ss_add(tableView)
+        tableView.register(SSDemoTableViewCell.self, forCellReuseIdentifier: "SSDemoTableViewCell")
+        tableView.delegate = self
+        tableView.dataSource = self
         
+//        view.ss_add(textField)
+//            .ss_add(actionSheetButton)
+//            .ss_add(alertButton)
+
+//        textField.snp.makeConstraints { (make) in
+//            make.left.equalTo(50)
+//            make.top.equalTo(CGFloat.unsafeTop).offset(50)
+//            make.right.equalToSuperview().offset(-50)
+//            make.height.equalTo(50)
+//        }
+//
+//        actionSheetButton.snp.makeConstraints { (make) in
+//            make.left.right.height.equalTo(textField)
+//            make.top.equalTo(textField.snp.bottom).offset(30)
+//        }
+//
+//        alertButton.snp.makeConstraints { (make) in
+//            make.left.right.height.equalTo(textField)
+//            make.top.equalTo(actionSheetButton.snp.bottom).offset(30)
+//        }
+//
+//        actionSheetButton.rx.tap
+//            .subscribe(onNext: {[weak self] (_) in
+//                self?.showActionSheet()
+//            })
+//            .disposed(by: dispose)
+//
+//        alertButton.rx.tap
+//            .subscribe(onNext: {[weak self] (_) in
+//                self?.showAlert()
+//            })
+//            .disposed(by: dispose)
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -61,27 +101,110 @@ extension ViewController {
             .custom(title: "拍照", titleColor: .ss_blue, extra: 50),
             .destructive(title: "删除", extra: nil)
         ]
-        
+
         SSActionSheet.show(nil, buttonItems: items)
             .asObservable()
-            .subscribe(onNext: {[weak self] (extra) in
-                print(extra)
-                self?.showPhotoSheet()
+            .subscribe(onNext: { (extra) in
+                if let value = extra {
+                    print(value)
+                }else{
+                    print("this item not has value")
+                }
             })
             .disposed(by: dispose)
     }
     
-    @objc func showPhotoSheet() {
-        SSActionSheet.photo()
-            .asObservable()
-            .subscribe(onNext: { (item) in
+    @objc func showAlert() {
         
-                if item == .camera {
-                    print("拍照")
-                }else if item == .album {
-                    print("从相册选择")
-                }
-            })
-            .disposed(by: dispose)
+        var content: String = ""
+        
+        
+        let titleLabel = SSAlertDisplayElement.label(
+            content: "这是标题".ss_attribute
+                .ss_font(font: .largePrice)
+                .ss_color(color: .red)
+                .ss_color(color: .blue, with: "是")
+                .ss_color(color: .green, with: "标")
+                .ss_color(color: .orange, with: "题")
+                .ss_alignment(.center),
+            insets: UIEdgeInsets(top: 20, left: 30, bottom: 20, right: 30))
+        
+        let detail = SSAlertDisplayElement.label(
+            content: "在此推荐一个苹果针对浮点型计算时存在精度计算误差的问题而提供的一个计算类".ss_attribute
+                .ss_font(font: .detail)
+                .ss_color(color: .lightGray)
+                .ss_color(color: .orange, with: "浮点型")
+                .ss_alignment(.center),
+            insets: UIEdgeInsets(top: 0, left: 30, bottom: 20, right: 30))
+        
+        let textField = SSAlertDisplayElement.textField(
+            placeholder: "请输入金额",
+            keyboardType: .decimal,
+            insets: UIEdgeInsets(top: 0, left: 30, bottom: 20, right: 30),
+            leftTitle: "$".ss_attribute.ss_font(font: .largePrice).ss_color(color: .red),
+            rightTitle: nil) { (text) in
+                content = text
+                print(text)
+        }
+        
+        let cancel = SSAlertDisplayElement.button(title: "取消", titleColor: .ss_main, backgroundColor: .ss_background, type: .cancel) { (_) in
+            print("取消")
+        }
+        
+        let confirm = SSAlertDisplayElement.button(title: "确定/完成", titleColor: .white, backgroundColor: .ss_main, type: .confirm) { (_) in
+            print("确定 content = \(content)")
+        }
+        
+        let elements: [SSAlertDisplayElement] = [
+            titleLabel,
+            textField,
+            detail,
+            cancel,
+            confirm
+        ]
+        
+        SSAlert.show(elements)
+    }
+}
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: SSDemoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SSDemoTableViewCell", for: indexPath) as! SSDemoTableViewCell
+        
+        cell.textLabel?.text = dataSource[indexPath.row]
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        var controller: UIViewController?
+        
+        switch dataSource[indexPath.row] {
+        case "基本用法":
+            controller = SSBasicViewController()
+            
+        case "键盘":
+            controller = SSKeyboardDemoViewController()
+            
+        case "Action Sheet":
+            controller = SSActionSheetDemoViewController()
+            
+        case "Alert":
+            controller = SSAlertDemoViewController()
+            
+        default:
+            break
+        }
+        
+        if let vc = controller {
+            vc.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

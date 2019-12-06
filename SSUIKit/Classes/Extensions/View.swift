@@ -103,8 +103,8 @@ public extension SSUIViewCompatible where Self: UIView {
     ///   - width: 边界线宽度
     /// - Returns: UIView泛型
     @discardableResult
-    func ss_layerBorder(color: UIColor, width: CGFloat) -> Self {
-        self.layer.borderColor = color.cgColor
+    func ss_layerBorder(color: UIColor?, width: CGFloat) -> Self {
+        self.layer.borderColor = color?.cgColor
         self.layer.borderWidth = width
         return self
     }

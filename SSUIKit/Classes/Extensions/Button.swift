@@ -260,9 +260,9 @@ public enum SSButtonStyle {
     /// 默认圆角的按钮（圆角为4）
     case `default`
     /// 按钮颜色全部填充，且圆角为按钮高度的一半，会随着按钮大小的变化而变化
-    case filled(tintColor: UIColor)
+    case filled(tintColor: UIColor?)
     /// 按钮为透明，有边框颜色，且圆角为按钮高度的一半，会随着按钮大小的变化而变化
-    case border(tintColor: UIColor)
+    case border(tintColor: UIColor?)
 }
 
 public enum SSButtonTintColorStrategy {

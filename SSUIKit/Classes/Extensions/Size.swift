@@ -14,11 +14,11 @@ public extension CGSize {
     /// 屏幕
     struct Screen {
         /// 屏幕尺寸
-        static let size = UIScreen.main.bounds
+        public static let size = UIScreen.main.bounds
         /// 屏幕高度
-        static let height = size.height
+        public static let height = size.height
         /// 屏幕宽度
-        static let width = size.width
+        public static let width = size.width
     }
 }
 
@@ -28,7 +28,7 @@ public extension CGSize {
     /// 不安全区域
     struct UnsafeArea {
         /// 状态栏高度
-        static var statusBar: CGFloat {
+        public static var statusBar: CGFloat {
             if UIDevice.isBangsScreen {
                 return 44
             }else{
@@ -37,16 +37,16 @@ public extension CGSize {
         }
         
         /// 导航栏高度
-        static let navigationBar: CGFloat = 44
+        public static let navigationBar: CGFloat = 44
         
         /// 选项卡高度
-        static let tabbarBar: CGFloat = 49
+        public static let tabbarBar: CGFloat = 49
         
         /// 顶部加起来一共是多高
-        static var top: CGFloat { statusBar + navigationBar }
+        public static var top: CGFloat { statusBar + navigationBar }
         
         /// 当刘海屏时，底部home bar的高度
-        static var bottom: CGFloat {
+        public static var bottom: CGFloat {
             if UIDevice.isBangsScreen {
                 return 34
             }else{
