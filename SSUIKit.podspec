@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
                       SSUIKit是一个UIKit的扩展
                       DESC
 
-  s.homepage     = "http://192.168.10.174/wudi/SSUIKit"
+  s.homepage     = "https://github.com/wudi890520/SSUIKit"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => 'http://192.168.10.174/wudi/SSUIKit.git', :tag => s.version.to_s }
+  s.source       = { :git => 'https://github.com/wudi890520/SSUIKit.git', :tag => s.version.to_s }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
