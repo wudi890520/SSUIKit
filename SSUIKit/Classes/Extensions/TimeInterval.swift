@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SwiftDate
 
 /// 回头车日期格式化类型
 ///
@@ -144,30 +143,30 @@ public extension TimeInterval {
         return dateFormat.string(from: date)
     }
     
-    var ss_conversationDetailTime: String {
-        
-        func getPeriodDescription(_ region: DateInRegion?) -> String {
-            guard let hour = region?.hour, let minute = region?.minute else { return "" }
-            switch hour {
-            case (0 ..< 6): return "凌晨 \(hour):\(minute)"
-            case (6 ..< 12): return "上午 \(hour):\(minute)"
-            case (12 ..< 13): return "下午 \(hour):\(minute)"
-            default: return "下午 \(hour-12):\(minute)"
-            }
-        }
-        
-        let region = ss_dateDescription.toDate("yyyy年MM月dd日 H:mm")
-        
-        if region?.isToday == true {
-            return getPeriodDescription(region)
-        }else if region?.isYesterday == true {
-            return "昨天 ".add(getPeriodDescription(region))
-        }else{
-            let dateDescription = ss_dateDescription.components(separatedBy: " ").first.orEmpty
-            return dateDescription.add(" ", getPeriodDescription(region))
-        }
-        
-    }
+//    var ss_conversationDetailTime: String {
+//
+//        func getPeriodDescription(_ region: DateInRegion?) -> String {
+//            guard let hour = region?.hour, let minute = region?.minute else { return "" }
+//            switch hour {
+//            case (0 ..< 6): return "凌晨 \(hour):\(minute)"
+//            case (6 ..< 12): return "上午 \(hour):\(minute)"
+//            case (12 ..< 13): return "下午 \(hour):\(minute)"
+//            default: return "下午 \(hour-12):\(minute)"
+//            }
+//        }
+//
+//        let region = ss_dateDescription.toDate("yyyy年MM月dd日 H:mm")
+//
+//        if region?.isToday == true {
+//            return getPeriodDescription(region)
+//        }else if region?.isYesterday == true {
+//            return "昨天 ".add(getPeriodDescription(region))
+//        }else{
+//            let dateDescription = ss_dateDescription.components(separatedBy: " ").first.orEmpty
+//            return dateDescription.add(" ", getPeriodDescription(region))
+//        }
+//
+//    }
     
 }
 

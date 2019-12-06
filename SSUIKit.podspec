@@ -185,7 +185,7 @@ Pod::Spec.new do |s|
   # 获取设备信息 https://github.com/devicekit/DeviceKit
   s.dependency 'DeviceKit', '~> 2.3.0'
 
-  # 日期管理 https://github.com/malcommac/SwiftDate
-  s.dependency 'SwiftDate', '~> 6.1.0'
+#  # 日期管理 https://github.com/malcommac/SwiftDate
+#  s.dependency 'SwiftDate', '~> 6.1.0'
 
 end
