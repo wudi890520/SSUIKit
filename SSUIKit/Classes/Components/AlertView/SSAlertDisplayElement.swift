@@ -42,7 +42,7 @@ public enum SSAlertDisplayElement {
     /// 列表
     /// - Parameters dataSource: 数据源
     /// - Parameters rowHeight: 行高
-    case tableView(dataSource: [SSAlertDisplayTableViewItemData], rowHeight: CGFloat, selectedIndex: ((Int) -> Void)?)
+    case tableView(dataSource: [SSAlertDisplayTableViewItemData], rowHeight: CGFloat, selectedIndex: ((Any?) -> Void)?)
     
     /// 列表
     /// - Parameters title: 按钮标题

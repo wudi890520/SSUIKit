@@ -227,17 +227,38 @@ public extension String {
 
 public extension String {
     public func ss_sub(from index: Int) -> String {
-        if index >= self.count  {
-            return self
+        if (0 ..< self.count).contains(index) {
+            return ss_nsString.substring(from: index)
         }
-        return ss_nsString.substring(from: index)
+        return self
     }
     
     public func ss_sub(to index: Int) -> String {
-        if index >= self.count  {
+        if (0 ..< self.count).contains(index) {
+            return ss_nsString.substring(to: index)
+        }
+        return self
+    }
+    
+    public func ss_sub(in range: Range<Int>) -> String {
+        
+        var startIndex: Int = range.startIndex
+        var endIndex: Int = range.endIndex
+        
+        if range.startIndex < 0 {
+            startIndex = 0
+        }else if range.startIndex >= self.count {
             return self
         }
-        return ss_nsString.substring(to: index)
+        
+        if range.endIndex < 0 {
+            return self
+        }else if range.endIndex >= self.count {
+            endIndex = self.count - 1
+        }
+        
+        let nsRange = NSMakeRange(startIndex, endIndex - startIndex)
+        return ss_nsString.substring(with: nsRange)
     }
 }
 

@@ -187,17 +187,24 @@ public extension SSUITextFieldCompatible where Self: TextField {
     @discardableResult
     func ss_limit(_ count: Int?, for type: SSInputLimitType = .all) -> Self {
         switch type {
-        case .all:     self.ss_limit = count
-        case .integer: self.ss_integerLimit = count
-        case .decimal: self.ss_decimalLimit = count
+        case .all:
+            self.ss_limit = count
+            if let count = count {
+                maximumTextLength = UInt(count)
+            }
+        case .integer:
+            self.ss_integerLimit = count
+            maximumTextLength = UInt.max
+        case .decimal:
+            self.ss_decimalLimit = count
+            maximumTextLength = UInt.max
         }
 
         /// 防止先设置了键盘类型，后设置位数长度的情况
         if let keyboardType = ss_keyboardType {
             ss_keyboardType(keyboardType)
-        } else if let count = count {
-            maximumTextLength = UInt(count)
         }
+        
         return self
     }
 

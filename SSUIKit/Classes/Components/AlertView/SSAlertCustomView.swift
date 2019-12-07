@@ -19,6 +19,8 @@ class SSAlertCustomView: UIView {
         .ss_backgroundColor(SSAlertConfiguration.shared.displayView.backgroundColor)
         .ss_layerCornerRadius(SSAlertConfiguration.shared.displayView.cornerRadius)
     
+    private var tableViewDataSource: [SSAlertDisplayTableViewItemData] = []
+    
     private let dispose = DisposeBag()
     
     init(elements: [SSAlertDisplayElement]) {
@@ -61,7 +63,14 @@ extension SSAlertCustomView {
                 textField.becomeFirstResponder()
                 
             case let .tableView(dataSource, rowHeight, callback):
-                addTableViewElement(dataSource: dataSource, rowHeight: rowHeight)
+                let tableView = addTableViewElement(dataSource: dataSource, rowHeight: rowHeight)
+                
+                tableView.rx.modelSelected(SSAlertDisplayTableViewItemData.self)
+                    .asObservable()
+                    .subscribe(onNext: { (data) in
+                        callback
+                    })
+                    .disposed(by: dispose)
                 
             case let .button(title, titleColor, backgroundColor, type, callback):
                 let button = addButtonElement(title: title, titleColor: titleColor, backgroundColor: backgroundColor, type: type)
@@ -148,8 +157,18 @@ extension SSAlertCustomView {
         return textField
     }
     
-    private func addTableViewElement(dataSource: [SSAlertDisplayTableViewItemData], rowHeight: CGFloat) {
-        
+    private func addTableViewElement(dataSource: [SSAlertDisplayTableViewItemData], rowHeight: CGFloat) -> UITableView {
+        let tableViewHeight = dataSource.count.ss_cgFloat * rowHeight
+        let tableView = UITableView.ss_plain()
+            .ss_rowHeight(rowHeight)
+            .ss_register(SSAlertCustomTableViewCell.self)
+            .ss_frame(x: 0, y: contentView.height, width: width, height: tableViewHeight)
+        tableViewDataSource = dataSource
+        tableView.delegate = self
+        tableView.dataSource = self
+        contentView.addSubview(tableView)
+        contentView.height = tableView.bottom + 20
+        return tableView
     }
     
     private func addButtonElement(title: String, titleColor: UIColor?, backgroundColor: UIColor?, type: SSAlertDisplayElementButtonType) -> QMUIButton {
@@ -201,6 +220,21 @@ extension SSAlertCustomView {
     }
 }
 
-extension SSAlertCustomView {
+extension SSAlertCustomView: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tableViewDataSource.count
+    }
     
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: SSAlertCustomTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SSAlertCustomTableViewCell", for: indexPath) as! SSAlertCustomTableViewCell
+        let data = tableViewDataSource[indexPath.row]
+        cell.imageView?.image = data.image
+        cell.textLabel?.text = data.title
+        cell.detailTextLabel?.text = data.subTitle
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
 }

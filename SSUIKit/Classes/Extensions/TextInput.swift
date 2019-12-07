@@ -93,14 +93,94 @@ public extension UITextInput {
     
     /// 添加空格（当输入框键盘类型为mobile时生效）
     func ss_addBlankIfNeeded() {
-        guard let keyboardType = ss_keyboardType, keyboardType == .mobile else { return }
+        guard let keyboardType = ss_keyboardType else { return }
 
+        switch keyboardType {
+            
+        case .mobile(let isNeedBlank):
+            addMobileBlank(isNeedBlank)
+            
+        case .idCard(let isNeedBlank):
+            addIDCardBlank(isNeedBlank)
+            
+        case .bankCard(let isNeedBlank):
+            addBankCardBlank(isNeedBlank)
+            
+        default:
+            return
+        }
+        
+    }
+}
+
+extension UITextInput {
+    private func addMobileBlank(_ isNeedBlank: Bool) {
+        
+        let spaceWord = isNeedBlank ? " " : ""
+        
         func handle(_ string: String) -> String? {
-            let text = string.filter(keywords: " ").ss_sub(to: 11)
+            let text = string.filter(keywords: spaceWord).ss_sub(to: 11)
             if text.count > 3 && text.count <= 7 {
-                return "\(text.ss_sub(to: 3)) \(text.ss_sub(from: 3))"
+                return "\(text.ss_sub(to: 3))\(spaceWord)\(text.ss_sub(from: 3))"
             }else if text.count > 7 && text.count <= 11 {
-                return "\(text.ss_sub(to: 3)) \(text.ss_sub(from: 3).ss_sub(to: 4)) \(text.ss_sub(from: 7))"
+                return "\(text.ss_sub(to: 3))\(spaceWord)\(text.ss_sub(from: 3).ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 7))"
+            }
+            return nil
+        }
+        
+        if let textField = self as? UITextField, let textString = textField.text {
+            if let text = handle(textString) {
+                textField.text = text
+            }
+        }else if let textView = self as? UITextView, let textString = textView.text {
+            if let text = handle(textString) {
+                textView.text = text
+            }
+        }
+    }
+    
+    private func addIDCardBlank(_ isNeedBlank: Bool) {
+        
+        let spaceWord = isNeedBlank ? " " : ""
+        
+        func handle(_ string: String) -> String? {
+            let text = string.filter(keywords: spaceWord).ss_sub(to: 18)
+            if text.count > 6 && text.count <= 10 {
+                return "\(text.ss_sub(to: 6))\(spaceWord)\(text.ss_sub(from: 6))"
+            }else if text.count > 10 && text.count <= 14 {
+                return "\(text.ss_sub(to: 6))\(spaceWord)\(text.ss_sub(from: 6).ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 10))"
+            }else if text.count > 14 && text.count <= 18 {
+                return "\(text.ss_sub(to: 6))\(spaceWord)\(text.ss_sub(from: 6).ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 10).ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 14))"
+            }
+            return nil
+        }
+        
+        if let textField = self as? UITextField, let textString = textField.text {
+            if let text = handle(textString) {
+                textField.text = text
+            }
+        }else if let textView = self as? UITextView, let textString = textView.text {
+            if let text = handle(textString) {
+                textView.text = text
+            }
+        }
+    }
+    
+    private func addBankCardBlank(_ isNeedBlank: Bool) {
+        
+        let spaceWord = isNeedBlank ? " " : ""
+        
+        func handle(_ string: String) -> String? {
+            let text = string.filter(keywords: spaceWord).ss_sub(to: 19)
+            
+            if text.count > 4 && text.count <= 8 {
+                return "\(text.ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 4))"
+            }else if text.count > 8 && text.count <= 12 {
+                return "\(text.ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 4).ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 8))"
+            }else if text.count > 12 && text.count <= 16 {
+                return "\(text.ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 4).ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 8).ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 12))"
+            }else if text.count > 16 && text.count <= 19 {
+                return "\(text.ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 4).ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 8).ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 12).ss_sub(to: 4))\(spaceWord)\(text.ss_sub(from: 16))"
             }
             return nil
         }

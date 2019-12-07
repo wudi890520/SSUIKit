@@ -51,7 +51,7 @@ extension SSKeyboardDataContainer {
             destroyTimerAction()
         }else{
             input?.deleteBackward()
-            if keyboardType == SSKeyboardType.mobile, input?.ss_text?.last == " " {
+            if keyboardType?.isNeedBlank == true {
                 input?.deleteBackward()
             }
         }

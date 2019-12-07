@@ -26,17 +26,6 @@ class ViewController: UIViewController {
         "Alert"
     ]
     
-    let textField = TextField()
-        .ss_keyboardType(.number)
-        .ss_showDismissButtonItem()
-        .ss_frame(x: 40, y: 50, width: 120, height: 44)
-        .ss_layerCornerRadius()
-        .ss_backgroundColor(.ss_background)
-    
-    let actionSheetButton = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("弹出ActionSheet")
-    
     let alertButton = Button()
         .ss_style(.filled(tintColor: .ss_red))
         .ss_title("弹出alert")
@@ -61,22 +50,10 @@ class ViewController: UIViewController {
 //            make.right.equalToSuperview().offset(-50)
 //            make.height.equalTo(50)
 //        }
-//
-//        actionSheetButton.snp.makeConstraints { (make) in
-//            make.left.right.height.equalTo(textField)
-//            make.top.equalTo(textField.snp.bottom).offset(30)
-//        }
-//
 //        alertButton.snp.makeConstraints { (make) in
 //            make.left.right.height.equalTo(textField)
 //            make.top.equalTo(actionSheetButton.snp.bottom).offset(30)
 //        }
-//
-//        actionSheetButton.rx.tap
-//            .subscribe(onNext: {[weak self] (_) in
-//                self?.showActionSheet()
-//            })
-//            .disposed(by: dispose)
 //
 //        alertButton.rx.tap
 //            .subscribe(onNext: {[weak self] (_) in
@@ -95,29 +72,11 @@ class ViewController: UIViewController {
 
 
 extension ViewController {
-    @objc func showActionSheet() {
-        let items: [SSActionSheetButtonItem<Int>] = [
-            .custom(title: "相册", titleColor: .ss_red, extra: 10),
-            .custom(title: "拍照", titleColor: .ss_blue, extra: 50),
-            .destructive(title: "删除", extra: nil)
-        ]
-
-        SSActionSheet.show(nil, buttonItems: items)
-            .asObservable()
-            .subscribe(onNext: { (extra) in
-                if let value = extra {
-                    print(value)
-                }else{
-                    print("this item not has value")
-                }
-            })
-            .disposed(by: dispose)
-    }
+    
     
     @objc func showAlert() {
         
         var content: String = ""
-        
         
         let titleLabel = SSAlertDisplayElement.label(
             content: "这是标题".ss_attribute

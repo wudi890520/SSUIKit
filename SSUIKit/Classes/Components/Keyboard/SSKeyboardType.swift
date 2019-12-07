@@ -12,11 +12,12 @@ public enum SSKeyboardType {
     case `default`
     case number
     case decimal
-    case idCard
-    case mobile
+    case idCard(isNeedBlank: Bool)
+    case bankCard(isNeedBlank: Bool)
+    case mobile(isNeedBlank: Bool)
 }
 
-extension SSKeyboardType: Hashable, Equatable {
+extension SSKeyboardType {
     /// 左下角按钮的title
     public var customButtonTitle: String? {
         switch self {
@@ -25,28 +26,45 @@ extension SSKeyboardType: Hashable, Equatable {
         default: return nil
         }
     }
+    
+    /// 是否需要加空格
+    public var isNeedBlank: Bool {
+        switch self {
+        case .idCard(let isNeed): return isNeed
+        case .bankCard(let isNeed): return isNeed
+        case .mobile(let isNeed): return isNeed
+        default: return false
+        }
+    }
+}
+
+extension SSKeyboardType: Hashable, Equatable {
+    
 
     /// 实现哈希协议
     public func hash(into hasher: inout Hasher) {
         switch self {
-        case .default: return hasher.combine(0)
-        case .number: return hasher.combine(1)
-        case .decimal: return hasher.combine(2)
-        case .idCard: return hasher.combine(3)
-        case .mobile: return hasher.combine(4)
+        case .default:   return hasher.combine(0)
+        case .number:    return hasher.combine(1)
+        case .decimal:   return hasher.combine(2)
+        case .idCard:    return hasher.combine(3)
+        case .bankCard:  return hasher.combine(4)
+        case .mobile:    return hasher.combine(5)
         }
     }
     
     /// 实现Equatable协议
     public static func == (lhs: SSKeyboardType, rhs: SSKeyboardType) -> Bool {
         switch (lhs, rhs) {
-        case (.default, .default): return true
-        case (.number, .number): return true
-        case (.decimal, .decimal): return true
-        case (.idCard, .idCard): return true
-        case (.mobile, .mobile): return true
+        case (.default, .default):   return true
+        case (.number, .number):     return true
+        case (.decimal, .decimal):   return true
+        case (.idCard, .idCard):     return true
+        case (.bankCard, .bankCard): return true
+        case (.mobile, .mobile):     return true
         default: return false
         }
     }
 }
+
 

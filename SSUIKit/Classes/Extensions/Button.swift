@@ -284,12 +284,12 @@ public extension QMUIButton {
             
         case let .filled(tintColor):
             let button = QMUIFillButton()
-            button.tintColor = tintColor
+            button.fillColor = tintColor
             return button
             
         case let .border(tintColor):
-            let button = QMUIFillButton()
-            button.tintColor = tintColor
+            let button = QMUIGhostButton()
+            button.ghostColor = tintColor
             return button
             
         default:
@@ -301,7 +301,7 @@ public extension QMUIButton {
     /// - Parameter color: 颜色
     /// - Parameter strategy: 策略
     @discardableResult
-    func ss_tintColor(_ color: UIColor, strategy: SSButtonTintColorStrategy) -> Self {
+    func ss_tintColor(_ color: UIColor?, strategy: SSButtonTintColorStrategy) -> Self {
         tintColor = color
         adjustsTitleTintColorAutomatically = true
         return self

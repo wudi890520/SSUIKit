@@ -13,6 +13,7 @@ class SSActionSheetTableViewCell: UITableViewCell {
         .ss_frame(x: 0, y: 0, width: CGFloat.screenWith, height: SSActionSheetConfiguration.shared.rowHeight)
         .ss_font(SSActionSheetConfiguration.shared.buttonItemFont)
         .ss_textAlignment(.center)
+        .ss_numberOfLines()
     
     private let selectedBGView = UIView()
         .ss_frame(x: 0, y: 0, width: CGFloat.screenWith, height: SSActionSheetConfiguration.shared.rowHeight)

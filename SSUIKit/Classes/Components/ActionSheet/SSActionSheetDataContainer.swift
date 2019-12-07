@@ -36,8 +36,13 @@ extension SSActionSheetDataContainer: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: SSActionSheetTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SSActionSheetTableViewCell", for: indexPath) as! SSActionSheetTableViewCell
         let data = dataSource[indexPath.row]
-        cell.titleLabel.text = data.title
-        cell.titleLabel.textColor = data.titleColor
+        if let attribute = data.attribute {
+            cell.titleLabel.attributedText = attribute
+        }else{
+            cell.titleLabel.attributedText = nil
+            cell.titleLabel.text = data.title
+            cell.titleLabel.textColor = data.titleColor
+        }
         cell.line.isHidden = indexPath.row == 0
         return cell
     }
