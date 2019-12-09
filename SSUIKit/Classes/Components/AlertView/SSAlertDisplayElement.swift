@@ -14,6 +14,8 @@ public enum SSAlertDisplayElementButtonType {
     case confirm
     /// 在中间，就一个按钮
     case justOnly
+    /// 在中间，且在白色content view的下面
+    case close
 }
 
 public struct SSAlertDisplayTableViewItemData {
@@ -21,6 +23,13 @@ public struct SSAlertDisplayTableViewItemData {
     let title: String?
     let subTitle: String?
     let extra: Any?
+    
+    public init(image: UIImage?, title: String?, subTitle: String?, extra: Any?) {
+        self.image = image
+        self.title = title
+        self.subTitle = subTitle
+        self.extra = extra
+    }
 }
 
 /// 弹框上面的元素
@@ -37,17 +46,28 @@ public enum SSAlertDisplayElement {
     /// - Parameters insets: 上下左右间距
     /// - Parameters leftTitle: 左标题
     /// - Parameters rightTitle: 右标题
+    /// - Parameters textDidChange: 文本变化
     case textField(placeholder: String, keyboardType: SSKeyboardType, insets: UIEdgeInsets, leftTitle: NSMutableAttributedString?, rightTitle: NSMutableAttributedString?, textDidChange: ((String) -> Void)?)
     
     /// 列表
     /// - Parameters dataSource: 数据源
     /// - Parameters rowHeight: 行高
+    /// - Parameters selectedIndex: 列表点击事件
     case tableView(dataSource: [SSAlertDisplayTableViewItemData], rowHeight: CGFloat, selectedIndex: ((Any?) -> Void)?)
     
-    /// 列表
+    /// 按钮
     /// - Parameters title: 按钮标题
     /// - Parameters titleColor: 按钮标题颜色
     /// - Parameters backgroundColor: 按钮背景颜色
     /// - Parameters type: 按钮类型
+    /// - Parameters didTap: 按钮点击事件
     case button(title: String, titleColor: UIColor?, backgroundColor: UIColor?, type: SSAlertDisplayElementButtonType, didTap: ((Void) -> Void)?)
+    
+    /// 图片
+    /// - Parameters source: 数据（可传入字符串，URL，UIImage）
+    /// - Parameters maxHeight: 图片最大高度
+    /// - Parameters maxWidth: 图片最大宽度
+    /// - Parameters extra: 附加参数，会随着点击事件返回
+    /// - Parameters didTap: 点击图片的回调
+    case image(source: Any?, extra: Any?, didTap: ((Any?) -> Void)?)
 }

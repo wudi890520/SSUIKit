@@ -21,6 +21,8 @@ class SSAlertCustomView: UIView {
     
     private var tableViewDataSource: [SSAlertDisplayTableViewItemData] = []
     
+    private var tableViewSelected: ((Any?) -> Void)?
+    
     private let dispose = DisposeBag()
     
     init(elements: [SSAlertDisplayElement]) {
@@ -30,7 +32,6 @@ class SSAlertCustomView: UIView {
         addElements(elements)
         contentView.height = contentView.height+20
         contentView.centerY = height / 2
-        
         bindAction()
     }
     
@@ -64,13 +65,10 @@ extension SSAlertCustomView {
                 
             case let .tableView(dataSource, rowHeight, callback):
                 let tableView = addTableViewElement(dataSource: dataSource, rowHeight: rowHeight)
+                self.tableViewSelected = callback
                 
-                tableView.rx.modelSelected(SSAlertDisplayTableViewItemData.self)
-                    .asObservable()
-                    .subscribe(onNext: { (data) in
-                        callback
-                    })
-                    .disposed(by: dispose)
+            case let .image(source, extra, didTap):
+                addImageViewElement(source: source, extra: extra, didTap: didTap)
                 
             case let .button(title, titleColor, backgroundColor, type, callback):
                 let button = addButtonElement(title: title, titleColor: titleColor, backgroundColor: backgroundColor, type: type)
@@ -81,7 +79,6 @@ extension SSAlertCustomView {
                         self?.shouldDismiss?(())
                     })
                     .disposed(by: dispose)
-                
             }
         }
     }
@@ -201,8 +198,8 @@ extension SSAlertCustomView {
             button.bottom = contentView.height
             contentView.addSubview(button)
             return button
-            
-        default:
+        
+        case .justOnly:
             let button = QMUIButton()
             button.ss_backgroundImage(backgroundColor)
             button.ss_title(title)
@@ -216,7 +213,123 @@ extension SSAlertCustomView {
             contentView.addSubview(button)
             contentView.height = button.bottom
             return button
+            
+        case .close:
+            let button = QMUIButton()
+            button.ss_image("close".bundleImage?.byTintColor(.white))
+            button.size = CGSize(width: 44, height: 44)
+            button.ss_layerCornerRadius(22)
+            button.ss_layerBorder(color: .white, width: 1)
+            contentView.height = contentView.height+20
+            contentView.centerY = height / 2
+            button.top = contentView.bottom + 10
+            button.centerX = width/2
+            self.addSubview(button)
+            return button
         }
+    }
+    
+    private func addImageViewElement(source: Any?, extra: Any?, didTap: ((Any?) -> Void)?) {
+        
+        let maxWidth = self.width
+        let resizeValue = self.size
+        contentView.backgroundColor = .clear
+        
+        if var image = source as? UIImage {
+            
+            if image.size.width > width {
+                if let resizedImage = image.qmui_imageResized(inLimitedSize: self.size) {
+                    image = resizedImage
+                }
+            }
+       
+            let imageView = UIImageView(image: image)
+            imageView.ss_layerCornerRadius(13)
+            imageView.top = contentView.height
+            imageView.centerX = width / 2
+            contentView.addSubview(imageView)
+            contentView.height = imageView.bottom
+            
+            if let didTap = didTap {
+                let tap = UITapGestureRecognizer {[weak self] (_) in
+                    didTap(extra)
+                    self?.shouldDismiss?(())
+                }
+                imageView.ss_addGesture(tap)
+            }
+            
+        }else if let url = source as? URL {
+            
+            var imageView = UIImageView()
+            
+            imageView.kf.setImage(with: url) {[weak self] (result) in
+                switch result {
+                case let .success(value):
+                    var image = value.image
+                    if (image.size.width > maxWidth) == true {
+                        if let resizedImage = image.qmui_imageResized(inLimitedSize: resizeValue) {
+                            image = resizedImage
+                        }
+                    }
+                    imageView.size = image.size
+                    imageView.centerX = maxWidth / 2
+                    imageView.top = self?.contentView.height ?? 0
+                    imageView.ss_layerCornerRadius(13)
+                    self?.contentView.addSubview(imageView)
+                    self?.contentView.height = imageView.bottom
+                    self?.contentView.centerY = resizeValue.height / 2 - 30
+                    let closeButton = self?.subviews.filter{ $0.isKind(of: UIButton.self) }.first
+                    closeButton?.top = (self?.contentView.bottom ?? 0) + 30
+                    
+                    if let didTap = didTap {
+                        let tap = UITapGestureRecognizer { (_) in
+                            didTap(extra)
+                            self?.shouldDismiss?(())
+                        }
+                        imageView.ss_addGesture(tap)
+                    }
+                    
+                case .failure(_):
+                    self?.shouldDismiss?(())
+                }
+            }
+            
+        }else if let string = source as? String, let url = URL(string: string) {
+            var imageView = UIImageView()
+            
+            imageView.kf.setImage(with: url) {[weak self] (result) in
+                switch result {
+                case let .success(value):
+                    var image = value.image
+                    if (image.size.width > maxWidth) == true {
+                        if let resizedImage = image.qmui_imageResized(inLimitedSize: resizeValue) {
+                            image = resizedImage
+                        }
+                    }
+                    imageView.size = image.size
+                    imageView.centerX = maxWidth / 2
+                    imageView.top = self?.contentView.height ?? 0
+                    imageView.ss_layerCornerRadius(13)
+                    self?.contentView.addSubview(imageView)
+                    self?.contentView.height = imageView.bottom
+                    self?.contentView.centerY = resizeValue.height / 2 - 30
+                    let closeButton = self?.subviews.filter{ $0.isKind(of: UIButton.self) }.first
+                    closeButton?.top = (self?.contentView.bottom ?? 0) + 30
+                    
+                    if let didTap = didTap {
+                        let tap = UITapGestureRecognizer { (_) in
+                            didTap(extra)
+                            self?.shouldDismiss?(())
+                        }
+                        imageView.ss_addGesture(tap)
+                    }
+                    
+                case .failure(_):
+                    self?.shouldDismiss?(())
+                }
+            }
+        }
+        
     }
 }
 
@@ -235,6 +348,7 @@ extension SSAlertCustomView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let data = tableViewDataSource[indexPath.row]
+        self.tableViewSelected?(data.extra)
     }
 }

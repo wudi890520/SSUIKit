@@ -176,6 +176,7 @@ public extension SSUIViewCompatible where Self: UIView {
     /// - Returns: UIView泛型
     @discardableResult
     func ss_addGesture(_ gesture: UIGestureRecognizer) -> Self {
+        isUserInteractionEnabled = true
         addGestureRecognizer(gesture)
         return self
     }
