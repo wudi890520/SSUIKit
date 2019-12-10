@@ -79,6 +79,8 @@ class SSAlertSeparator {
     func reload() {
         JCAlertStyle.share()?.separator.color = color
         JCAlertStyle.share()?.separator.width = width
+        
+        JCAlertStyle.share()?.background.alpha = 4
     }
 }
 
@@ -93,6 +95,14 @@ class SSAlertDisplayView {
         JCAlertStyle.share()?.alertView.maxHeight = maxHeight
         JCAlertStyle.share()?.alertView.cornerRadius = cornerRadius
         JCAlertStyle.share()?.alertView.backgroundColor = backgroundColor
+    }
+}
+
+class SSAlertBackground {
+    var alpha: Float = 0.4
+    
+    func reload() {
+        JCAlertStyle.share()?.background.alpha = alpha
     }
 }
 
@@ -118,6 +128,9 @@ public class SSAlertConfiguration: NSObject {
     /// 显示的视图
     internal let displayView = SSAlertDisplayView()
     
+    /// 背景
+    internal let background = SSAlertBackground()
+    
     private override init() {
         super.init()
     }
@@ -132,6 +145,7 @@ extension SSAlertConfiguration {
         normalButton.reload()
         separator.reload()
         displayView.reload()
+        background.reload()
     }
 }
 
@@ -250,6 +264,12 @@ public extension SSAlertConfiguration {
         
         public static var backgroundColor: UIColor? = .white {
             didSet { SSAlertConfiguration.shared.displayView.backgroundColor = backgroundColor }
+        }
+    }
+    
+    struct Background {
+        public static var alpha: Float = 0.4 {
+            didSet { SSAlertConfiguration.shared.background.alpha = alpha }
         }
     }
 }

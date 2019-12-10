@@ -93,7 +93,7 @@ Pod::Spec.new do |s|
   s.swift_version    = '5.0'
   s.platform         = :ios, '10.0'
 
-  s.source_files  = 'SSUIKit/Classes/Extensions/*.{h,m,swift}', 'SSUIKit/Classes/Components/**/*.{h,m,swift}'
+  s.source_files  = 'SSUIKit/Classes/Extensions/*.{h,m,swift}', 'SSUIKit/Classes/Components/**/*.{h,m,swift}', 'SSUIKit/Classes/SVProgressHUD/*.{h,m,swift}', 'SSUIKit/Classes/*.*'
   
 
   # spec.public_header_files = "Classes/**/*.h"
@@ -118,7 +118,7 @@ Pod::Spec.new do |s|
   #  Link your library with frameworks, or libraries. Libraries do not include
   #  the lib prefix of their name.
   #
-  s.ios.frameworks = 'UIKit', 'Foundation', 'CoreLocation'
+  s.ios.frameworks = 'UIKit', 'Foundation', 'CoreLocation', 'AVFoundation'
   # spec.framework  = "SomeFramework"
   # spec.frameworks = "SomeFramework", "AnotherFramework"
 
@@ -137,7 +137,10 @@ Pod::Spec.new do |s|
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"
   # https://qmuiteam.com/ios
-  s.dependency 'QMUIKit', '~> 4.0.3'
+  s.dependency 'QMUIKit', '~> 4.0.4'
+  
+  # https://github.com/BlocksKit/BlocksKit
+  s.dependency 'BlocksKit', '~> 2.2.5'
    
   # https://github.com/SnapKit/SnapKit
   s.dependency 'SnapKit', '~> 5.0.1'
@@ -157,6 +160,9 @@ Pod::Spec.new do |s|
    
   # https://github.com/SwiftKickMobile/SwiftMessages
   s.dependency 'SwiftMessages', '~> 7.0.1'
+   
+  # 相册选择（仿微信）https://github.com/banchichen/TZImagePickerController
+  s.dependency 'TZImagePickerController', '~> 3.2.6'
    
   # 空数据 https://github.com/dzenbot/DZNEmptyDataSet
   s.dependency 'DZNEmptyDataSet', '~> 1.8.1'

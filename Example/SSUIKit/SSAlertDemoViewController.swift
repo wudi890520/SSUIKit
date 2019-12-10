@@ -189,6 +189,10 @@ class SSAlertDemoViewController: UIViewController {
             titleLabel,
             textField,
             detail,
+            detail,
+            textField,
+            detail,
+            detail,
             cancel,
             confirm
         ]
@@ -253,7 +257,7 @@ class SSAlertDemoViewController: UIViewController {
         
         var source: Any?
         if remote {
-            source = "http://b-ssl.duitang.com/uploads/item/201507/04/20150704212949_PSfNZ.jpeg"
+            source = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575960898305&di=13ae990c99f51eab879f72dd2d97dd67&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fc2cec3fdfc03924590b2a9b58d94a4c27d1e2500.jpg"
         }else{
             source = UIImage(named: "demoImage")
         }
@@ -275,8 +279,3 @@ class SSAlertDemoViewController: UIViewController {
     }
 }
 
-extension SSAlertDemoViewController {
-    func showToast(_ msg: String?) {
-        view.makeToast(msg, duration: 1.5, position: .center)
-    }
-}

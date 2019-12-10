@@ -6,15 +6,48 @@
 //
 
 import UIKit
+import FSPagerView
+import RxSwift
+import RxCocoa
 
-class SSBannerView: UIView {
+public class SSBannerView: UIView {
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    public lazy var bannerView: FSPagerView = {
+        let view = FSPagerView(frame: .zero)
+        view.automaticSlidingInterval = 5
+        view.isInfinite = true
+        view.register(SSGuidePageCell.self, forCellWithReuseIdentifier: SSGuidePageCell.Identifier)
+        
+        if let size = self.itemSize {
+            view.itemSize = size
+        }
+        
+        if isNeedTransformer {
+            let transformer = FSPagerViewTransformer(type: .linear)
+            transformer.minimumScale = 0.66
+            transformer.minimumAlpha = 1
+            view.transformer = transformer
+        }
+        
+        return view
+    }()
+    
+    public lazy var dataSource: SSBannerDataSource = {
+        let dataSource = SSBannerDataSource(pagerView: self.bannerView)
+        return dataSource
+    }()
+    
+    private var itemSize: CGSize?
+    private var isNeedTransformer = false
+    
+    public init(isNeedTransformer: Bool = false, itemSize: CGSize? = nil) {
+        super.init(frame: .zero)
+        self.isNeedTransformer = isNeedTransformer
+        self.itemSize = itemSize
     }
-    */
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }

@@ -110,7 +110,7 @@ extension SSKeyboardDoneButtonManager {
     
     private var resignFirstResponder: AnyObserver<Void> {
         return Binder.init(self) { (this, _) in
-            UIApplication.shared.keyWindow?.rootViewController?.view.endEditing(true)
+            UIApplication.endEditing()
         }.asObserver()
     }
 }

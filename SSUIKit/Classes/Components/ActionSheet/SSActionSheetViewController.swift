@@ -89,25 +89,44 @@ public extension SSActionSheet {
         let sheet = SSActionSheet(title)
         sheet.datas.dataSource = buttonItems.map{ $0.data }
         let height = SSActionSheet.height(buttonItems.count, title: title)
-        UIApplication.shared.keyWindow?.rootViewController?.presentAsStork(sheet, height: height, swipeToDismissEnabled: false, tapAroundToDismissEnabled: true, complection: nil)
+        UIApplication.rootViewController?.presentAsStork(sheet, height: height, swipeToDismissEnabled: false, tapAroundToDismissEnabled: true, complection: nil)
         
         return sheet.datas.selected
             .map{ buttonItems[$0].extra }
             .do(onNext: { (_) in sheet.dismiss(animated: true, completion: nil) })
-            .delay(.milliseconds(350))
+            .delay(.milliseconds(310))
     }
     
+    
+}
+
+public extension SSActionSheet {
     /// 弹出相机、相册
-    static func photo() -> Driver<SSActionSheetButtonItem<Any>> {
-        let items: [SSActionSheetButtonItem<Any>] = [.camera, .album]
+    /// - Parameter isNeedCamera: 是否需要拍照
+    /// - Parameter albumMaxCount: 从相册选择的最大图片数量，默认为1，代表不需要从相册选择
+    ///   - 如果 albumMaxCount传0，代表不需要从相册选择
+    static func photo(isNeedCamera: Bool = true, albumMaxCount: Int = 1) -> Driver<[UIImage]> {
+
+        var items: [SSActionSheetButtonItem<Any>] = []
+
+        if isNeedCamera {
+            items.append(.camera)
+        }
+
+        if albumMaxCount > 0 {
+            items.append(.album(maxPhotoCount: albumMaxCount))
+        }
+
         let sheet = SSActionSheet(nil)
         sheet.datas.dataSource = items.map{ $0.data }
         let height = SSActionSheet.height(items.count, title: nil)
         UIApplication.shared.keyWindow?.rootViewController?.presentAsStork(sheet, height: height, swipeToDismissEnabled: false, tapAroundToDismissEnabled: true, complection: nil)
-        
+
         return sheet.datas.selected
             .map{ items[$0] }
             .do(onNext: { (_) in sheet.dismiss(animated: true, completion: nil) })
-            .delay(.milliseconds(350))
+            .delay(.milliseconds(310))
+            .flatMapLatest{ SSPhotoManager.show($0) }
+            .filterNil()
     }
 }

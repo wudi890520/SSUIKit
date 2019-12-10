@@ -7,6 +7,7 @@
 
 import UIKit
 import JCAlertController
+import Kingfisher
 
 public typealias SSAlert = SSAlertProvider
 
@@ -53,13 +54,33 @@ public extension SSAlertProvider {
     
     static func show(_ elements: [SSAlertDisplayElement], handleCompletion: ((Bool) -> Void)? = nil) {
         SSAlertConfiguration.shared.reloadStyle()
-        let customView = SSAlertCustomView(elements: elements)
-        guard let alert = JCAlertController.alert(withTitle: nil, contentView: customView) else { return }
-        JCPresentController.setOverlayWindowLevel(.alert)
-        JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: nil)
         
-        customView.shouldDismiss = { _ in
-            alert.dismiss(animated: true, completion: nil)
+        if let url = elements.imageURL {
+            ImageDownloader.default.downloadImage(with: url, options: nil) { (result) in
+                switch result {
+                case let .success(imageResult):
+                    let image = imageResult.image
+                    let newElements = elements.replaceImageElement(image)
+                    let customView = SSAlertCustomView(elements: newElements)
+                    guard let alert = JCAlertController.alert(withTitle: nil, contentView: customView) else { return }
+                    JCPresentController.setOverlayWindowLevel(.alert)
+                    JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: nil)
+                    customView.shouldDismiss = { _ in
+                        alert.dismiss(animated: true, completion: nil)
+                    }
+                case let .failure(error):
+                    return
+                }
+            }
+        }else{
+            let customView = SSAlertCustomView(elements: elements)
+            guard let alert = JCAlertController.alert(withTitle: nil, contentView: customView) else { return }
+            JCPresentController.setOverlayWindowLevel(.alert)
+            JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: nil)
+            customView.shouldDismiss = { _ in
+                alert.dismiss(animated: true, completion: nil)
+            }
         }
+
     }
 }

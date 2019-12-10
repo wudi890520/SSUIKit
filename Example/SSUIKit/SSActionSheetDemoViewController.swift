@@ -17,8 +17,11 @@ class SSActionSheetDemoViewController: UIViewController {
         .ss_style(.filled(tintColor: .ss_main))
         .ss_title("弹出")
     
-    let resultTitleLabel = UILabel().ss_font(.detail).ss_text("返回结果")
-    let resultContentLabel = UILabel().ss_font(UIFont.lightPrice.bold).ss_textColor(.red)
+    let photoButton = Button()
+        .ss_style(.filled(tintColor: .ss_main))
+        .ss_title("相机/相册")
+
+    let banner = SSBannerView()
     
     let disposeBag = DisposeBag()
     
@@ -28,8 +31,8 @@ class SSActionSheetDemoViewController: UIViewController {
         view.backgroundColor = .ss_background
         
         view.addSubview(button)
-        view.addSubview(resultTitleLabel)
-        view.addSubview(resultContentLabel)
+        view.addSubview(photoButton)
+        view.addSubview(banner.bannerView)
         
         button.snp.makeConstraints { (make) in
             make.top.equalTo(CGFloat.unsafeTop+50)
@@ -38,19 +41,23 @@ class SSActionSheetDemoViewController: UIViewController {
             make.height.equalTo(50)
         }
         
-        resultTitleLabel.snp.makeConstraints { (make) in
+        photoButton.snp.makeConstraints { (make) in
             make.top.equalTo(button.snp.bottom).offset(40)
-            make.centerX.equalToSuperview()
+            make.left.equalTo(44)
+            make.right.equalToSuperview().offset(-44)
+            make.height.equalTo(50)
         }
         
-        resultContentLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(resultTitleLabel.snp.bottom).offset(5)
-            make.centerX.equalToSuperview()
+        banner.bannerView.snp.makeConstraints { (make) in
+            make.left.equalTo(30)
+            make.right.equalToSuperview().offset(-30)
+            make.top.equalTo(photoButton.snp.bottom).offset(40)
+            make.bottom.equalToSuperview().offset(-100)
         }
         
         let image = UIImage(named: "QMUI_previewImage_checkbox_checked")
         
-        let attribute = "自定义富文本".ss_attribute
+        let attribute = "自定义富文本带额外参数：999".ss_attribute
             .ss_font(font: .detail)
             .ss_color(color: .lightGray)
             .ss_font(font: UIFont.largeTitle.bold, with: "富文本")
@@ -60,27 +67,33 @@ class SSActionSheetDemoViewController: UIViewController {
             .ss_alignment(.right)
         
         let items: [SSActionSheetButtonItem<Int>] = [
-            .custom(title: "自定义按钮", titleColor: nil, extra: nil),
-            .custom(title: "自定义按钮带颜色", titleColor: .ss_main, extra: nil),
-            .custom(title: "自定义按钮带额外参数", titleColor: .orange, extra: 250),
+            .custom(title: "自定义按钮（无参数）", titleColor: nil, extra: nil),
+            .custom(title: "自定义按钮带颜色（无参数）", titleColor: .ss_main, extra: nil),
+            .custom(title: "自定义按钮带额外参数：250", titleColor: .orange, extra: 250),
             .attribute(attribute: attribute, extra: 999),
-            .destructive(title: "删除", extra: nil)
+            .destructive(title: "删除带额外参数：-1", extra: -1)
         ]
         
         button.rx.tap
             .asDriver()
             .flatMapLatest{ SSActionSheet.show("这是标题", buttonItems: items) }
             .asObservable()
-            .subscribe(onNext: {[weak self] (extra) in
-                var message = ""
+            .subscribe(onNext: { (extra) in
+                var message = "该item未设置参数"
                 if let value = extra {
                     message = "\(value)"
-                }else{
-                    message = "this item not has value"
                 }
-                self?.resultContentLabel.text = message
+                SSToast.show(message)
             })
             .disposed(by: disposeBag)
+  
+        photoButton.rx.tap
+            .asDriver()
+            .flatMapLatest{ SSActionSheet.photo(albumMaxCount: 5) }
+            .map{ $0 }
+            .drive(banner.dataSource.rx.dataSource)
+            .disposed(by: disposeBag)
+
         // Do any additional setup after loading the view.
     }
 

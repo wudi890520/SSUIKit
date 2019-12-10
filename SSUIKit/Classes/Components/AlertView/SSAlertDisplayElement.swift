@@ -71,3 +71,52 @@ public enum SSAlertDisplayElement {
     /// - Parameters didTap: 点击图片的回调
     case image(source: Any?, extra: Any?, didTap: ((Any?) -> Void)?)
 }
+
+extension SSAlertDisplayElement: Equatable {
+    public static func == (lhs: SSAlertDisplayElement, rhs: SSAlertDisplayElement) -> Bool {
+        switch (lhs, rhs) {
+        case (.label, .label):          return true
+        case (.textField, .textField):  return true
+        case (.tableView, .tableView):  return true
+        case (.button, .button):        return true
+        case (.image, .image):          return true
+        default:                        return false
+        }
+    }
+}
+ 
+extension Array where Element == SSAlertDisplayElement {
+    var imageURL: URL? {
+        for e in self {
+            switch e {
+            case let .image(source, _, _):
+                if let url = source as? URL {
+                    return url
+                }else if let string = source as? String, let url = URL(string: string) {
+                    return url
+                }else{
+                    return nil
+                }
+            default:
+                continue
+            }
+        }
+        return nil
+    }
+    
+    func replaceImageElement(_ image: UIImage) -> [SSAlertDisplayElement] {
+        for i in 0 ..< self.count {
+            let e = self[i]
+            switch e {
+            case let .image(source, extra, didTap):
+                let newImageElement = SSAlertDisplayElement.image(source: image, extra: extra, didTap: didTap)
+                var newElements = self
+                newElements[i] = newImageElement
+                return newElements
+            default:
+                continue
+            }
+        }
+        return self
+    }
+}

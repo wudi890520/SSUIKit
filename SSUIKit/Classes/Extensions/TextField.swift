@@ -191,6 +191,8 @@ public extension SSUITextFieldCompatible where Self: TextField {
             self.ss_limit = count
             if let count = count {
                 maximumTextLength = UInt(count)
+            }else{
+                maximumTextLength = UInt.max
             }
         case .integer:
             self.ss_integerLimit = count
@@ -215,6 +217,7 @@ public extension SSUITextFieldCompatible where Self: TextField {
     @discardableResult
     func ss_keyboardType(_ keyboardType: SSKeyboardType) -> Self {
         self.ss_keyboardType = keyboardType
+
         if keyboardType == .default {
             inputView = nil
         }else{

@@ -217,8 +217,8 @@ extension SSAlertCustomView {
         case .close:
             let button = QMUIButton()
             button.ss_image("close".bundleImage?.byTintColor(.white))
-            button.size = CGSize(width: 44, height: 44)
-            button.ss_layerCornerRadius(22)
+            button.size = CGSize(width: 36, height: 36)
+            button.ss_layerCornerRadius(button.height/2)
             button.ss_layerBorder(color: .white, width: 1)
             contentView.height = contentView.height+20
             contentView.centerY = height / 2

@@ -163,6 +163,7 @@ class SSKeyboardDemoViewController: UIViewController {
                 self?.floatButton.isHidden = index != 2
                 self?.allButton.isHidden = index > 1
                 
+                self?.textField.ss_limit(nil)
                 self?.textField.ss_keyboardType(keyboardTypes[index])
                 self?.reload.accept(())
             })

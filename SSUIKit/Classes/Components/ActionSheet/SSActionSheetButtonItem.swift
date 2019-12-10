@@ -20,7 +20,7 @@ public enum SSActionSheetButtonItem<T> {
     case camera
     
     /// 从相册选择
-    case album
+    case album(maxPhotoCount: Int)
     
     /// 取消
     case cancel(extra: T?)
