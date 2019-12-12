@@ -13,17 +13,14 @@ import RxCocoa
 
 class SSBannerDemoViewController: UIViewController {
 
-    let native = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("本地图片")
+    let tableView = UITableView()
+        .ss_frame(rect: UIScreen.main.bounds)
     
-    let network = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("网络图片")
-    
-    let transform = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("变形")
+    let dataSource: [String] = [
+        "本地图片",
+        "网络图片",
+        "CoverFlow"
+    ]
     
     let disposeBag = DisposeBag()
     
@@ -31,55 +28,38 @@ class SSBannerDemoViewController: UIViewController {
         super.viewDidLoad()
         title = "Banner的使用"
         view.backgroundColor = .ss_background
-        view.ss_add(native)
-            .ss_add(network)
-            .ss_add(transform)
-          
-        native.snp.makeConstraints { (make) in
-            make.top.equalTo(CGFloat.unsafeTop+50)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-        
-        network.snp.makeConstraints { (make) in
-            make.top.equalTo(native.snp.bottom).offset(15)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-        
-        transform.snp.makeConstraints { (make) in
-            make.top.equalTo(network.snp.bottom).offset(15)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-        
-        native.rx.tap
-            .subscribe(onNext: {[weak self] (_) in
-                let controller = SSBannerNativeDemoViewController()
-                self?.navigationController?.pushViewController(controller, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        network.rx.tap
-            .subscribe(onNext: {[weak self] (_) in
-                let controller = SSBannerNetworkDemoViewController()
-                self?.navigationController?.pushViewController(controller, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        transform.rx.tap
-            .subscribe(onNext: {[weak self] (_) in
-                let controller = SSBannerTransformDemoViewController()
-                self?.navigationController?.pushViewController(controller, animated: true)
-            })
-            .disposed(by: disposeBag)
-        
-        // Do any additional setup after loading the view.
+        view.ss_add(tableView)
+        tableView.register(SSDemoTableViewCell.self, forCellReuseIdentifier: "SSDemoTableViewCell")
+        tableView.delegate = self
+        tableView.dataSource = self
     }
  
+}
+
+extension SSBannerDemoViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: SSDemoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SSDemoTableViewCell", for: indexPath) as! SSDemoTableViewCell
+        cell.textLabel?.text = dataSource[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        var controller: UIViewController?
+        switch dataSource[indexPath.row] {
+        case "本地图片": controller = SSBannerNativeDemoViewController()
+        case "网络图片": controller = SSBannerNetworkDemoViewController()
+        case "CoverFlow": controller = SSBannerTransformDemoViewController()
+        default: break
+        }
+        if let vc = controller {
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
 
 class SSBannerNativeDemoViewController: UIViewController {
@@ -170,8 +150,8 @@ class SSBannerTransformDemoViewController: UIViewController {
         banner.bannerView.snp.makeConstraints { (make) in
             make.left.equalTo(0)
             make.right.equalToSuperview()
-            make.top.equalToSuperview().offset(100)
-            make.height.equalTo(200)
+            make.top.equalToSuperview().offset(40)
+            make.height.equalTo(300)
         }
       
         let dataSource: [SSBannerImageItem] = [

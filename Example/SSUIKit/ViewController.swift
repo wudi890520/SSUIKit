@@ -14,7 +14,7 @@ import RxSwift
 import SnapKit
 import QMUIKit
 
-class ViewController: UIViewController {
+class ViewController: SSBaseViewController {
 
     let tableView = UITableView()
         .ss_frame(rect: UIScreen.main.bounds)
@@ -26,15 +26,14 @@ class ViewController: UIViewController {
         "Alert",
         "Banner",
         "Toast",
-        "HUD"
+        "HUD",
+        "导航栏"
     ]
     
     let alertButton = Button()
         .ss_style(.filled(tintColor: .ss_red))
         .ss_title("弹出alert")
-    
-    let dispose = DisposeBag()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "SSUIKit"
@@ -44,12 +43,6 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         // Do any additional setup after loading the view, typically from a nib.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -91,6 +84,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             
         case "HUD":
             controller = SSHUDDemoViewController()
+         
+        case "导航栏":
+            controller = SSNavigationDemoViewController()
             
         default:
             break

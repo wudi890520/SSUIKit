@@ -10,33 +10,20 @@ import UIKit
 import SSUIKit
 import RxCocoa
 import RxSwift
-import Toast_Swift
 
 class SSAlertDemoViewController: UIViewController {
 
-    let normal = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("弹出普通alert")
+    let tableView = UITableView()
+        .ss_frame(rect: UIScreen.main.bounds)
     
-    let towButtons = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("底部2个按钮的alert")
-    
-    let textFieldButton = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("自定义alert（带输入框）")
-    
-    let tableViewButton = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("自定义alert（列表）")
-    
-    let imageButton = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("自定义alert（本地图片）")
-    
-    let remoteImageButton = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("自定义alert（网络图片）")
+    let dataSource: [String] = [
+        "弹出普通alert",
+        "底部2个按钮的alert",
+        "自定义alert（带输入框）",
+        "自定义alert（列表）",
+        "自定义alert（本地图片）",
+        "自定义alert（网络图片）"
+    ]
     
     private let alertTitle = "在此推荐一个苹果针对浮点型计算时存在精度计算误差的问题而提供的一个计算类"
     
@@ -46,81 +33,41 @@ class SSAlertDemoViewController: UIViewController {
         super.viewDidLoad()
         title = "Alert的使用"
         view.backgroundColor = .ss_background
-        view.ss_add(normal)
-            .ss_add(towButtons)
-            .ss_add(textFieldButton)
-            .ss_add(tableViewButton)
-            .ss_add(imageButton)
-            .ss_add(remoteImageButton)
-        
-        normal.snp.makeConstraints { (make) in
-            make.top.equalTo(CGFloat.unsafeTop+50)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-        
-        towButtons.snp.makeConstraints { (make) in
-            make.top.equalTo(normal.snp.bottom).offset(15)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-
-        textFieldButton.snp.makeConstraints { (make) in
-            make.top.equalTo(towButtons.snp.bottom).offset(15)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-        
-        tableViewButton.snp.makeConstraints { (make) in
-            make.top.equalTo(textFieldButton.snp.bottom).offset(15)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-        
-        imageButton.snp.makeConstraints { (make) in
-            make.top.equalTo(tableViewButton.snp.bottom).offset(15)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-        
-        remoteImageButton.snp.makeConstraints { (make) in
-            make.top.equalTo(imageButton.snp.bottom).offset(15)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-        
-        normal.rx.tap
-            .subscribe(onNext: {[weak self] (_) in self?.showNormalAlert() })
-            .disposed(by: dispose)
-        
-        towButtons.rx.tap
-            .subscribe(onNext: {[weak self] (_) in self?.showTwoButtonsAlert() })
-            .disposed(by: dispose)
-        
-        textFieldButton.rx.tap
-            .subscribe(onNext: {[weak self] (_) in self?.showTextFieldAlert() })
-            .disposed(by: dispose)
-        
-        tableViewButton.rx.tap
-            .subscribe(onNext: {[weak self] (_) in self?.showTableViewAlert() })
-            .disposed(by: dispose)
-        
-        imageButton.rx.tap
-            .subscribe(onNext: {[weak self] (_) in self?.showImageAlert(false) })
-            .disposed(by: dispose)
-        
-        remoteImageButton.rx.tap
-            .subscribe(onNext: {[weak self] (_) in self?.showImageAlert(true) })
-            .disposed(by: dispose)
-        // Do any additional setup after loading the view.
+        view.addSubview(tableView)
+     
+        tableView.register(SSDemoTableViewCell.self, forCellReuseIdentifier: "SSDemoTableViewCell")
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 
+}
+
+extension SSAlertDemoViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: SSDemoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SSDemoTableViewCell", for: indexPath) as! SSDemoTableViewCell
+        cell.textLabel?.text = dataSource[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        switch dataSource[indexPath.row] {
+        case "弹出普通alert": showNormalAlert()
+        case "底部2个按钮的alert": showTwoButtonsAlert()
+        case "自定义alert（带输入框）": showTextFieldAlert()
+        case "自定义alert（列表）": showTableViewAlert()
+        case "自定义alert（本地图片）": showImageAlert(false)
+        case "自定义alert（网络图片）": showImageAlert(true)
+        default: break
+        }
+    }
+}
+
+extension SSAlertDemoViewController {
     func showNormalAlert() {
         /// 不处理回调
 //        SSAlert.show(alertTitle)
@@ -130,7 +77,7 @@ class SSAlertDemoViewController: UIViewController {
             self?.showToast("alert 消失了")
         }
     }
-    
+        
     func showTwoButtonsAlert() {
         SSAlert.show(alertTitle, message: "这是 message", cancelButtonTitle: "取消", confirmButtonTitle: "确定") {[weak self] (result) in
             if result == true {
@@ -188,10 +135,6 @@ class SSAlertDemoViewController: UIViewController {
         let elements: [SSAlertDisplayElement] = [
             titleLabel,
             textField,
-            detail,
-            detail,
-            textField,
-            detail,
             detail,
             cancel,
             confirm
@@ -278,4 +221,3 @@ class SSAlertDemoViewController: UIViewController {
         SSAlert.show(elements)
     }
 }
-

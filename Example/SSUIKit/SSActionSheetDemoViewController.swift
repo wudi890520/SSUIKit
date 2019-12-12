@@ -13,13 +13,13 @@ import RxSwift
 
 class SSActionSheetDemoViewController: UIViewController {
 
-    let button = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("弹出")
+    let tableView = UITableView()
+        .ss_frame(rect: UIScreen.main.bounds)
     
-    let photoButton = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("相机/相册")
+    let dataSource: [String] = [
+        "弹出",
+        "相机/相册"
+    ]
 
     let banner = SSBannerView()
     
@@ -30,31 +30,40 @@ class SSActionSheetDemoViewController: UIViewController {
         title = "ActionSheet的使用"
         view.backgroundColor = .ss_background
         
-        view.addSubview(button)
-        view.addSubview(photoButton)
-        view.addSubview(banner.bannerView)
+        view.addSubview(tableView)
+        banner.bannerView.size = CGSize(width: CGFloat.screenWith, height: 200)
+      
+        tableView.register(SSDemoTableViewCell.self, forCellReuseIdentifier: "SSDemoTableViewCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+
+}
+
+extension SSActionSheetDemoViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: SSDemoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SSDemoTableViewCell", for: indexPath) as! SSDemoTableViewCell
         
-        button.snp.makeConstraints { (make) in
-            make.top.equalTo(CGFloat.unsafeTop+50)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
+        cell.textLabel?.text = dataSource[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        switch dataSource[indexPath.row] {
+        case "弹出": showCustom()
+        case "相机/相册": showPhoto()
+        default: break
         }
-        
-        photoButton.snp.makeConstraints { (make) in
-            make.top.equalTo(button.snp.bottom).offset(40)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-        
-        banner.bannerView.snp.makeConstraints { (make) in
-            make.left.equalTo(30)
-            make.right.equalToSuperview().offset(-30)
-            make.top.equalTo(photoButton.snp.bottom).offset(40)
-            make.bottom.equalToSuperview().offset(-100)
-        }
-        
+    }
+}
+
+extension SSActionSheetDemoViewController {
+    private func showCustom() {
         let image = UIImage(named: "QMUI_previewImage_checkbox_checked")
         
         let attribute = "自定义富文本带额外参数：999".ss_attribute
@@ -74,28 +83,27 @@ class SSActionSheetDemoViewController: UIViewController {
             .destructive(title: "删除带额外参数：-1", extra: -1)
         ]
         
-        button.rx.tap
-            .asDriver()
-            .flatMapLatest{ SSActionSheet.show("这是标题", buttonItems: items) }
+        SSActionSheet.show("这是标题", buttonItems: items)
             .asObservable()
             .subscribe(onNext: { (extra) in
                 var message = "该item未设置参数"
                 if let value = extra {
-                    message = "\(value)"
+                    message = "参数：\(value)"
                 }
                 SSToast.show(message)
             })
             .disposed(by: disposeBag)
-  
-        photoButton.rx.tap
-            .asDriver()
-            .flatMapLatest{ SSActionSheet.photo(albumMaxCount: 5) }
+    }
+    
+    private func showPhoto() {
+        let `是否需要相机` = true
+        let `相册最大可选数量`: Int = 5
+        SSActionSheet.photo(isNeedCamera: `是否需要相机`, albumMaxCount: `相册最大可选数量`)
             .map{ $0 }
+            .do(onNext: {[weak self] (photos) in
+                self?.tableView.tableHeaderView = self?.banner.bannerView
+            })
             .drive(banner.dataSource.rx.dataSource)
             .disposed(by: disposeBag)
-
-        // Do any additional setup after loading the view.
     }
-
-
 }

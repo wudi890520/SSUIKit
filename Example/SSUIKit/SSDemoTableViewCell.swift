@@ -12,6 +12,7 @@ class SSDemoTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        textLabel?.numberOfLines = 0
         // Initialization code
     }
 

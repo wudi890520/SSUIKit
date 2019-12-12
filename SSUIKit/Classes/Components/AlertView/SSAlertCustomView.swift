@@ -115,7 +115,7 @@ extension SSAlertCustomView {
         let textField = QMUITextField()
         
         textField
-            .ss_frame(x: insets.left, y: contentView.height, width: width - insets.left - insets.right, height: 50)
+            .ss_frame(x: insets.left, y: contentView.height+insets.top, width: width - insets.left - insets.right, height: 50)
             .ss_placeholder(placeholder)
             .ss_font(.largeTitle)
             .ss_keyboardType(keyboardType)

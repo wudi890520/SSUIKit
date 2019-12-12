@@ -11,7 +11,9 @@ import Kingfisher
 
 public typealias SSAlert = SSAlertProvider
 
-public class SSAlertProvider: NSObject {}
+public class SSAlertProvider: NSObject {
+    static let JCPresentControllersAllDismissedNotification = Notification.Name.init("JCPresentControllersAllDismissedNotification")
+}
 
 public extension SSAlertProvider {
     
@@ -54,9 +56,8 @@ public extension SSAlertProvider {
     
     static func show(_ elements: [SSAlertDisplayElement], handleCompletion: ((Bool) -> Void)? = nil) {
         SSAlertConfiguration.shared.reloadStyle()
-        
         if let url = elements.imageURL {
-            ImageDownloader.default.downloadImage(with: url, options: nil) { (result) in
+            ImageDownloader.default.downloadImage(with: url, options: KingfisherManager.shared.defaultOptions) { (result) in
                 switch result {
                 case let .success(imageResult):
                     let image = imageResult.image
@@ -82,5 +83,11 @@ public extension SSAlertProvider {
             }
         }
 
+    }
+}
+
+extension SSAlertProvider {
+    static func dismiss() {
+        JCPresentControllersAllDismissedNotification.post()
     }
 }

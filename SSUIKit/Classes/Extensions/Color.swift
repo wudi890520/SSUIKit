@@ -83,6 +83,9 @@ public struct Color {
     /// 微信主色（微信绿）
     public static let weChatTint: UIColor? = UIColor.hex("#232d31")
     
+    /// 微信导航栏颜色（黑色）
+    public static let weChatNavigation: UIColor? = UIColor.hex("#34393B")
+    
     /// 文本颜色
     public static let text: UIColor? = UIColor.darkText
     
@@ -91,6 +94,8 @@ public struct Color {
     
     /// 黑色
     public static let black: UIColor? = UIColor.black
+    
+    
 }
 
 extension SSColorCompatible where Self: UIColor {
@@ -179,6 +184,9 @@ extension SSColorCompatible where Self: UIColor {
     
     /// 微信主色（微信绿）
     public static var ss_weChatTint: UIColor? { Color.weChatTint }
+    
+    /// 微信导航栏颜色（黑色）
+    public static var ss_weChatNavigation: UIColor? { Color.weChatNavigation }
     
     /// 文本颜色
     public static var ss_text: UIColor? { Color.text }

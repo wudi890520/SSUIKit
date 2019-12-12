@@ -13,21 +13,15 @@ import RxCocoa
 
 class SSHUDDemoViewController: UIViewController {
 
-    let customButton = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("自定义文本")
-
-    let clearButton = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("透明且不能操作页面")
-
-    let blackButton = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("黑色背景且不能操作页面")
-    
-    let rxButton = Button()
-        .ss_style(.filled(tintColor: .ss_main))
-        .ss_title("配合RxSwift使用，模拟网络请求")
+    let tableView = UITableView()
+        .ss_frame(rect: UIScreen.main.bounds)
+       
+    let dataSource: [String] = [
+        "自定义文本",
+        "透明且不能操作页面",
+        "黑色背景且不能操作页面",
+        "配合RxSwift使用，模拟网络请求"
+    ]
     
     let disposeBag = DisposeBag()
     
@@ -35,74 +29,58 @@ class SSHUDDemoViewController: UIViewController {
         super.viewDidLoad()
         title = "Toast的使用"
         view.backgroundColor = .ss_background
+        view.addSubview(tableView)
         
-        view.ss_add(customButton)
-            .ss_add(clearButton)
-            .ss_add(blackButton)
-            .ss_add(rxButton)
-          
-        customButton.snp.makeConstraints { (make) in
-            make.top.equalTo(CGFloat.unsafeTop+50)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
+        tableView.register(SSDemoTableViewCell.self, forCellReuseIdentifier: "SSDemoTableViewCell")
+        tableView.delegate = self
+        tableView.dataSource = self
         
-        clearButton.snp.makeConstraints { (make) in
-            make.top.equalTo(customButton.snp.bottom).offset(15)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-        
-        blackButton.snp.makeConstraints { (make) in
-            make.top.equalTo(clearButton.snp.bottom).offset(15)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-        
-        rxButton.snp.makeConstraints { (make) in
-            make.top.equalTo(blackButton.snp.bottom).offset(15)
-            make.left.equalTo(44)
-            make.right.equalToSuperview().offset(-44)
-            make.height.equalTo(50)
-        }
-        
-        customButton.rx.tap
-            .subscribe(onNext: {[weak self] (_) in
-                self?.showHUD(status: SSHUDStatus.custom(status: "等一下"))
-            })
-            .disposed(by: disposeBag)
-        
-        clearButton.rx.tap
-            .subscribe(onNext: {[weak self] (_) in
-                self?.showHUD(status: SSHUDStatus.clear(.loading))
-            })
-            .disposed(by: disposeBag)
-        
-        blackButton.rx.tap
-            .subscribe(onNext: {[weak self] (_) in
-                self?.showHUD(status: SSHUDStatus.black(.waiting))
-            })
-            .disposed(by: disposeBag)
-        
-        rxButton.rx.tap
-            .asDriver()
-            /// 显示HUD
+        tableView.rx.itemSelected.asDriver()
+            .map{ [weak self] indexPath in self?.dataSource[indexPath.row] }
+            .filter{ $0 == "配合RxSwift使用，模拟网络请求" }
             .showHUD(for: .loading)
-            /// 请求
-            .flatMapLatest{ SSHUDDemoViewController.makeRequest() }
-            /// 隐藏HUD
+            .flatMapLatest{ _ in SSHUDDemoViewController.simulatedNetworkRequest() }
             .dismissHUD()
             .drive()
             .disposed(by: disposeBag)
+        
         // Do any additional setup after loading the view.
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         SSHUD.dismiss()
+    }
+}
+
+extension SSHUDDemoViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return dataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: SSDemoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SSDemoTableViewCell", for: indexPath) as! SSDemoTableViewCell
+        cell.textLabel?.text = dataSource[indexPath.row]
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        switch dataSource[indexPath.row] {
+
+        case "自定义文本":
+            showHUD(status: SSHUDStatus.custom(status: "我叫自定义"))
+
+        case "透明且不能操作页面":
+            showHUD(status: SSHUDStatus.clear(.loading))
+
+        case "黑色背景且不能操作页面":
+            showHUD(status: SSHUDStatus.black(.waiting))
+
+        default:
+            break
+        }
     }
 }
 
@@ -118,7 +96,7 @@ extension SSHUDDemoViewController {
 }
 
 extension SSHUDDemoViewController {
-    static func makeRequest() -> Driver<Int> {
+    static func simulatedNetworkRequest() -> Driver<Int> {
         return Driver.just(123).delay(.seconds(2))
     }
 }

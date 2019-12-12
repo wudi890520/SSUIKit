@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SSViewModelType {
+public protocol SSViewModelType {
     
     associatedtype Input
     associatedtype Output
