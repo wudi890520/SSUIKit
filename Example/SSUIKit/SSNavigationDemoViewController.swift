@@ -204,15 +204,23 @@ class SSNavigationHiddenDemoViewController: SSBaseViewController, UITableViewDel
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: SSDemoTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SSDemoTableViewCell", for: indexPath) as! SSDemoTableViewCell
         cell.textLabel?.numberOfLines = 0
-        if indexPath.row == 0 {
-            cell.accessoryView = nil
-        }else{
-            if indexPath.row % 2 == 0 {
-                cell.accessoryView = UILabel().ss_frame(x: 0, y: 0, width: 44, height: 44).ss_text("-").ss_font(.with(34)).ss_textColor(.red).ss_textAlignment(.center)
+        
+        
+        if showIntroduction {
+            if indexPath.row == 0 {
+                cell.accessoryView = nil
             }else{
-                cell.accessoryView = UILabel().ss_frame(x: 0, y: 0, width: 44, height: 44).ss_text("+").ss_font(.with(30)).ss_textAlignment(.center)
+                if indexPath.row % 2 == 0 {
+                    cell.accessoryView = UILabel().ss_frame(x: 0, y: 0, width: 44, height: 44).ss_text("-").ss_font(.with(34)).ss_textColor(.red).ss_textAlignment(.center)
+                }else{
+                    cell.accessoryView = UILabel().ss_frame(x: 0, y: 0, width: 44, height: 44).ss_text("+").ss_font(.with(30)).ss_textAlignment(.center)
+                }
             }
+        }else{
+            cell.accessoryView = nil
         }
+        
+        
         cell.textLabel?.text = dataSource[indexPath.row]
         return cell
     }
