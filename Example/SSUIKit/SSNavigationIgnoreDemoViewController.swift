@@ -52,7 +52,7 @@ class SSNavigationIgnoreDemoViewController: SSBaseViewController {
 
 }
 
-extension SSNavigationIgnoreDemoViewController: UITableViewDelegate, UITableViewDataSource {
+extension SSNavigationIgnoreDemoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }

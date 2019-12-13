@@ -49,7 +49,7 @@ class SSNavigationDemoViewController: SSBaseViewController {
 
 }
 
-extension SSNavigationDemoViewController: UITableViewDelegate, UITableViewDataSource {
+extension SSNavigationDemoViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource.count
@@ -147,7 +147,7 @@ fileprivate class SSNavigationClearDemoViewController: SSBaseViewController {
     }
 }
 
-class SSNavigationHiddenDemoViewController: SSBaseViewController, UITableViewDelegate, UITableViewDataSource {
+class SSNavigationHiddenDemoViewController: SSBaseViewController, UITableViewDataSource {
     
     var showIntroduction = false
     

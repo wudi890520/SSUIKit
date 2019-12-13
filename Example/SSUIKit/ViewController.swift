@@ -27,7 +27,8 @@ class ViewController: SSBaseViewController {
         "Banner",
         "Toast",
         "HUD",
-        "导航栏"
+        "导航栏",
+        "查看大图"
     ]
     
     let alertButton = Button()
@@ -45,7 +46,7 @@ class ViewController: SSBaseViewController {
     }
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }
@@ -87,6 +88,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
          
         case "导航栏":
             controller = SSNavigationDemoViewController()
+        
+        case "查看大图":
+            controller = SSBrowserDemoViewController()
             
         default:
             break

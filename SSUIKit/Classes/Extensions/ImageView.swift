@@ -13,6 +13,26 @@ public protocol SSUIImageViewCompatible {}
 
 extension UIImageView: SSUIImageViewCompatible {}
 
+public extension UIImageView {
+    internal struct AssociatedKeys {
+        static var tapGesture = "ss_tapGestureRecognizer"
+    }
+    
+    internal func ss_set(_ key: UnsafeRawPointer, newValue: Any) {
+        objc_setAssociatedObject(self, key, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
+    internal func ss_get<T>(_ key: UnsafeRawPointer, type: T.Type) -> T? {
+        return objc_getAssociatedObject(self, key) as? T
+    }
+    
+    /// 点击手势
+    var ss_tapGestureRecognizer: UITapGestureRecognizer? {
+        set { ss_set(&type(of: self).AssociatedKeys.tapGesture, newValue: newValue) }
+        get { ss_get(&type(of: self).AssociatedKeys.tapGesture, type: UITapGestureRecognizer.self) }
+    }
+    
+}
+
 public extension SSUIImageViewCompatible where Self: UIImageView {
     
     /// 设置图片
@@ -66,7 +86,5 @@ public extension SSUIImageViewCompatible where Self: UIImageView {
         
         return self
     }
-    
-    
 }
 

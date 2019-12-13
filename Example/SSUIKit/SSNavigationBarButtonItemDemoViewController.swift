@@ -77,7 +77,7 @@ class SSNavigationBarButtonItemDemoViewController: SSBaseViewController {
     }
 }
 
-extension SSNavigationBarButtonItemDemoViewController: UITableViewDelegate, UITableViewDataSource {
+extension SSNavigationBarButtonItemDemoViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return dataSource.count
