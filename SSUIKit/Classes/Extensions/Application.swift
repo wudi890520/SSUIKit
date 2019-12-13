@@ -24,7 +24,7 @@ public extension UIApplication {
         }
     }
     
-    static func endEditing() {
+    @objc static func endEditing() {
         rootView?.endEditing(true)
     }
 }

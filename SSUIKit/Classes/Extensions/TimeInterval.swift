@@ -147,7 +147,7 @@ public extension TimeInterval {
     
 }
 
-extension TimeInterval {
+public extension TimeInterval {
     
     /// 时间戳 -> 字符串
     ///
@@ -176,23 +176,23 @@ extension TimeInterval {
 
 public extension TimeInterval {
     struct Duration {
-        static let ss_hornDelay: TimeInterval = 3
-        static let ss_popDelay: TimeInterval = 2
-        static let ss_delay: TimeInterval = 0.3
-        static let ss_longDelay: TimeInterval = 0.4
-        static let ss_animate: TimeInterval = 0.25
-        static let ss_min: TimeInterval = 1/TimeInterval.infinity
+        public static let ss_hornDelay: TimeInterval = 3
+        public static let ss_popDelay: TimeInterval = 2
+        public static let ss_delay: TimeInterval = 0.3
+        public static let ss_longDelay: TimeInterval = 0.4
+        public static let ss_animate: TimeInterval = 0.25
+        public static let ss_min: TimeInterval = 1/TimeInterval.infinity
     }
 }
 
 public extension DispatchTimeInterval {
     struct Duration {
-        static let ss_hornDelay: DispatchTimeInterval = .seconds(3)
-        static let ss_popDelay: DispatchTimeInterval = .seconds(2)
-        static let ss_delay: DispatchTimeInterval = .milliseconds(300)
-        static let ss_longDelay: DispatchTimeInterval = .milliseconds(400)
-        static let ss_animate: DispatchTimeInterval = .milliseconds(250)
-        static let ss_min: DispatchTimeInterval = .nanoseconds(1)
+        public static let ss_hornDelay: DispatchTimeInterval = .seconds(3)
+        public static let ss_popDelay: DispatchTimeInterval = .seconds(2)
+        public static let ss_delay: DispatchTimeInterval = .milliseconds(300)
+        public static let ss_longDelay: DispatchTimeInterval = .milliseconds(400)
+        public static let ss_animate: DispatchTimeInterval = .milliseconds(250)
+        public static let ss_min: DispatchTimeInterval = .nanoseconds(1)
     }
 }
 

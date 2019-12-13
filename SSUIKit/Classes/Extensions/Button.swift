@@ -189,6 +189,13 @@ public extension SSUIButtonCompatible where Self: UIButton {
         self.kf.setImage(with: urlString?.ss_url, for: .highlighted, placeholder: placeholder)
         return self
     }
+    
+    /// 点击按钮时收起键盘
+    @discardableResult
+    func ss_endEditingWhenTap() -> Self {
+        addTarget(self, action: #selector(UIApplication.endEditing), for: .touchUpInside)
+        return self
+    }
 }
 
 public extension UIButton {

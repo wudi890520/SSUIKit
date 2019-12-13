@@ -50,6 +50,9 @@ public extension UIFont {
     /// fontSize = 16.0
     static let title = Title.normal
     
+    /// fontSize = 17.0
+    static let systemTitle = Title.system
+    
     /// fontSize = 18.0
     static let largeTitle = Title.large
     

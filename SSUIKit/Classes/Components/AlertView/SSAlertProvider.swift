@@ -79,7 +79,7 @@ public extension SSAlertProvider {
     }
 }
 
-extension SSAlertProvider {
+public extension SSAlertProvider {
     static func show(_ title: String, confirmButtonTitle: String = "我知道了") -> Driver<Void> {
         return Observable.create({ (observer) -> Disposable in
             SSAlertConfiguration.Title.textAlignment = .center

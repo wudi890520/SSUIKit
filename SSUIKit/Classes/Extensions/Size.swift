@@ -53,12 +53,9 @@ public extension CGSize {
                 return 0
             }
         }
-        
-        
     }
     
 }
-
 
 public extension CGSize {
     
@@ -70,4 +67,8 @@ public extension CGSize {
         /// 子页面（不含tabbar）的安全内容高度
         static var childContentHeight = Screen.height - UnsafeArea.top - UnsafeArea.bottom
     }
+}
+
+public extension CGSize {
+    static let doneButton = CGSize(width: 57, height: 30)
 }

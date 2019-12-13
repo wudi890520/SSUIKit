@@ -73,6 +73,9 @@ public extension CGFloat {
     
     /// 按钮高度
     static let button: CGFloat = 45
+    
+    /// 按钮底部
+    static let buttonBottomOffset: CGFloat = UIDevice.isBangsScreen ? 34 : 15
 }
 
 public extension CGFloat {

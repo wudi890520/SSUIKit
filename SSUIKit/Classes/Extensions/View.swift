@@ -200,10 +200,47 @@ public extension SSUIViewAddChild where Self: UIView {
     /// - Parameter position: QMUIViewBorderPosition
     /// - Returns: UIView泛型
     @discardableResult
-    func ss_border(at position: QMUIViewBorderPosition = .top, color: UIColor? = .ss_line, lineWidth: CGFloat = CGFloat.line) -> Self {
-        qmui_borderPosition = position
-        qmui_borderColor = color
-        qmui_borderWidth = lineWidth
+    func ss_border(at position: QMUIViewBorderPosition = .top, color: UIColor? = .ss_line, lineWidth: CGFloat = CGFloat.line, insets: UIEdgeInsets? = nil) -> Self {
+        if let insets = insets {
+            let borderView = UIView().ss_backgroundColor(color)
+            self.addSubview(borderView)
+            switch position {
+            case .top:
+                borderView.snp.makeConstraints { (make) in
+                    make.left.equalToSuperview().offset(insets.left)
+                    make.right.equalToSuperview().offset(-insets.right)
+                    make.top.equalTo(0).offset(insets.top)
+                    make.height.equalTo(lineWidth)
+                }
+            case .bottom:
+                borderView.snp.makeConstraints { (make) in
+                    make.left.equalToSuperview().offset(insets.left)
+                    make.right.equalToSuperview().offset(-insets.right)
+                    make.bottom.equalToSuperview().offset(-insets.bottom)
+                    make.height.equalTo(lineWidth)
+                }
+            case .left:
+                borderView.snp.makeConstraints { (make) in
+                    make.top.equalToSuperview().offset(insets.top)
+                    make.bottom.equalToSuperview().offset(-insets.bottom)
+                    make.left.equalToSuperview().offset(insets.left)
+                    make.width.equalTo(lineWidth)
+                }
+            case .right:
+                borderView.snp.makeConstraints { (make) in
+                    make.top.equalToSuperview().offset(insets.top)
+                    make.bottom.equalToSuperview().offset(-insets.bottom)
+                    make.right.equalToSuperview().offset(-insets.right)
+                    make.width.equalTo(lineWidth)
+                }
+            default:
+                break
+            }
+        }else{
+            qmui_borderPosition = position
+            qmui_borderColor = color
+            qmui_borderWidth = lineWidth
+        }
         return self
     }
 }

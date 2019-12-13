@@ -56,6 +56,18 @@ public extension UIViewController {
     }
 }
 
+public extension SSBaseViewController {
+
+    func BD(_ dispose: Disposable) {
+        binding(dispose)
+    }
+
+    private func binding(_ dispose: Disposable) {
+        dispose.disposed(by: self.dispose)
+    }
+
+}
+
 public extension Reactive where Base: SSBaseViewController {
     var popGestureEnable: Binder<Bool> {
         return Binder(base) { controller, enable in
