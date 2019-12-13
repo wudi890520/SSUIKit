@@ -45,7 +45,7 @@ public enum SSDateFormat {
     case sign
 }
 
-extension SSDateFormat {
+public extension SSDateFormat {
     var dateFormat: String {
         switch self {
         case .default: return "yyyy-MM-dd HH:mm:ss"

@@ -9,14 +9,14 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-extension Driver {
+public extension Driver {
     /// 映射成空
-    public func mapVoid() -> Driver<Void> {
+    func mapVoid() -> Driver<Void> {
         return map{ _ in () } as! Driver<Void>
     }
     
     /// 振动反馈
-    public func impactOccurred() -> Driver<Element> {
+    func impactOccurred() -> Driver<Element> {
         return self.do(onNext: { (_) in
             if #available(iOS 10.0, *) {
                 UIImpactFeedbackGenerator.ss_impactOccurred()
@@ -84,7 +84,7 @@ extension Driver {
     }
 }
 
-extension Driver where Element == Bool {
+public extension Driver where Element == Bool {
     
     /// 反转Bool值
     func reverse() -> Driver<Element> {

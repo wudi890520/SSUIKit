@@ -9,13 +9,13 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-extension Observable {
+public extension Observable {
     func mapVoid() -> Observable<Void> {
         return map{ _ in () }
     }
     
     /// 振动反馈
-    public func impactOccurred() -> Observable<Element> {
+    func impactOccurred() -> Observable<Element> {
         return self.do(onNext: { (_) in
             if #available(iOS 10.0, *) {
                 UIImpactFeedbackGenerator.ss_impactOccurred()

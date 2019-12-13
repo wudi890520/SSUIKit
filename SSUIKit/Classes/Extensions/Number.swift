@@ -8,6 +8,18 @@
 
 import UIKit
 
+public protocol OptionalNumber {}
+extension NSNumber: OptionalNumber {}
+public extension Optional where Wrapped: OptionalNumber {
+    var orEmpty: Wrapped {
+        if self == nil {
+            return NSNumber(integerLiteral: 0) as! Wrapped
+        }else{
+            return self!
+        }
+    }
+}
+
 public extension NSNumber {
     
     /// 格式化

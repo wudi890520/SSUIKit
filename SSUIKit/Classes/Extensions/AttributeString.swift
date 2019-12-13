@@ -179,6 +179,14 @@ public extension NSMutableAttributedString {
 
 public extension NSMutableAttributedString {
     
+    var ss_width: CGFloat { return size().width }
+    
+    var ss_height: CGFloat { return size().height }
+    
+}
+
+public extension NSMutableAttributedString {
+    
     var ss_layout: YYTextLayout? {
         let conteiner = YYTextContainer(size: CGSize(width: CGFloat.infinity, height:  CGFloat.infinity))
         let layout = YYTextLayout(container: conteiner, text: self)

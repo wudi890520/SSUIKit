@@ -82,4 +82,12 @@ public extension Array {
         sequence.append(contentsOf: elements)
         return sequence
     }
+    
+    /// 追加一个数组
+    /// - Parameter element: 元素
+    func add(_ elements: Element...) -> [Element] {
+        var sequence = self
+        sequence.append(contentsOf: elements)
+        return sequence
+    }
 }

@@ -215,7 +215,10 @@ public extension SSUITextFieldCompatible where Self: TextField {
     /// - Parameter keyboardType: SSKeyboardType
     /// - Returns: UITextField
     @discardableResult
-    func ss_keyboardType(_ keyboardType: SSKeyboardType) -> Self {
+    func ss_keyboardType(_ keyboardType: SSKeyboardType? = nil) -> Self {
+        
+        guard let keyboardType = keyboardType else { return self }
+        
         self.ss_keyboardType = keyboardType
 
         if keyboardType == .default {
