@@ -40,8 +40,7 @@ extension SSNavigationBarStyle {
         case .default:
             return nil
         case .black:
-            guard let color = UIColor.ss.weChatNavigation else { return nil }
-            return UIImage(color: color)
+            return UIImage(color: .ss_weChatNavigation)
         case .clear:
             return UIImage(color: .clear)
         case .hidden:

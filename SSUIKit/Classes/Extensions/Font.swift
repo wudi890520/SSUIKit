@@ -17,6 +17,8 @@ public extension UIFont {
         public static let light = UIFont.systemFont(ofSize: 15)
         /// 中（fontSize = 16.0）
         public static let normal = UIFont.systemFont(ofSize: 16)
+        /// 系统 （fontSize = 17.0）
+        public static let system = UIFont.systemFont(ofSize: 17)
         /// 大（fontSize = 18.0）
         public static let large = UIFont.systemFont(ofSize: 18)
     }

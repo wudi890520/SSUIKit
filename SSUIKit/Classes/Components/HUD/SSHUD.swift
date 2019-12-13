@@ -27,7 +27,7 @@ public class SSHUD: NSObject {
 extension SSHUD {
     static func setStyle() {
         SVProgressHUD.setDefaultStyle(.dark)
-        SVProgressHUD.setBackgroundColor(UIColor.ss.black!.withAlphaComponent(0.3))
+        SVProgressHUD.setBackgroundColor(UIColor.ss.black.ss_alpha(0.3))
         SVProgressHUD.setForegroundColor(.white)
         SVProgressHUD.setCornerRadius(8)
         SVProgressHUD.setFont(UIFont.systemFont(ofSize: 16))

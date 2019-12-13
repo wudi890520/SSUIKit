@@ -112,17 +112,6 @@ public extension String {
 
 public extension String {
     
-    func add(_ strings: String...) -> String {
-        var result: String = "\(self)"
-        for str in strings {
-            result = "\(result)\(str)"
-        }
-        return result
-    }
-}
-
-public extension String {
-    
     var asMobile: String {
         return "telprompt://\(self)"
     }
@@ -226,6 +215,16 @@ public extension String {
 }
 
 public extension String {
+    public func ss_width(for font: UIFont) -> CGFloat {
+        return ss_nsString.width(for: font)
+    }
+    
+    public func ss_height(for font: UIFont, contentWidth: CGFloat) -> CGFloat {
+        return ss_nsString.height(for: font, width: contentWidth)
+    }
+}
+
+public extension String {
     public func ss_sub(from index: Int) -> String {
         if (0 ..< self.count).contains(index) {
             return ss_nsString.substring(from: index)
@@ -259,6 +258,14 @@ public extension String {
         
         let nsRange = NSMakeRange(startIndex, endIndex - startIndex)
         return ss_nsString.substring(with: nsRange)
+    }
+    
+    func add(_ strings: String...) -> String {
+        var result: String = "\(self)"
+        for str in strings {
+            result = "\(result)\(str)"
+        }
+        return result
     }
 }
 

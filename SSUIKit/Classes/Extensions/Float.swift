@@ -62,6 +62,12 @@ public extension CGFloat {
     
     /// 间距
     static let edge: CGFloat = 15
+    
+    /// cell高度
+    static let cell: CGFloat = 54
+    
+    /// 按钮高度
+    static let button: CGFloat = 45
 }
 
 public extension CGFloat {

@@ -37,10 +37,10 @@ extension SSAlertActionButtonItem {
     /// 按钮标题颜色
     public var titleColor: UIColor {
         switch self {
-        case .ok: return UIColor.ss.main!
+        case .ok: return UIColor.ss.main
         case .cancel: return UIColor.gray
-        case .iKnow: return UIColor.ss.main!
-        case let .custom(_, titleColor, _): return titleColor ?? UIColor.ss.main!
+        case .iKnow: return UIColor.ss.main
+        case let .custom(_, titleColor, _): return titleColor ?? UIColor.ss.main
         default: return .black
         }
     }
