@@ -94,7 +94,7 @@ extension SSNavigationIgnoreDemoViewController: UITableViewDataSource {
                 }
             }
             
-            SSAlert.show([textField, cancel, confirm])
+            SSAlert.present([textField, cancel, confirm])
             
         default:
             break

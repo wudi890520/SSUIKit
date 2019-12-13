@@ -53,6 +53,11 @@ public extension CGFloat {
 }
 
 public extension CGFloat {
+    static var safeRootContentHeight: CGFloat { Size.SafeArea.rootContentHeight }
+    static var safeChildContentHeight: CGFloat { Size.SafeArea.childContentHeight }
+}
+
+public extension CGFloat {
     
     /// 线的宽度
     static let line: CGFloat = 1.0 / UIScreen.main.scale

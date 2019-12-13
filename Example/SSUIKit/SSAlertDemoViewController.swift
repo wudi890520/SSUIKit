@@ -73,13 +73,13 @@ extension SSAlertDemoViewController {
 //        SSAlert.show(alertTitle)
         
         /// 处理回调事件
-        SSAlert.show(alertTitle) { [weak self] in
+        SSAlert.present(alertTitle) { [weak self] in
             self?.showToast("alert 消失了")
         }
     }
         
     func showTwoButtonsAlert() {
-        SSAlert.show(alertTitle, message: "这是 message", cancelButtonTitle: "取消", confirmButtonTitle: "确定") {[weak self] (result) in
+        SSAlert.present(alertTitle, message: "这是 message", cancelButtonTitle: "取消", confirmButtonTitle: "确定") {[weak self] (result) in
             if result == true {
                 self?.showToast("点击了确定")
             }else if result == false {
@@ -140,7 +140,7 @@ extension SSAlertDemoViewController {
             confirm
         ]
         
-        SSAlert.show(elements)
+        SSAlert.present(elements)
     }
 
     
@@ -193,7 +193,7 @@ extension SSAlertDemoViewController {
             confirm
         ]
         
-        SSAlert.show(elements)
+        SSAlert.present(elements)
     }
     
     func showImageAlert(_ remote: Bool) {
@@ -218,6 +218,6 @@ extension SSAlertDemoViewController {
             close
         ]
         
-        SSAlert.show(elements)
+        SSAlert.present(elements)
     }
 }

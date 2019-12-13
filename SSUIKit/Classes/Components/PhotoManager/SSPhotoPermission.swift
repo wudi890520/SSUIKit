@@ -32,7 +32,7 @@ extension SSPhotoPermission {
         let T = SSPhotoPermission.self
         let authStatus = AVCaptureDevice.authorizationStatus(for: .video)
         if authStatus == .restricted || authStatus == .denied {
-            SSAlert.show(
+            SSAlert.present(
             T.noCameraPermission,
             message: T.cameraPermissionDescription,
             confirmButtonTitle: T.open) { (isEnable) in
@@ -49,7 +49,7 @@ extension SSPhotoPermission {
         let T = SSPhotoPermission.self
         let authStatus = PHPhotoLibrary.authorizationStatus()
         if authStatus == .restricted || authStatus == .denied {
-            SSAlert.show(
+            SSAlert.present(
             T.noPhotoLibraryPermission,
             message: T.photoLibraryPermissionDescription,
             confirmButtonTitle: T.open) { (isEnable) in

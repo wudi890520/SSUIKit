@@ -27,8 +27,7 @@ class ViewController: SSBaseViewController {
         "Banner",
         "Toast",
         "HUD",
-        "导航栏",
-        "查看大图"
+        "导航栏"
     ]
     
     let alertButton = Button()
@@ -88,9 +87,6 @@ extension ViewController: UITableViewDataSource {
          
         case "导航栏":
             controller = SSNavigationDemoViewController()
-        
-        case "查看大图":
-            controller = SSBrowserDemoViewController()
             
         default:
             break

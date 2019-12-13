@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SSUIKit"
-  s.version      = "0.1.4"
+  s.version      = "0.1.5"
   s.summary      = "Sheng Sheng Huitouche UIKit"
 
   # This description is used to generate tags and improve search results.
@@ -168,7 +168,7 @@ Pod::Spec.new do |s|
   s.dependency 'DZNEmptyDataSet', '~> 1.8.1'
    
   # 图片下载 https://github.com/onevcat/Kingfisher
-  s.dependency 'Kingfisher', '~> 5.7.1'
+  s.dependency 'Kingfisher', '~> 5.11.0'
    
   # 弹出视图，类似微信首页右上角“+” https://github.com/liufengting/FTPopOverMenu_Swift
   s.dependency 'FTPopOverMenu_Swift', '~> 0.2.1'

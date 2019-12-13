@@ -8,6 +8,8 @@
 import UIKit
 import JCAlertController
 import Kingfisher
+import RxCocoa
+import RxSwift
 
 public typealias SSAlert = SSAlertProvider
 
@@ -16,17 +18,8 @@ public class SSAlertProvider: NSObject {
 }
 
 public extension SSAlertProvider {
-    
-    static func show(_ title: String, _ dismissCompletion: (() -> Void)? = nil) {
-        SSAlertConfiguration.Title.textAlignment = .center
-        SSAlertConfiguration.shared.reloadStyle()
-        guard let alert = JCAlertController.alert(withTitle: title, message: nil) else { return }
-        JCPresentController.setOverlayWindowLevel(.alert)
-        JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: dismissCompletion)
-        alert.addButton(withTitle: "我知道了", type: JCButtonType.init(rawValue: 0), clicked: nil)
-    }
-    
-    static func show(_ title: String, _ confirmButtonTitle: String, _ dismissCompletion: (() -> Void)? = nil) {
+  
+    static func present(_ title: String, _ confirmButtonTitle: String = "我知道了", _ dismissCompletion: (() -> Void)? = nil) {
         SSAlertConfiguration.Title.textAlignment = .center
         SSAlertConfiguration.shared.reloadStyle()
         guard let alert = JCAlertController.alert(withTitle: title, message: nil) else { return }
@@ -35,7 +28,7 @@ public extension SSAlertProvider {
         alert.addButton(withTitle: confirmButtonTitle, type: .init(rawValue: 0), clicked: nil)
     }
     
-    static func show(
+    static func present(
         _ title: String? = nil,
         message: String? = nil,
         cancelButtonTitle: String = "取消",
@@ -54,7 +47,7 @@ public extension SSAlertProvider {
         }
     }
     
-    static func show(_ elements: [SSAlertDisplayElement], handleCompletion: ((Bool) -> Void)? = nil) {
+    static func present(_ elements: [SSAlertDisplayElement], handleCompletion: ((Bool) -> Void)? = nil) {
         SSAlertConfiguration.shared.reloadStyle()
         if let url = elements.imageURL {
             ImageDownloader.default.downloadImage(with: url, options: KingfisherManager.shared.defaultOptions) { (result) in
@@ -83,6 +76,73 @@ public extension SSAlertProvider {
             }
         }
 
+    }
+}
+
+extension SSAlertProvider {
+    static func show(_ title: String, confirmButtonTitle: String = "我知道了") -> Driver<Void> {
+        return Observable.create({ (observer) -> Disposable in
+            SSAlertConfiguration.Title.textAlignment = .center
+            SSAlertConfiguration.shared.reloadStyle()
+            if let alert = JCAlertController.alert(withTitle: title, message: nil) {
+                JCPresentController.setOverlayWindowLevel(.alert)
+                JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: nil)
+                alert.addButton(withTitle: confirmButtonTitle, type: JCButtonType.init(rawValue: 0)) {
+                    observer.onNext(())
+                    observer.onCompleted()
+                }
+            }
+            return Disposables.create()
+        }).asDriver(onErrorJustReturn: ())
+    }
+    
+    static func show(
+        title: String? = nil,
+        message: String? = nil,
+        cancelButtonTitle: String = "取消",
+        confirmButtonTitle: String = "确定") -> Driver<Bool> {
+        return Observable.create({ (observer) -> Disposable in
+            SSAlertConfiguration.Title.textAlignment = .center
+            SSAlertConfiguration.shared.reloadStyle()
+            if let alert = JCAlertController.alert(withTitle: title, message: message) {
+                JCPresentController.setOverlayWindowLevel(.alert)
+                JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: nil)
+                alert.addButton(withTitle: cancelButtonTitle, type: JCButtonType.init(rawValue: 0)) {
+                    observer.onNext(false)
+                    observer.onCompleted()
+                }
+                alert.addButton(withTitle: confirmButtonTitle, type: .init(rawValue: 0)) {
+                    observer.onNext(true)
+                    observer.onCompleted()
+                }
+            }
+            return Disposables.create()
+        }).asDriver(onErrorJustReturn: false)
+    }
+    
+    static func show<T>(
+        extra: T?,
+        title: String? = nil,
+        message: String? = nil,
+        cancelButtonTitle: String = "取消",
+        confirmButtonTitle: String = "确定") -> Driver<T?> {
+        return Observable.create({ (observer) -> Disposable in
+            SSAlertConfiguration.Title.textAlignment = .center
+            SSAlertConfiguration.shared.reloadStyle()
+            if let alert = JCAlertController.alert(withTitle: title, message: message) {
+                JCPresentController.setOverlayWindowLevel(.alert)
+                JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: nil)
+                alert.addButton(withTitle: cancelButtonTitle, type: JCButtonType.init(rawValue: 0)) {
+                    observer.onNext(nil)
+                    observer.onCompleted()
+                }
+                alert.addButton(withTitle: confirmButtonTitle, type: .init(rawValue: 0)) {
+                    observer.onNext(extra)
+                    observer.onCompleted()
+                }
+            }
+            return Disposables.create()
+        }).asDriver(onErrorJustReturn: nil)
     }
 }
 
