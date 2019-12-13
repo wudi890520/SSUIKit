@@ -58,7 +58,7 @@ public extension UIViewController {
 
 public extension SSBaseViewController {
 
-    func BD(_ dispose: Disposable) {
+    public func BD(_ dispose: Disposable) {
         binding(dispose)
     }
 

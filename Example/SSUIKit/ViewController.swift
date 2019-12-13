@@ -41,8 +41,18 @@ class ViewController: SSBaseViewController {
         tableView.register(SSDemoTableViewCell.self, forCellReuseIdentifier: "SSDemoTableViewCell")
         tableView.delegate = self
         tableView.dataSource = self
+       
+        BD(Driver.just("") >> observer)
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    var observer: AnyObserver<String> {
+        return Binder.init(self) { (this, _) in
+            
+        }.asObserver()
+    }
+    
 }
 
 extension ViewController: UITableViewDataSource {

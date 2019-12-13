@@ -70,5 +70,5 @@ public extension CGSize {
 }
 
 public extension CGSize {
-    static let doneButton = CGSize(width: 57, height: 30)
+    public static let doneButton = CGSize(width: 57, height: 30)
 }
