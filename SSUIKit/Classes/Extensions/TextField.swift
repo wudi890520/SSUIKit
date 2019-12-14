@@ -322,9 +322,7 @@ public extension SSUITextFieldCompatible where Self: TextField {
         self.rightViewMode = .always
         return self
     }
-}
-
-extension QMUITextField {
+    
     /// 控制TextField内容的padding
     @discardableResult
     func ss_contentInset(top: CGFloat, left: CGFloat, bottom: CGFloat, right: CGFloat) -> Self {

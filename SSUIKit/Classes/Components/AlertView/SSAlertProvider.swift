@@ -13,8 +13,22 @@ import RxSwift
 
 public typealias SSAlert = SSAlertProvider
 
+class SSAlertPresentProvider: NSObject {
+    static let shared = SSAlertPresentProvider()
+    
+    var isVisiable: Bool = false
+    
+    private override init() {
+        super.init()
+    }
+}
+
 public class SSAlertProvider: NSObject {
     static let JCPresentControllersAllDismissedNotification = Notification.Name.init("JCPresentControllersAllDismissedNotification")
+    
+    static var isVisiable: Bool {
+        return SSAlertPresentProvider.shared.isVisiable
+    }
 }
 
 public extension SSAlertProvider {
@@ -23,9 +37,8 @@ public extension SSAlertProvider {
         SSAlertConfiguration.Title.textAlignment = .center
         SSAlertConfiguration.shared.reloadStyle()
         guard let alert = JCAlertController.alert(withTitle: title, message: nil) else { return }
-        JCPresentController.setOverlayWindowLevel(.alert)
-        JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: dismissCompletion)
         alert.addButton(withTitle: confirmButtonTitle, type: .init(rawValue: 0), clicked: nil)
+        SSAlertProvider.presentViewController(alert)
     }
     
     static func present(
@@ -37,14 +50,13 @@ public extension SSAlertProvider {
         SSAlertConfiguration.Title.textAlignment = .center
         SSAlertConfiguration.shared.reloadStyle()
         guard let alert = JCAlertController.alert(withTitle: title, message: message) else { return }
-        JCPresentController.setOverlayWindowLevel(.alert)
-        JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: nil)
         alert.addButton(withTitle: cancelButtonTitle, type: .cancel) {
             handleCompletion?(false)
         }
         alert.addButton(withTitle: confirmButtonTitle, type: .init(rawValue: 0)) {
             handleCompletion?(true)
         }
+        SSAlertProvider.presentViewController(alert)
     }
     
     static func present(_ elements: [SSAlertDisplayElement], handleCompletion: ((Bool) -> Void)? = nil) {
@@ -57,11 +69,10 @@ public extension SSAlertProvider {
                     let newElements = elements.replaceImageElement(image)
                     let customView = SSAlertCustomView(elements: newElements)
                     guard let alert = JCAlertController.alert(withTitle: nil, contentView: customView) else { return }
-                    JCPresentController.setOverlayWindowLevel(.alert)
-                    JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: nil)
                     customView.shouldDismiss = { _ in
                         alert.dismiss(animated: true, completion: nil)
                     }
+                    SSAlertProvider.presentViewController(alert)
                 case let .failure(error):
                     return
                 }
@@ -69,11 +80,10 @@ public extension SSAlertProvider {
         }else{
             let customView = SSAlertCustomView(elements: elements)
             guard let alert = JCAlertController.alert(withTitle: nil, contentView: customView) else { return }
-            JCPresentController.setOverlayWindowLevel(.alert)
-            JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: nil)
             customView.shouldDismiss = { _ in
                 alert.dismiss(animated: true, completion: nil)
             }
+            SSAlertProvider.presentViewController(alert)
         }
 
     }
@@ -85,12 +95,11 @@ public extension SSAlertProvider {
             SSAlertConfiguration.Title.textAlignment = .center
             SSAlertConfiguration.shared.reloadStyle()
             if let alert = JCAlertController.alert(withTitle: title, message: nil) {
-                JCPresentController.setOverlayWindowLevel(.alert)
-                JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: nil)
                 alert.addButton(withTitle: confirmButtonTitle, type: JCButtonType.init(rawValue: 0)) {
                     observer.onNext(())
                     observer.onCompleted()
                 }
+                SSAlertProvider.presentViewController(alert)
             }
             return Disposables.create()
         }).asDriver(onErrorJustReturn: ())
@@ -105,8 +114,6 @@ public extension SSAlertProvider {
             SSAlertConfiguration.Title.textAlignment = .center
             SSAlertConfiguration.shared.reloadStyle()
             if let alert = JCAlertController.alert(withTitle: title, message: message) {
-                JCPresentController.setOverlayWindowLevel(.alert)
-                JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: nil)
                 alert.addButton(withTitle: cancelButtonTitle, type: JCButtonType.init(rawValue: 0)) {
                     observer.onNext(false)
                     observer.onCompleted()
@@ -115,6 +122,7 @@ public extension SSAlertProvider {
                     observer.onNext(true)
                     observer.onCompleted()
                 }
+                SSAlertProvider.presentViewController(alert)
             }
             return Disposables.create()
         }).asDriver(onErrorJustReturn: false)
@@ -130,8 +138,6 @@ public extension SSAlertProvider {
             SSAlertConfiguration.Title.textAlignment = .center
             SSAlertConfiguration.shared.reloadStyle()
             if let alert = JCAlertController.alert(withTitle: title, message: message) {
-                JCPresentController.setOverlayWindowLevel(.alert)
-                JCPresentController.presentViewControllerFIFO(alert, presentCompletion: nil, dismissCompletion: nil)
                 alert.addButton(withTitle: cancelButtonTitle, type: JCButtonType.init(rawValue: 0)) {
                     observer.onNext(nil)
                     observer.onCompleted()
@@ -140,13 +146,24 @@ public extension SSAlertProvider {
                     observer.onNext(extra)
                     observer.onCompleted()
                 }
+                SSAlertProvider.presentViewController(alert)
             }
             return Disposables.create()
         }).asDriver(onErrorJustReturn: nil)
     }
 }
 
-extension SSAlertProvider {
+public extension SSAlertProvider {
+    
+    internal static func presentViewController(_ alertController: UIViewController) {
+        JCPresentController.setOverlayWindowLevel(.alert)
+        JCPresentController.presentViewControllerFIFO(alertController, presentCompletion: {
+            SSAlertPresentProvider.shared.isVisiable = true
+        }) {
+            SSAlertPresentProvider.shared.isVisiable = false
+        }
+    }
+    
     static func dismiss() {
         JCPresentControllersAllDismissedNotification.post()
     }

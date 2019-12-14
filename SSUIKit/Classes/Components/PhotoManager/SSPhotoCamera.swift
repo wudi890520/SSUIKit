@@ -10,12 +10,12 @@ import RxCocoa
 import RxSwift
 import BlocksKit
 
-class SSPhotoCamera: NSObject {
+public class SSPhotoCamera: NSObject {
     
 }
 
 extension SSPhotoCamera {
-    static func show() -> Driver<[UIImage]?> {
+    public static func show() -> Driver<[UIImage]?> {
         UIApplication.endEditing()
 
         if !SSPhotoPermission.camera {

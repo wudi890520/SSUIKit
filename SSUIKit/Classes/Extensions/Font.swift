@@ -37,12 +37,23 @@ public extension UIFont {
     struct Price {
         /// 小（fontSize = 20.0）
         public static let light = UIFont.systemFont(ofSize: 20)
+        /// 中（fontSize = 22.0）
+        public static let normal = UIFont.systemFont(ofSize: 22)
         /// 大（fontSize = 24.0）
         public static let large = UIFont.systemFont(ofSize: 24)
     }
 }
 
 public extension UIFont {
+    
+    /// fontSize = 12.0
+    static let lightDetail = Detail.light
+    
+    /// fontSize = 13.0
+    static let detail = Detail.normal
+    
+    /// fontSize = 14.0
+    static let largeDetail = Detail.large
     
     /// fontSize = 15.0
     static let lightTitle = Title.light
@@ -55,18 +66,12 @@ public extension UIFont {
     
     /// fontSize = 18.0
     static let largeTitle = Title.large
-    
-    /// fontSize = 12.0
-    static let lightDetail = Detail.light
-    
-    /// fontSize = 13.0
-    static let detail = Detail.normal
-    
-    /// fontSize = 14.0
-    static let largeDetail = Detail.large
-    
+ 
     /// fontSize = 20.0
     static let lightPrice = Price.light
+    
+    /// fontSize = 22.0
+    static let price = Price.normal
     
     /// fontSize = 24.0
     static let largePrice = Price.large

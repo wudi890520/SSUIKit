@@ -10,12 +10,12 @@ import TZImagePickerController
 import RxCocoa
 import RxSwift
 
-class SSPhotoAlbum: NSObject {
+public class SSPhotoAlbum: NSObject {
 
 }
 
 extension SSPhotoAlbum {
-    static func show(_ max: Int) -> Driver<[UIImage]?> {
+    public static func show(_ max: Int) -> Driver<[UIImage]?> {
         UIApplication.endEditing()
 
         if !SSPhotoPermission.album {

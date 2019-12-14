@@ -9,12 +9,12 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class SSPhotoManager: NSObject {
+public class SSPhotoManager: NSObject {
     
 }
 
 extension SSPhotoManager {
-    static func show(_ item: SSActionSheetButtonItem<Any>) -> Driver<[UIImage]?> {
+    public static func show(_ item: SSActionSheetButtonItem<Any>) -> Driver<[UIImage]?> {
         switch item {
         case .camera:
             return SSPhotoCamera.show()

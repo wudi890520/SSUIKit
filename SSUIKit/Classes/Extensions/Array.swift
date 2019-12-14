@@ -83,6 +83,16 @@ public extension Array {
         return sequence
     }
     
+    /// 追加多个数组
+    /// - Parameter element: 元素
+    func add(_ elements: [Element]...) -> [Element] {
+        var sequence = self
+        for e in elements {
+            sequence.append(contentsOf: e)
+        }
+        return sequence
+    }
+    
     /// 追加一个数组
     /// - Parameter element: 元素
     func add(_ elements: Element...) -> [Element] {

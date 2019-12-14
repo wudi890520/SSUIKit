@@ -74,6 +74,18 @@ public extension Reactive where Base: SSBaseViewController {
             controller.popGestureEnable = enable
         }
     }
+    
+    var removeLeftBarButtonItem: Binder<Void> {
+        return Binder(base) { controller, enable in
+            controller.addBarButtonItem(with: SSBarButtonItem.nil, at: .left)
+        }
+    }
+    
+    var removeRightBarButtonItem: Binder<Void> {
+        return Binder(base) { controller, enable in
+            controller.addBarButtonItem(with: SSBarButtonItem.nil)
+        }
+    }
 }
 
 public extension Reactive where Base: SSBaseViewController {
@@ -114,6 +126,18 @@ public extension Reactive where Base: SSBaseViewController {
             let last = controller.navigationController?.viewControllers.filter{ $0.isKind(of: cls) }.last
             guard let vc = last else { return }
             controller.navigationController?.popToViewController(vc, animated: false)
+        }
+    }
+    
+    var dismiss: Binder<Void> {
+        return Binder(base) { controller, _ in
+            controller.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    var dismissWithoutAnimated: Binder<Void> {
+        return Binder(base) { controller, _ in
+            controller.dismiss(animated: false, completion: nil)
         }
     }
 }

@@ -23,6 +23,9 @@ public enum SSNavigationBarButtonItemDirection {
 /// 回头车常用的UIBarButtonItem样式
 public enum SSBarButtonItem {
     
+    /// 清除，即不设置item
+    case `nil`
+    
     /// 返回
     case back
     
@@ -41,17 +44,24 @@ public enum SSBarButtonItem {
     /// 分享
     case share
     
-    var image: UIImage? {
+    /// 联系客服
+    /// - Parameter isNeedIcon: 是否需要带个图标
+    case connectService(isNeedIcon: Bool)
+
+    var content: Any? {
         switch self {
+        case .nil: return " "
         case .back: return "back".bundleImage
         case .close: return "close".bundleImage
         case .active: return "active".bundleImage
         case .more: return "more".bundleImage
         case .microphone: return "microphone".bundleImage
         case .share: return "share".bundleImage
+        case .connectService: return "联系客服"
+        default: return nil
         }
     }
-    
+
 }
 
 public extension UIViewController {
@@ -101,6 +111,11 @@ extension UIViewController {
     }
     
     internal static func createItem(content: Any?, tintColor: UIColor? = nil, fontSize: CGFloat? = nil) -> UIBarButtonItem {
+        
+        if let ssBarButtonItem = content as? SSBarButtonItem {
+            return createItem(content: ssBarButtonItem.content, tintColor: tintColor, fontSize: fontSize)
+        }
+        
         var item: UIBarButtonItem = UIBarButtonItem().ss_tintColor(tintColor)
         
         if let title = content as? String {
@@ -111,8 +126,6 @@ extension UIViewController {
             item.ss_custom(custom)
         }else if let systemItem = content as? UIBarButtonItem.SystemItem {
             item = UIBarButtonItem(barButtonSystemItem: systemItem, target: nil, action: nil)
-        }else if let ssItem = content as? SSBarButtonItem {
-            item.ss_image(ssItem.image)
         }else if let barButtonItem = content as? UIBarButtonItem {
             item = barButtonItem
         }
@@ -129,6 +142,10 @@ extension UIViewController {
     }
     
     internal static func createButton(content: Any?, tintColor: UIColor? = nil, fontSize: CGFloat? = nil) -> UIButton {
+        
+        if let ssBarButtonItem = content as? SSBarButtonItem {
+            return createButton(content: ssBarButtonItem.content, tintColor: tintColor, fontSize: fontSize)
+        }
         
         var item: UIButton = UIButton().ss_frame(x: 0, y: 0, width: 0, height: 44)
         let font = fontSize == nil ? UIFont.lightTitle : UIFont.with(fontSize!)
@@ -151,15 +168,6 @@ extension UIViewController {
             item.width = custom.width + 30
             item.addSubview(custom)
             custom.centerX = item.width/2
-            
-        }else if let ssItem = content as? SSBarButtonItem {
-            
-            item.width = (ssItem.image?.size.width ?? 0) + 30
-            if let tintColor = tintColor {
-                item.ss_image(ssItem.image?.byTintColor(tintColor))
-            }else{
-                item.ss_image(ssItem.image)
-            }
             
         }
 

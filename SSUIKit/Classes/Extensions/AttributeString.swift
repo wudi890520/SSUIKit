@@ -56,12 +56,16 @@ public extension NSMutableAttributedString {
     @discardableResult
     func ss_font(
         font: UIFont,
-        with text: String? = nil
+        with value: Any? = nil
         ) -> NSMutableAttributedString {
-        var str = text.orEmpty
-        if text == nil {
+        var str = ""
+        
+        if value == nil {
             str = self.string
+        }else{
+            str = "\(value!)"
         }
+        
         if !string.contains(str) { return self }
         
         let range = string.ss_nsString.range(of: str)
