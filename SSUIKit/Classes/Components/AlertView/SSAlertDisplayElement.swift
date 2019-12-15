@@ -70,6 +70,10 @@ public enum SSAlertDisplayElement {
     /// - Parameters extra: 附加参数，会随着点击事件返回
     /// - Parameters didTap: 点击图片的回调
     case image(source: Any?, extra: Any?, didTap: ((Any?) -> Void)?)
+    
+    /// 自定义UI
+    /// - Parameters extra: 附加参数，会随着点击事件返回
+    case custom(view: UIView)
 }
 
 extension SSAlertDisplayElement: Equatable {
@@ -80,6 +84,7 @@ extension SSAlertDisplayElement: Equatable {
         case (.tableView, .tableView):  return true
         case (.button, .button):        return true
         case (.image, .image):          return true
+        case (.custom, .custom):        return true
         default:                        return false
         }
     }

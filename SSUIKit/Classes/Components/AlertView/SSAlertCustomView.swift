@@ -79,6 +79,12 @@ extension SSAlertCustomView {
                         self?.shouldDismiss?(())
                     })
                     .disposed(by: dispose)
+                
+            case let .custom(view):
+                contentView.addSubview(view)
+                contentView.height = view.bottom
+                contentView.centerY = SSAlertConfiguration.shared.displayView.maxHeight/2
+                contentView.backgroundColor = .clear
             }
         }
     }

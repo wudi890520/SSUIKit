@@ -130,7 +130,7 @@ public extension SSAlertProvider {
     
     /// 弹出带有自定义元素的对话框
     /// - Parameter elements: SSAlertDisplayElement数组
-    public static func showElements(_ elements: [SSAlertDisplayElement]) {
+    public static func showElements(_ elements: [SSAlertDisplayElement], autoDismiss: Bool = true) {
         SSAlertConfiguration.shared.reloadStyle()
         if let url = elements.imageURL {
             ImageDownloader.default.downloadImage(with: url, options: KingfisherManager.shared.defaultOptions) { (result) in
