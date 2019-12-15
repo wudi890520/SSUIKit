@@ -19,7 +19,7 @@ extension SSPhotoManager {
         case .camera:
             return SSPhotoCamera.show()
         case .album(let max):
-            return SSPhotoAlbum.show(max)
+            return SSPhotoLibrary.show(max)
         default:
             return .just(nil)
         }

@@ -140,4 +140,24 @@ public extension Reactive where Base: SSBaseViewController {
             controller.dismiss(animated: false, completion: nil)
         }
     }
+    
+    var back: Binder<Void> {
+        return Binder(base) { controller, _ in
+            if controller.qmui_isPresented() && controller.indexOfNavigationControllers == 0 {
+                controller.dismiss(animated: true, completion: nil)
+            }else{
+                controller.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    var backWithoutAnimated: Binder<Void> {
+        return Binder(base) { controller, _ in
+            if controller.qmui_isPresented() && controller.indexOfNavigationControllers == 0 {
+                controller.dismiss(animated: false, completion: nil)
+            }else{
+                controller.navigationController?.popViewController(animated: false)
+            }
+        }
+    }
 }

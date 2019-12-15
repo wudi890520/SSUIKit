@@ -18,7 +18,7 @@ extension SSPhotoCamera {
     public static func show() -> Driver<[UIImage]?> {
         UIApplication.endEditing()
 
-        if !SSPhotoPermission.camera {
+        if SSPermission.request(.camera) != .allowed {
             return Driver.just(nil)
         }
 

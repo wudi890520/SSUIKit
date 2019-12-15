@@ -1,5 +1,5 @@
 //
-//  SSPhotoAlbum.swift
+//  SSPhotoLibrary.swift
 //  DeviceKit
 //
 //  Created by 吴頔 on 2019/12/10.
@@ -10,18 +10,18 @@ import TZImagePickerController
 import RxCocoa
 import RxSwift
 
-public class SSPhotoAlbum: NSObject {
+public class SSPhotoLibrary: NSObject {
 
 }
 
-extension SSPhotoAlbum {
+extension SSPhotoLibrary {
     public static func show(_ max: Int) -> Driver<[UIImage]?> {
         UIApplication.endEditing()
 
-        if !SSPhotoPermission.album {
+        if SSPermission.request(.photoLibrary) != .allowed {
             return Driver.just(nil)
         }
-        
+       
         switch max {
         case 0:
             return Driver.just(nil)
@@ -33,7 +33,7 @@ extension SSPhotoAlbum {
     }
 }
 
-extension SSPhotoAlbum {
+extension SSPhotoLibrary {
     /// 相册单选
     ///
     /// - Returns: 图片数组
@@ -105,7 +105,7 @@ extension SSPhotoAlbum {
        }
 }
 
-extension SSPhotoAlbum {
+extension SSPhotoLibrary {
     private static func createPicker() -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.sourceType = .photoLibrary

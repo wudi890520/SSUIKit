@@ -22,7 +22,9 @@ class SSAlertDemoViewController: UIViewController {
         "自定义alert（带输入框）",
         "自定义alert（列表）",
         "自定义alert（本地图片）",
-        "自定义alert（网络图片）"
+        "自定义alert（网络图片）",
+        "结合Rx",
+        "结合Rx带参数"
     ]
     
     private let alertTitle = "在此推荐一个苹果针对浮点型计算时存在精度计算误差的问题而提供的一个计算类"
@@ -62,6 +64,8 @@ extension SSAlertDemoViewController: UITableViewDelegate, UITableViewDataSource 
         case "自定义alert（列表）": showTableViewAlert()
         case "自定义alert（本地图片）": showImageAlert(false)
         case "自定义alert（网络图片）": showImageAlert(true)
+        case "结合Rx": showRxAlert()
+        case "结合Rx带参数": showRxAlertWithPara()
         default: break
         }
     }
@@ -70,16 +74,17 @@ extension SSAlertDemoViewController: UITableViewDelegate, UITableViewDataSource 
 extension SSAlertDemoViewController {
     func showNormalAlert() {
         /// 不处理回调
-//        SSAlert.show(alertTitle)
+//        SSAlert.showAlert(alertTitle)
         
         /// 处理回调事件
-        SSAlert.present(alertTitle) { [weak self] in
+        
+        SSAlert.showAlert(alertTitle) { [weak self] in
             self?.showToast("alert 消失了")
         }
     }
         
     func showTwoButtonsAlert() {
-        SSAlert.present(alertTitle, message: "这是 message", cancelButtonTitle: "取消", confirmButtonTitle: "确定") {[weak self] (result) in
+        SSAlert.showConfirm(title: alertTitle, message: "这是 message", messageAligment: .left, cancelButtonTitle: "取消", confirmButtonTitle: "确定") {[weak self] (result) in
             if result == true {
                 self?.showToast("点击了确定")
             }else if result == false {
@@ -140,7 +145,7 @@ extension SSAlertDemoViewController {
             confirm
         ]
         
-        SSAlert.present(elements)
+        SSAlert.showElements(elements)
     }
 
     
@@ -193,7 +198,7 @@ extension SSAlertDemoViewController {
             confirm
         ]
         
-        SSAlert.present(elements)
+        SSAlert.showElements(elements)
     }
     
     func showImageAlert(_ remote: Bool) {
@@ -218,6 +223,34 @@ extension SSAlertDemoViewController {
             close
         ]
         
-        SSAlert.present(elements)
+        SSAlert.showElements(elements)
+    }
+    
+    func showRxAlert() {
+        SSAlert.rx.showConfirm(title: "标题")
+            .asObservable()
+            .subscribe(onNext: {[weak self] (enable) in
+                if enable {
+                    self?.showToast("点击了确定")
+                }else{
+                    self?.showToast("点击了取消")
+                }
+            })
+            .disposed(by: dispose)
+    }
+    
+    func showRxAlertWithPara() {
+        
+        Driver.just(["id": 123, "name": "sshtc"])
+            .flatMapLatest{ SSAlert.rx.showConfirm(extra: $0, title: "带参数的alert") }
+            .asObservable()
+            .subscribe(onNext: {[weak self] (para) in
+                if let para = para {
+                    self?.showToast("点击了确定 参数为\(para)")
+                }else{
+                    self?.showToast("点击了取消")
+                }
+            })
+            .disposed(by: dispose)
     }
 }
