@@ -10,6 +10,8 @@ import UIKit
 import QMUIKit
 import YYCategories
 import Kingfisher
+import RxSwift
+import RxCocoa
 
 public typealias Button = QMUIButton
 
@@ -112,6 +114,7 @@ public extension SSUIButtonCompatible where Self: UIButton {
         }
         
         if color != .white {
+            tintColor = .white
             ss_titleColor(.white)
         }
         
@@ -197,7 +200,10 @@ public extension SSUIButtonCompatible where Self: UIButton {
     /// 点击按钮时收起键盘
     @discardableResult
     func ss_endEditingWhenTap() -> Self {
-        addTarget(self, action: #selector(endEditingWhenTap), for: .touchUpInside)
+        _ = rx.tap.asObservable()
+            .subscribe(onNext: { (_) in
+                UIApplication.endEditing()
+            })
         return self
     }
 }

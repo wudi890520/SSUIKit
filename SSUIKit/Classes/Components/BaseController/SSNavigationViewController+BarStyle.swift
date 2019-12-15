@@ -10,6 +10,7 @@ import QMUIKit
 
 public enum SSNavigationBarStyle {
     case `default`
+    case white
     case black
     case clear
     case hidden
@@ -22,6 +23,8 @@ extension SSNavigationBarStyle {
     var statusBarStyle: UIStatusBarStyle {
         switch self {
         case .default:
+            return .default
+        case .white:
             return .default
         case .black:
             return .lightContent
@@ -39,6 +42,8 @@ extension SSNavigationBarStyle {
         switch self {
         case .default:
             return nil
+        case .white:
+            return UIImage(color: .white)
         case .black:
             return UIImage(color: .ss_weChatNavigation)
         case .clear:
@@ -54,6 +59,8 @@ extension SSNavigationBarStyle {
     var barTintColor: UIColor? {
         switch self {
         case .default:
+            return .black
+        case .white:
             return .black
         case .black:
             return .white
@@ -75,15 +82,9 @@ extension SSNavigationBarStyle {
         }
     }
     
-    
     /// 导航栏底部线条颜色
     var shadowImage: UIImage? {
-        switch self {
-        case .default:
-            return nil
-        default:
-            return UIImage(color: .clear)
-        }
+        return UIImage(color: .clear)
     }
     
     /// 转场动画的key
