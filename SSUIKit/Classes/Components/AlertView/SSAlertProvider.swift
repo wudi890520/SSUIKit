@@ -84,7 +84,7 @@ public extension SSAlertProvider {
         message: String? = nil,
         messageAligment: NSTextAlignment = .center,
         cancelButtonTitle: String = "取消",
-        confirmButtonTitle: String = "我知道了",
+        confirmButtonTitle: String = "确定",
         handleCompletion: ((Bool) -> Void)? = nil) {
         
         SSAlertConfiguration.shared.reloadStyle()
@@ -111,7 +111,7 @@ public extension SSAlertProvider {
         title: String?,
         message: NSMutableAttributedString? = nil,
         cancelButtonTitle: String = "取消",
-        confirmButtonTitle: String = "我知道了",
+        confirmButtonTitle: String = "确定",
         handleCompletion: ((Bool) -> Void)? = nil) {
         
         SSAlertConfiguration.shared.reloadStyle()
@@ -204,7 +204,7 @@ public class SSRxAlertProvider: NSObject {
         message: String? = nil,
         messageAligment: NSTextAlignment = .center,
         cancelButtonTitle: String = "取消",
-        confirmButtonTitle: String = "我知道了") -> Driver<Bool> {
+        confirmButtonTitle: String = "确定") -> Driver<Bool> {
         
         return Observable.create({ (observer) -> Disposable in
             
@@ -237,7 +237,7 @@ public class SSRxAlertProvider: NSObject {
         title: String?,
         message: NSMutableAttributedString? = nil,
         cancelButtonTitle: String = "取消",
-        confirmButtonTitle: String = "我知道了") -> Driver<Bool> {
+        confirmButtonTitle: String = "确定") -> Driver<Bool> {
         
         return Observable.create({ (observer) -> Disposable in
             
@@ -308,7 +308,7 @@ extension SSRxAlertProvider {
         message: String? = nil,
         messageAligment: NSTextAlignment = .center,
         cancelButtonTitle: String = "取消",
-        confirmButtonTitle: String = "我知道了") -> Driver<T?> {
+        confirmButtonTitle: String = "确定") -> Driver<T?> {
         
         return Observable.create({ (observer) -> Disposable in
             
@@ -343,7 +343,7 @@ extension SSRxAlertProvider {
         title: String?,
         message: NSMutableAttributedString? = nil,
         cancelButtonTitle: String = "取消",
-        confirmButtonTitle: String = "我知道了") -> Driver<T?> {
+        confirmButtonTitle: String = "确定") -> Driver<T?> {
         
         return Observable.create({ (observer) -> Disposable in
             

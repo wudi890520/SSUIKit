@@ -111,6 +111,10 @@ public extension SSUIButtonCompatible where Self: UIButton {
             setBackgroundImage(image, for: .normal)
         }
         
+        if color != .white {
+            ss_titleColor(.white)
+        }
+        
         return self
     }
     
@@ -193,8 +197,14 @@ public extension SSUIButtonCompatible where Self: UIButton {
     /// 点击按钮时收起键盘
     @discardableResult
     func ss_endEditingWhenTap() -> Self {
-        addTarget(self, action: #selector(UIApplication.endEditing), for: .touchUpInside)
+        addTarget(self, action: #selector(endEditingWhenTap), for: .touchUpInside)
         return self
+    }
+}
+
+extension UIButton {
+    @objc func endEditingWhenTap() {
+        UIApplication.endEditing()
     }
 }
 
