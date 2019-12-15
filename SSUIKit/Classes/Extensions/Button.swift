@@ -57,6 +57,7 @@ public extension SSUIButtonCompatible where Self: UIButton {
     /// - Returns: UIButton
     @discardableResult
     func ss_titleColor(_ color: UIColor?, for state: UIControl.State? = .normal) -> Self {
+        tintColor = color
         setTitleColor(color, for: state ?? .normal)
         return self
     }

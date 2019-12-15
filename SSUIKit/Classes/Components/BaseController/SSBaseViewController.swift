@@ -13,7 +13,7 @@ import RxSwift
 open class SSBaseViewController: QMUICommonViewController {
 
     /// 导航栏样式
-    public var barStyle: SSNavigationBarStyle = .default
+    public var barStyle: SSNavigationBarStyle = .white
 
     /// 是否允许滑动返回
     public var popGestureEnable: Bool = true
