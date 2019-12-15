@@ -141,7 +141,9 @@ public extension SSAlertProvider {
                     let customView = SSAlertCustomView(elements: newElements)
                     guard let alert = JCAlertController.alert(withTitle: nil, contentView: customView) else { return }
                     customView.shouldDismiss = { _ in
-                        alert.dismiss(animated: true, completion: nil)
+                        if autoDismiss {
+                            alert.dismiss(animated: true, completion: nil)
+                        }
                     }
                     SSAlertProvider.presentViewController(alert)
                 case let .failure(error):
@@ -152,7 +154,9 @@ public extension SSAlertProvider {
             let customView = SSAlertCustomView(elements: elements)
             guard let alert = JCAlertController.alert(withTitle: nil, contentView: customView) else { return }
             customView.shouldDismiss = { _ in
-                alert.dismiss(animated: true, completion: nil)
+                if autoDismiss {
+                    alert.dismiss(animated: true, completion: nil)
+                }
             }
             SSAlertProvider.presentViewController(alert)
      
