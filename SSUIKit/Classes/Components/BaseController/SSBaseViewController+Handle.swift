@@ -97,3 +97,57 @@ public extension UIViewController {
         
     }
 }
+
+extension UIViewController {
+    
+    @discardableResult
+    func ss_hideTabbar() -> Self {
+        hidesBottomBarWhenPushed = true
+        return self
+    }
+    
+    @discardableResult
+    func ss_asStork(_ height: CGFloat) -> Self {
+        let transitionDelegate = SPStorkTransitioningDelegate()
+        transitionDelegate.customHeight = height
+        transitionDelegate.swipeToDismissEnabled = true
+        transitionDelegate.showIndicator = false
+        self.transitioningDelegate = transitionDelegate
+        self.modalPresentationStyle = .custom
+        self.modalPresentationCapturesStatusBarAppearance = true
+        return self
+    }
+    
+    @discardableResult
+    func ss_asModelPopup() -> Self {
+        self.view.backgroundColor = .clear
+        self.modalPresentationStyle = .overCurrentContext
+        UIApplication.rootViewController?.modalPresentationStyle = .currentContext
+        return self
+    }
+    
+    @discardableResult
+    func ss_fullScreenPresentationStyle() -> Self {
+        modalPresentationStyle = .fullScreen
+        return self
+    }
+    
+    @discardableResult
+    func ss_title(_ title: String?) -> Self {
+        self.title = title
+        hidesBottomBarWhenPushed = true
+        return self
+    }
+ 
+    public func checkViewIfExsit<T: UIView>(type: T.Type, from superview: UIView?) -> T? {
+        guard let superview = superview else { return nil }
+        for view in superview.subviews where view.isKind(of: type) {
+            return view as? T
+        }
+        return nil
+    }
+}
+
+extension UINavigationController {
+    
+}

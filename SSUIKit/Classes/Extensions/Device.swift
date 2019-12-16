@@ -10,11 +10,11 @@ import UIKit
 import DeviceKit
 import AdSupport
 
-extension UIDevice {
+public extension UIDevice {
     /// 是否是刘海屏
     /// - True: 是刘海屏
     /// - False: 不是
-    static var isBangsScreen: Bool {
+    public static var isBangsScreen: Bool {
         let device = Device.current
         switch device {
         case .iPhone4, .iPhone4s,
@@ -39,22 +39,22 @@ extension UIDevice {
     }
     
     /// 系统版本号
-    static var systemVersion: String? {
+    public static var systemVersion: String? {
         return Device.current.systemVersion
     }
     
     /// 广告标识符
-    static var IDFA: String? {
+    public static var IDFA: String? {
         return ASIdentifierManager.shared().advertisingIdentifier.uuidString
     }
     
     /// 应用开发商标识符
-    static var IDFV: String? {
+    public static var IDFV: String? {
         return UIDevice.current.identifierForVendor?.uuidString
     }
     
     /// 设备描述
-    static var description: String {
+    public static var description: String {
         return Device.current.description
     }
 }

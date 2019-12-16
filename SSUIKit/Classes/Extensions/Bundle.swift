@@ -10,14 +10,14 @@ import UIKit
 
 public extension Bundle {
     /// 获取当前App版本号（如：1.0.0，三位数的，不是build版本）
-    static var shortVersion: String? {
+    public static var shortVersion: String? {
         let keyPath = "CFBundleShortVersionString"
         guard let version = Bundle.main.object(forInfoDictionaryKey: keyPath) as? String else { return nil }
         return version
     }
     
     /// 获取构建版本号
-    static var buildVersion: String? {
+    public static var buildVersion: String? {
         let keyPath = "CFBundleVersion"
         guard let version = Bundle.main.object(forInfoDictionaryKey: keyPath) as? String else { return nil }
         return version
