@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// 列表的代理
 public protocol SSTableViewDelegate {
     
     typealias HeightForRowAtIndexPath = (IndexPath) -> CGFloat?
@@ -18,13 +19,28 @@ public protocol SSTableViewDelegate {
     typealias WillDisplayFooterView = (UIView, Int) -> ()
     typealias WillDisplayCell = (UITableView, UITableViewCell, IndexPath) -> ()
     
+    /// 行高
     var heightForRowAtIndexPath: HeightForRowAtIndexPath? { get set }
+    
+    /// 分组头部视图的高度
     var heightForHeaderInSection: HeightForHeaderInSection? { get set }
+    
+    /// 分组头部视图
     var viewForHeaderInSection: ViewForHeaderInSection? { get set }
+    
+    /// 分组尾部视图高度
     var heightForFooterInSection: HeightForFooterInSection? { get set }
+    
+    /// 分组尾部视图
     var viewForFooterInSection: ViewForFooterInSection? { get set }
+    
+    /// 头部视图将要绘制
     var willDisplayHeaderView: WillDisplayHeaderView? { get set }
+    
+    /// 尾部视图将要绘制
     var willDisplayFooterView: WillDisplayFooterView? { get set }
+    
+    /// cell将要绘制
     var willDisplayCell: WillDisplayCell? { get set }
 }
 

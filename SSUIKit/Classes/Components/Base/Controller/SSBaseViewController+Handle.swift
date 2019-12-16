@@ -60,6 +60,9 @@ extension UIViewController {
 }
 
 public extension UIViewController {
+    
+    /// 移除中间的控制器
+    /// - Parameter strategy: 移除策略
     public func ignore(_ strategy: SSViewControllerIgnoredStrategy) {
         
         switch strategy {
@@ -100,12 +103,15 @@ public extension UIViewController {
 
 public extension UIViewController {
     
+    /// 隐藏tabbar
     @discardableResult
     public func ss_hideTabbar() -> Self {
         hidesBottomBarWhenPushed = true
         return self
     }
     
+    /// 模态弹出-像苹果地图一样
+    /// - Parameter height: 要弹出的视图高度
     @discardableResult
     public func ss_asStork(_ height: CGFloat) -> Self {
         let transitionDelegate = SPStorkTransitioningDelegate()
@@ -118,6 +124,7 @@ public extension UIViewController {
         return self
     }
     
+    /// 模态弹出-透明模式
     @discardableResult
     public func ss_asModelPopup() -> Self {
         self.view.backgroundColor = .clear
@@ -126,19 +133,26 @@ public extension UIViewController {
         return self
     }
     
+    /// 模态弹出-全屏模式
     @discardableResult
     public func ss_fullScreenPresentationStyle() -> Self {
         modalPresentationStyle = .fullScreen
         return self
     }
     
+    /// 设置导航栏标题
+    /// - Parameter title: 标题内容
     @discardableResult
     public func ss_title(_ title: String?) -> Self {
         self.title = title
         hidesBottomBarWhenPushed = true
         return self
     }
- 
+    
+    /// 检测子视图中是否存在某个类型的视图
+    /// - Parameter type: 类型
+    /// - Parameter superview: 父视图
+    @discardableResult
     public func checkViewIfExsit<T: UIView>(type: T.Type, from superview: UIView?) -> T? {
         guard let superview = superview else { return nil }
         for view in superview.subviews where view.isKind(of: type) {

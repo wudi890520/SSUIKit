@@ -11,7 +11,7 @@ import RxSwift
 
 public typealias SSPermissionType = SPPermissionType
 
-extension SPPermissionType {
+public extension SPPermissionType {
     
     var isAllowed: Bool {
         return SPPermission.isAllowed(self)
@@ -119,7 +119,7 @@ public class SSRxPermission: NSObject {
     }
 }
 
-extension SSPermission {
+public extension SSPermission {
     public static func request(_ permissionType: SSPermissionType, isNeedOpenSystemSetting: Bool = true) -> SSPermissionStatus {
         if permissionType.isNotDetermined {
             SPPermission.request(permissionType) {}

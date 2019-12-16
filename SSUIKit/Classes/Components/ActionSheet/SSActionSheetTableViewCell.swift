@@ -8,13 +8,15 @@
 import UIKit
 
 class SSActionSheetTableViewCell: UITableViewCell {
-
+    
+    /// 标题控件
     public let titleLabel = UILabel()
         .ss_frame(x: 0, y: 0, width: CGFloat.screenWith, height: SSActionSheetConfiguration.shared.rowHeight)
         .ss_font(SSActionSheetConfiguration.shared.buttonItemFont)
         .ss_textAlignment(.center)
         .ss_numberOfLines()
     
+    /// 点击按钮的高亮颜色
     private let selectedBGView = UIView()
         .ss_frame(x: 0, y: 0, width: CGFloat.screenWith, height: SSActionSheetConfiguration.shared.rowHeight)
         .ss_backgroundColor(.ss_background)

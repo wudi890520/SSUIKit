@@ -8,12 +8,28 @@
 import UIKit
 import QMUIKit
 
+/// 导航栏风格
 public enum SSNavigationBarStyle {
+    
+    /// 默认风格（系统白色半透明磨砂）
     case `default`
+    
+    /// 白色
     case white
+    
+    /// 黑色（类似微信）
     case black
+    
+    /// 透明
     case clear
+    
+    /// 隐藏导航栏
     case hidden
+    
+    /// 自定义颜色
+    /// - Parameter statusBarStyle: 状态栏风格
+    /// - Parameter barBackgroundColor: 导航栏颜色
+    /// - Parameter barTintColor: 导航栏上item的颜色
     case custom(statusBarStyle: UIStatusBarStyle, barBackgroundColor: UIColor, barTintColor: UIColor)
 }
 

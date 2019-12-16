@@ -26,6 +26,7 @@ public class SSActionSheetConfiguration: NSObject {
 }
  
 public extension SSActionSheetConfiguration {
+    
     static var rowHeight: CGFloat = 56 {
         didSet { SSActionSheetConfiguration.shared.rowHeight = rowHeight }
     }

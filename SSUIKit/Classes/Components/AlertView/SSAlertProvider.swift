@@ -388,6 +388,7 @@ public extension SSAlertProvider {
         }
     }
     
+    /// 让alert消失
     public static func dismiss() {
         JCPresentControllersAllDismissedNotification.post()
     }

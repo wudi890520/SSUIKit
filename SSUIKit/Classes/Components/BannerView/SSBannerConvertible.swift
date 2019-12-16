@@ -93,16 +93,3 @@ extension SSBannerImageItem: SSBannerConvertible {
     }
 }
 
-//extension Array where Element: SSBannerConvertible {
-//    public var urlValues: [URL]? {
-//        return nil
-//    }
-//
-//    public var urlStringValues: [String]? {
-//        return nil
-//    }
-//
-//    public var imageValues: [UIImage]? {
-//        return nil
-//    }
-//}

@@ -9,8 +9,14 @@
 import UIKit
 
 public struct SSActionSheetButtonItemData {
+    
+    /// 标题
     let title: String?
+    
+    /// 标题颜色
     let titleColor: UIColor?
+    
+    /// 富文本
     let attribute: NSMutableAttributedString?
 }
 

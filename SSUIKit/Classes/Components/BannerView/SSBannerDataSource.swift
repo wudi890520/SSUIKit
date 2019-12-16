@@ -26,7 +26,8 @@ public extension Reactive where Base: SSBannerDataSource {
 }
 
 public extension Reactive where Base: SSBannerDataSource {
-  
+    
+    /// banner的数据源
     var dataSource: Binder<Array<SSBannerConvertible?>> {
         return Binder(base) { pagerView, sources in
             

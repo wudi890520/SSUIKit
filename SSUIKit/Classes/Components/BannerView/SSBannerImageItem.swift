@@ -15,7 +15,10 @@ public struct SSBannerImageItem {
     /// http...
     public let page: String?
     
-    public init(source: Any, page: String?) {
+    /// 初始化方法
+    /// - Parameter source: 图片资源
+    /// - Parameter page: H5链接地址
+    public init(source: Any?, page: String?) {
         self.source = source
         self.page = page
     }

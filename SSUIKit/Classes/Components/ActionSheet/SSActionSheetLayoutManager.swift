@@ -11,8 +11,10 @@ import SnapKit
 
 class SSActionSheetLayoutManager: NSObject, SSLayoutType {
     
+    /// 父视图
     var superView: UIView?
-
+    
+    /// 子视图容器
     var children: SSActionSheetViewContainer?
 }
 

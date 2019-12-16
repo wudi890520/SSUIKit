@@ -12,17 +12,22 @@ import RxSwift
 import RxKeyboard
 
 class SSAlertCustomView: UIView {
-
+    
+    /// 回调，alert控制器消息
     var shouldDismiss: ((Void) -> Void)?
-
+    
+    /// 内容视图
     private let contentView = UIView()
         .ss_backgroundColor(SSAlertConfiguration.shared.displayView.backgroundColor)
         .ss_layerCornerRadius(SSAlertConfiguration.shared.displayView.cornerRadius)
     
+    /// 列表数据源
     private var tableViewDataSource: [SSAlertDisplayTableViewItemData] = []
     
+    /// 列表点击cell事件回调
     private var tableViewSelected: ((Any?) -> Void)?
     
+    /// 信号生命周期
     private let dispose = DisposeBag()
     
     init(elements: [SSAlertDisplayElement]) {
@@ -42,6 +47,9 @@ class SSAlertCustomView: UIView {
 }
 
 extension SSAlertCustomView {
+    
+    /// 添加视图元素
+    /// - Parameter elements: SSAlertDisplayElement数组
     private func addElements(_ elements: [SSAlertDisplayElement]) {
         var contentHeight: CGFloat = 0
         
@@ -103,6 +111,10 @@ extension SSAlertCustomView {
 }
 
 extension SSAlertCustomView {
+    
+    /// 添加一个label
+    /// - Parameter content: label的内容
+    /// - Parameter insets: 上下左右的间距
     private func addLabelElement(content: NSMutableAttributedString, insets: UIEdgeInsets) {
         let label = QMUILabel()
         label.numberOfLines = 0
@@ -117,6 +129,12 @@ extension SSAlertCustomView {
         contentView.height = label.bottom + insets.bottom
     }
     
+    /// 添加一个输入框
+    /// - Parameter placeholder: 输入框提示文案
+    /// - Parameter keyboardType: 键盘类型
+    /// - Parameter insets: 上下左右的间距
+    /// - Parameter leftTitle: 左标题
+    /// - Parameter rightTitle: 右标题
     private func addTextFieldElement(placeholder: String, keyboardType: SSKeyboardType, insets: UIEdgeInsets, leftTitle: NSMutableAttributedString?, rightTitle: NSMutableAttributedString?) -> QMUITextField {
         let textField = QMUITextField()
         
@@ -160,6 +178,9 @@ extension SSAlertCustomView {
         return textField
     }
     
+    /// 添加一个列表
+    /// - Parameter dataSource: 列表数据源
+    /// - Parameter rowHeight: 列表行高
     private func addTableViewElement(dataSource: [SSAlertDisplayTableViewItemData], rowHeight: CGFloat) -> UITableView {
         let tableViewHeight = dataSource.count.ss_cgFloat * rowHeight
         let tableView = UITableView.ss_plain()
@@ -174,6 +195,11 @@ extension SSAlertCustomView {
         return tableView
     }
     
+    /// 添加按钮元素
+    /// - Parameter title: 按钮标题
+    /// - Parameter titleColor: 按钮标题颜色
+    /// - Parameter backgroundColor: 按钮背景颜色
+    /// - Parameter type: 按钮类型
     private func addButtonElement(title: String, titleColor: UIColor?, backgroundColor: UIColor?, type: SSAlertDisplayElementButtonType) -> QMUIButton {
         switch type {
         case .cancel:
@@ -235,6 +261,10 @@ extension SSAlertCustomView {
         }
     }
     
+    /// 添加图片
+    /// - Parameter source: 图片资源，支持UIImage，String，URL
+    /// - Parameter extra: 附加值，不会处理，会在点击图片时原封不动的返回，多用于返回H5的链接
+    /// - Parameter didTap: 点击了图片
     private func addImageViewElement(source: Any?, extra: Any?, didTap: ((Any?) -> Void)?) {
         
         let maxWidth = self.width

@@ -11,11 +11,13 @@ import RxSwift
 import RxCocoa
 
 class SSActionSheetDataContainer: NSObject {
-
+    
+    /// 点击事件
     let selected: Driver<Int>
     
     private let selectedBehavior = BehaviorRelay<Int?>(value: nil)
     
+    /// 数据源
     var dataSource: [SSActionSheetButtonItemData] = []
     
     override init() {

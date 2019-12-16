@@ -11,7 +11,8 @@ import RxSwift
 import RxCocoa
 
 public class SSBannerView: UIView {
-
+    
+    /// 广告视图
     public lazy var bannerView: FSPagerView = {
         let view = FSPagerView(frame: .zero)
         view.automaticSlidingInterval = 5
@@ -32,6 +33,7 @@ public class SSBannerView: UIView {
         return view
     }()
     
+    /// 广告数据源
     public lazy var dataSource: SSBannerDataSource = {
         let dataSource = SSBannerDataSource(pagerView: self.bannerView)
         return dataSource

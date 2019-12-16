@@ -66,6 +66,11 @@ open class SSBaseViewController: QMUICommonViewController {
 }
 
 extension SSBaseViewController {
+    
+    /// 用字符串的方法初始化控制器
+    /// - Parameter className: 类名
+    /// - Parameter prefix: 包体前缀
+    /// - Parameter parameters: 参数
     public static func create(_ className: String, prefix: String, parameters: [AnyHashable: Any]? = nil) -> SSBaseViewController {
         if let `class` = NSClassFromString("\(prefix).\(className)") as? SSBaseViewController.Type,
             let cls = `class`.init() as? SSBaseViewController {
