@@ -98,16 +98,16 @@ public extension UIViewController {
     }
 }
 
-extension UIViewController {
+public extension UIViewController {
     
     @discardableResult
-    func ss_hideTabbar() -> Self {
+    public func ss_hideTabbar() -> Self {
         hidesBottomBarWhenPushed = true
         return self
     }
     
     @discardableResult
-    func ss_asStork(_ height: CGFloat) -> Self {
+    public func ss_asStork(_ height: CGFloat) -> Self {
         let transitionDelegate = SPStorkTransitioningDelegate()
         transitionDelegate.customHeight = height
         transitionDelegate.swipeToDismissEnabled = true
@@ -119,7 +119,7 @@ extension UIViewController {
     }
     
     @discardableResult
-    func ss_asModelPopup() -> Self {
+    public func ss_asModelPopup() -> Self {
         self.view.backgroundColor = .clear
         self.modalPresentationStyle = .overCurrentContext
         UIApplication.rootViewController?.modalPresentationStyle = .currentContext
@@ -127,13 +127,13 @@ extension UIViewController {
     }
     
     @discardableResult
-    func ss_fullScreenPresentationStyle() -> Self {
+    public func ss_fullScreenPresentationStyle() -> Self {
         modalPresentationStyle = .fullScreen
         return self
     }
     
     @discardableResult
-    func ss_title(_ title: String?) -> Self {
+    public func ss_title(_ title: String?) -> Self {
         self.title = title
         hidesBottomBarWhenPushed = true
         return self
@@ -146,8 +146,4 @@ extension UIViewController {
         }
         return nil
     }
-}
-
-extension UINavigationController {
-    
 }

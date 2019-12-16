@@ -9,10 +9,10 @@ import UIKit
 
 public typealias ProgressView = UIProgressView
 
-protocol SSUIProgressViewCompatible {}
+public protocol SSUIProgressViewCompatible {}
 extension UIProgressView: SSUIProgressViewCompatible {}
 
-extension SSUIProgressViewCompatible where Self: UIProgressView {
+public extension SSUIProgressViewCompatible where Self: UIProgressView {
 
     /// 跟踪色
     ///
