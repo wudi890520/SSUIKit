@@ -10,17 +10,17 @@ import UIKit
 public protocol SSLayoutManagerType {
     associatedtype V
     
-    var superView: UIView? { get set }
+    var view: UIView? { get set }
     
     /// 子视图容器
-    var children: V? { get set }
+    var subviews: V? { get set }
     
     /// 绑定视图容器与视图约束管理者
     ///
     /// - Parameters:
     ///   - views: 子视图容器
     ///   - view: 父视图
-    func make(children views: V, in view: UIView)
+    func make(subviews: V, in view: UIView)
     
     /// 添加子视图
     func addChildren()

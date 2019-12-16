@@ -39,18 +39,19 @@ public extension UIDevice {
     }
     
     /// 系统版本号
-    public static var systemVersion: String? {
-        return Device.current.systemVersion
+    public static var systemVersion: String {
+        return Device.current.systemVersion.orEmpty
     }
     
     /// 广告标识符
-    public static var IDFA: String? {
+    public static var IDFA: String {
         return ASIdentifierManager.shared().advertisingIdentifier.uuidString
     }
     
     /// 应用开发商标识符
-    public static var IDFV: String? {
-        return UIDevice.current.identifierForVendor?.uuidString
+    public static var IDFV: String {
+        let idfv = UIDevice.current.identifierForVendor?.uuidString
+        return idfv.orEmpty
     }
     
     /// 设备描述

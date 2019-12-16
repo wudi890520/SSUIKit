@@ -43,7 +43,7 @@ class ViewController: SSBaseViewController {
         tableView.dataSource = self
        
         BD(Driver.just("") >> observer)
-        
+ 
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -96,7 +96,8 @@ extension ViewController: UITableViewDataSource {
             controller = SSHUDDemoViewController()
          
         case "导航栏":
-            controller = SSNavigationDemoViewController()
+       
+            controller = SSBaseViewController.create("SSNavigationDemoViewController", prefix: "SSUIKit_Example")
             
         default:
             break

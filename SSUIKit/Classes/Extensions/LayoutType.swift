@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SSLayoutType {
+public protocol SSLayoutType {
     
     associatedtype V
     

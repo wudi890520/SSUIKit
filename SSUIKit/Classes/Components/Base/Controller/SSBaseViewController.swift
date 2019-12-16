@@ -11,7 +11,7 @@ import RxCocoa
 import RxSwift
 
 open class SSBaseViewController: QMUICommonViewController {
-
+  
     /// 导航栏样式
     public var barStyle: SSNavigationBarStyle = .white
 
@@ -23,10 +23,12 @@ open class SSBaseViewController: QMUICommonViewController {
     
     /// 导航栏位置右侧的items（仅当barStyle == .hidden的时候生效）
     internal var rightBarButtonItems: [UIButton]?
-   
+ 
+    public var parameters: [AnyHashable: Any]?
+    
     /// 信号回收
     public var dispose = DisposeBag()
-    
+
     open override func viewDidLoad() {
         /// 初始化一些东西
         ss_initSomeObjects()
@@ -60,5 +62,18 @@ open class SSBaseViewController: QMUICommonViewController {
         /// 移除信号
         dispose = DisposeBag()
         print("\(className()) deinit")
+    }
+}
+
+extension SSBaseViewController {
+    public static func create(_ className: String, prefix: String, parameters: [AnyHashable: Any]? = nil) -> SSBaseViewController {
+        if let `class` = NSClassFromString("\(prefix).\(className)") as? SSBaseViewController.Type,
+            let cls = `class`.init() as? SSBaseViewController {
+            cls.parameters = parameters
+            return cls
+        }else{
+            assert(false, "\(className)不是SSBaseViewController类型")
+            return SSBaseViewController()
+        }
     }
 }
