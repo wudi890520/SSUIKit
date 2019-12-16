@@ -9,6 +9,10 @@
 import UIKit
 import MJRefresh
 import DZNEmptyDataSet
+import RxCocoa
+import RxSwift
+
+public typealias TableView = UITableView
 
 public protocol SSUITableViewCompatible {}
 extension UITableView: SSUITableViewCompatible {}
@@ -29,6 +33,7 @@ public extension UITableView {
         static var emptyDataTitle = "ss_emptyDataTitle"
         static var emptyDataSubtitle = "ss_emptyDataSubtitle"
         static var emptyDataButtonTitle = "ss_emptyDataButtonTitle"
+        static var emptyDataButtondDidTap = "ss_emptyDataButtondDidTap"
         static var loadingView = "ss_loadingView"
         static var page = "ss_dataSource_currentPage"
         static var emptyDataButton = "ss_emptyDataButton"
@@ -65,6 +70,12 @@ public extension UITableView {
         get { ss_get(&type(of: self).AssociatedKeys.emptyDataButtonTitle, type: String.self) }
     }
    
+    /// 按钮点击了
+    public var ss_emptyDataButtonDidTap: PublishSubject<Void>? {
+        set { ss_set(&type(of: self).AssociatedKeys.emptyDataButtondDidTap, newValue: newValue) }
+        get { ss_get(&type(of: self).AssociatedKeys.emptyDataButtondDidTap, type: PublishSubject<Void>.self) }
+    }
+    
     /// 当前页数
     var ss_page: Int {
         set { ss_set(&type(of: self).AssociatedKeys.page, newValue: newValue) }

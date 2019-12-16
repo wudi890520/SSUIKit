@@ -8,6 +8,8 @@
 
 import UIKit
 
+public typealias TableViewCell = UITableViewCell
+
 public protocol SSUITableViewCellCompatible {}
 extension UITableViewCell: SSUITableViewCellCompatible {}
 

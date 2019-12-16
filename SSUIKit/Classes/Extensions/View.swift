@@ -9,6 +9,8 @@
 import UIKit
 import QMUIKit
 
+public typealias View = UIView
+
 public protocol SSUIViewCompatible {}
 extension UIView: SSUIViewCompatible {}
 

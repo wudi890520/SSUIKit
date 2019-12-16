@@ -40,6 +40,8 @@ class SSNavigationDemoViewController: SSBaseViewController {
         title = "导航栏的使用"
         view.backgroundColor = .ss_background
 
+        barStyle = .black
+        
         view.ss_add(tableView)
           
         tableView.register(SSDemoTableViewCell.self, forCellReuseIdentifier: "SSDemoTableViewCell")

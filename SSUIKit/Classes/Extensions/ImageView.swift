@@ -9,6 +9,8 @@
 import UIKit
 import Kingfisher
 
+public typealias ImageView = UIImageView
+
 public protocol SSUIImageViewCompatible {}
 
 extension UIImageView: SSUIImageViewCompatible {}

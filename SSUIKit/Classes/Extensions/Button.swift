@@ -57,7 +57,9 @@ public extension SSUIButtonCompatible where Self: UIButton {
     /// - Returns: UIButton
     @discardableResult
     func ss_titleColor(_ color: UIColor?, for state: UIControl.State? = .normal) -> Self {
-        tintColor = color
+        if isKind(of: QMUIButton.self) && color != .white {
+            tintColor = color
+        }
         setTitleColor(color, for: state ?? .normal)
         return self
     }
@@ -114,11 +116,11 @@ public extension SSUIButtonCompatible where Self: UIButton {
             setBackgroundImage(image, for: .normal)
         }
         
-        if color != .white {
+        if isKind(of: QMUIButton.self) && color != .white {
             tintColor = .white
             ss_titleColor(.white)
         }
-        
+      
         return self
     }
     
