@@ -92,3 +92,9 @@ public extension Driver where Element == Bool {
     }
 }
 
+public extension Driver where Element == Notification.Name? {
+    /// 发送通知
+    func post() -> Driver<Element> {
+        return self.do(onNext: { $0?.post() }) as! SharedSequence<DriverSharingStrategy, Element>
+    }
+}

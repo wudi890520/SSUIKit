@@ -42,3 +42,19 @@ public extension Observable {
         })
     }
 }
+
+public extension Observable where Element == Bool {
+    
+    /// 反转Bool值
+    func reverse() -> Observable<Element> {
+        return self.map{ !$0 }
+    }
+}
+
+public extension Observable where Element == Notification.Name? {
+    
+    /// 发送通知
+    func post() -> Observable<Element> {
+        return self.do(onNext: { $0?.post() })
+    }
+}
