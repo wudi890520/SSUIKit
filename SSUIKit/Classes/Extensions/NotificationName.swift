@@ -19,7 +19,7 @@ public extension Notification.Name {
         return asObservable.mapVoid().asDriver(onErrorJustReturn: ())
     }
     
-    public var asObservable<T>(_ type: T.Type) -> Observable<T> {
+    public func asObservable<T>(_ type: T.Type) -> Observable<T> {
         return asObservable.map{ $0.object as? T }.filterNil()
     }
 }
