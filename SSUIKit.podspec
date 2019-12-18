@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SSUIKit"
-  s.version      = "0.3.0"
+  s.version      = "0.3.1"
   s.summary      = "Sheng Sheng Huitouche UIKit"
 
   # This description is used to generate tags and improve search results.
@@ -146,11 +146,12 @@ Pod::Spec.new do |s|
   s.dependency 'SnapKit', '~> 5.0.1'
    
   # https://github.com/ReactiveX/RxSwift
-  s.dependency 'RxSwift', '~> 5.0.0'
-  s.dependency 'RxCocoa', '~> 5.0.0'
+  s.dependency 'RxSwift', '~> 5.0.1'
+  s.dependency 'RxCocoa', '~> 5.0.1'
   s.dependency 'RxGesture', '~> 3.0.0'
   s.dependency 'RxKeyboard', '~> 1.0.0'
   s.dependency 'RxOptional', '~> 4.1.0'
+  s.dependency 'RxViewController', '~> 1.0.0'
   
   # https://github.com/ibireme/YYKit
   s.dependency 'YYCategories', '~> 1.0.4'

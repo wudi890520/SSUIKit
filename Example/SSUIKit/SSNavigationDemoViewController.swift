@@ -48,7 +48,6 @@ class SSNavigationDemoViewController: SSBaseViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
-
 }
 
 extension SSNavigationDemoViewController: UITableViewDataSource {
