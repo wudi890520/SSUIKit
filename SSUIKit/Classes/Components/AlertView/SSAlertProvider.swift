@@ -16,7 +16,17 @@ public typealias SSAlert = SSAlertProvider
 class SSAlertPresentProvider: NSObject {
     static let shared = SSAlertPresentProvider()
     
-    var isVisiable: Bool = false
+    /// 当前的Alert控制器
+    internal var currentAlertController: UIViewController?
+    
+    /// Alert当前是否可见
+    public var isVisiable: Bool {
+        if let _ = currentAlertController {
+            return true
+        }else{
+            return false
+        }
+    }
     
     private override init() {
         super.init()
@@ -382,14 +392,18 @@ public extension SSAlertProvider {
     internal static func presentViewController(_ alertController: UIViewController) {
         JCPresentController.setOverlayWindowLevel(.alert)
         JCPresentController.presentViewControllerFIFO(alertController, presentCompletion: {
-            SSAlertPresentProvider.shared.isVisiable = true
+            SSAlertPresentProvider.shared.currentAlertController = alertController
         }) {
-            SSAlertPresentProvider.shared.isVisiable = false
+            SSAlertPresentProvider.shared.currentAlertController = nil
         }
     }
     
     /// 让alert消失
     public static func dismiss() {
-        JCPresentControllersAllDismissedNotification.post()
+        if let alertController = SSAlertPresentProvider.shared.currentAlertController {
+            alertController.dismiss(animated: true, completion: nil)
+        }else{
+            JCPresentControllersAllDismissedNotification.post()
+        }
     }
 }

@@ -10,9 +10,17 @@ import RxSwift
 import RxCocoa
 import RxKeyboard
 
+/// 信号源 >> 监听者
 infix operator >> : BitwiseShiftPrecedence
+
+/// 信号源 >> 无监听
 infix operator ..
+
+/// 信号源 >> 收起键盘
 infix operator !!
+
+/// 信号源 >> 无返回值的函数体（会自动执行）
+infix operator **
 
 // MARK: - DriverSharingStrategy
 public func >> <E, Observer>(left: SharedSequence<DriverSharingStrategy, E>? = nil, right: Observer? = nil) -> RxSwift.Disposable where Observer : RxSwift.ObserverType, E == Observer.Element {
@@ -69,6 +77,9 @@ public func !! <E>(_ left: SharedSequence<DriverSharingStrategy, E>, right: Void
     return left.do(onNext: { _ in UIApplication.endEditing() }).drive()
 }
 
+public func ** <E>(_ left: SharedSequence<DriverSharingStrategy, E>, function: @escaping () -> Void) -> Disposable {
+    return left.do(onNext: { _ in function() }).drive()
+}
 
 // MARK: - ObservableType
 
@@ -118,4 +129,8 @@ public func .. <E>(_ left: Observable<E>?, right: Void) -> Disposable {
 
 public func !! <E>(_ left: Observable<E>, right: Void) -> Disposable {
     return left.asObservable().do(onNext: { _ in UIApplication.endEditing() }).subscribe()
+}
+
+public func ** <E>(_ left: Observable<E>, function: @escaping () -> Void) -> Disposable {
+    return left.asObservable().do(onNext: { _ in function() }).subscribe()
 }
