@@ -65,7 +65,7 @@ open class SSBaseViewController: QMUICommonViewController {
     }
 }
 
-extension SSBaseViewController {
+public extension SSBaseViewController {
     
     /// 用字符串的方法初始化控制器
     /// - Parameter className: 类名

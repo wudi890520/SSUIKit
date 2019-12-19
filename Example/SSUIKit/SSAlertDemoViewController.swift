@@ -71,7 +71,9 @@ extension SSAlertDemoViewController: UITableViewDelegate, UITableViewDataSource 
     }
 }
 
+
 extension SSAlertDemoViewController {
+    
     func showNormalAlert() {
         /// 不处理回调
 //        SSAlert.showAlert(alertTitle)
