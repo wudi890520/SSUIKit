@@ -22,6 +22,8 @@ public class SSActionSheetViewController: UIViewController {
     
     private let viewModel = SSActionSheetViewModel()
     
+    private var currentSelectedItemData: SSActionSheetButtonItemData?
+    
     private let dispose = DisposeBag()
   
     internal init(_ title: String?) {
@@ -36,13 +38,17 @@ public class SSActionSheetViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         defer {
-            subViews.tableView.delegate = datas
-            subViews.tableView.dataSource = datas
+            subViews.tableView.delegate = self
+            subViews.tableView.dataSource = self
             subViews.tableView.reloadData()
         }
         
         ss_layoutSubviews()
         ss_bindDataSource()
+    }
+    
+    deinit {
+        print("SSActionSheetViewController deinit")
     }
 }
 
@@ -61,6 +67,38 @@ extension SSActionSheetViewController {
             .disposed(by: dispose)
     }
 }
+
+extension SSActionSheetViewController: UITableViewDelegate, UITableViewDataSource {
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return datas.dataSource.count
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: SSActionSheetTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SSActionSheetTableViewCell", for: indexPath) as! SSActionSheetTableViewCell
+        let data = datas.dataSource[indexPath.row]
+        if let attribute = data.attribute {
+            cell.titleLabel.attributedText = attribute
+        }else{
+            cell.titleLabel.attributedText = nil
+            cell.titleLabel.text = data.title
+            cell.titleLabel.textColor = data.titleColor
+        }
+        cell.line.isHidden = indexPath.row == 0
+        return cell
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        dismiss(animated: true) { [weak self] in
+            self?.datas.setSelected(indexPath)
+        }
+    }
+}
+
 
 extension SSActionSheetViewController {
     static private func height(_ itemsCount: Int, title: String? = nil) -> CGFloat {
@@ -90,11 +128,8 @@ public extension SSActionSheet {
         sheet.datas.dataSource = buttonItems.map{ $0.data }
         let height = SSActionSheet.height(buttonItems.count, title: title)
         UIApplication.rootViewController?.presentAsStork(sheet, height: height, swipeToDismissEnabled: false, tapAroundToDismissEnabled: true, complection: nil)
-        
-        return sheet.datas.selected
-            .map{ buttonItems[$0].extra }
-            .do(onNext: { (_) in sheet.dismiss(animated: true, completion: nil) })
-            .delay(.milliseconds(310))
+
+        return sheet.datas.selected.map{ buttonItems[$0].extra }
     }
     
     
@@ -124,8 +159,6 @@ public extension SSActionSheet {
 
         return sheet.datas.selected
             .map{ items[$0] }
-            .do(onNext: { (_) in sheet.dismiss(animated: true, completion: nil) })
-            .delay(.milliseconds(310))
             .flatMapLatest{ SSPhotoManager.show($0) }
             .filterNil()
     }

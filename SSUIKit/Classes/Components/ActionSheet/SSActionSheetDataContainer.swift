@@ -26,31 +26,8 @@ class SSActionSheetDataContainer: NSObject {
     }
 }
 
-extension SSActionSheetDataContainer: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: SSActionSheetTableViewCell = tableView.dequeueReusableCell(withIdentifier: "SSActionSheetTableViewCell", for: indexPath) as! SSActionSheetTableViewCell
-        let data = dataSource[indexPath.row]
-        if let attribute = data.attribute {
-            cell.titleLabel.attributedText = attribute
-        }else{
-            cell.titleLabel.attributedText = nil
-            cell.titleLabel.text = data.title
-            cell.titleLabel.textColor = data.titleColor
-        }
-        cell.line.isHidden = indexPath.row == 0
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+extension SSActionSheetDataContainer {
+    func setSelected(_ indexPath: IndexPath) {
         selectedBehavior.accept(indexPath.row)
     }
 }
