@@ -25,8 +25,6 @@ extension SSPhotoLibrary {
         switch max {
         case 0:
             return Driver.just(nil)
-        case 1:
-            return single()
         default:
             return mutable(max)
         }
@@ -34,36 +32,6 @@ extension SSPhotoLibrary {
 }
 
 extension SSPhotoLibrary {
-    /// 相册单选
-    ///
-    /// - Returns: 图片数组
-    static func single() -> Driver<[UIImage]?> {
-        return Observable.create({ (observer) in
-            /// 初始化picker
-            let picker = createPicker()
-            /// 点击取消
-            picker.bk_didCancelBlock = { controller in
-                observer.onNext(nil)
-                observer.onCompleted()
-                controller?.dismiss(animated: true, completion: nil)
-            }
-            /// 拍照完成并使用
-            picker.bk_didFinishPickingMediaBlock = { controller, userInfo in
-                /// 获取原图，并重新调整方向，另图片朝上
-                if let image = userInfo?[UIImagePickerController.InfoKey.originalImage] as? UIImage,
-                    let up = image.ss_orientationUp() {
-                    observer.onNext([up])
-                }else{
-                    observer.onNext(nil)
-                }
-                observer.onCompleted()
-                controller?.dismiss(animated: true, completion: nil)
-            }
-            picker.modalPresentationStyle = .fullScreen
-            UIApplication.rootViewController?.present(picker, animated: true, completion: nil)
-            return Disposables.create()
-        }).asDriver(onErrorJustReturn: nil)
-    }
     
     static func mutable(_ max: Int)  -> Driver<[UIImage]?> {
            return Observable.create({ (observer) in

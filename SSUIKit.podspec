@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SSUIKit"
-  s.version      = "0.4.0"
+  s.version      = "0.4.1"
   s.summary      = "Sheng Sheng Huitouche UIKit"
 
   # This description is used to generate tags and improve search results.
@@ -138,10 +138,7 @@ Pod::Spec.new do |s|
   # spec.dependency "JSONKit", "~> 1.4"
   # https://qmuiteam.com/ios
   s.dependency 'QMUIKit', '~> 4.0.4'
-  
-  # https://github.com/BlocksKit/BlocksKit
-  s.dependency 'BlocksKit', '~> 2.2.5'
-   
+
   # https://github.com/SnapKit/SnapKit
   s.dependency 'SnapKit', '~> 5.0.1'
    

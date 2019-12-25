@@ -8,7 +8,6 @@
 import UIKit
 import RxCocoa
 import RxSwift
-import BlocksKit
 
 public extension Reactive where Base: UIProgressView {
     /// 停止刷新
@@ -16,10 +15,8 @@ public extension Reactive where Base: UIProgressView {
         return Binder(base) { view, progress in
             let progress = Float(progress)
             view.setProgress(progress, animated: true)
-            if progress >= 1 {
-                view.bk_perform({ (_) in
-                    view.progress = 0
-                }, afterDelay: 0.35)
+            UIView.animate(withDuration: 0.01, delay: 0.35, options: UIView.AnimationOptions.curveEaseOut, animations: {}) { (_) in
+                view.progress = 0
             }
         }
     }
