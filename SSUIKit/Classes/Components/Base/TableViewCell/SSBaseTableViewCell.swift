@@ -44,7 +44,7 @@ extension SSBaseTableViewCell {
     }
 }
 
-extension SSBaseCollectionViewCell {
+extension SSBaseTableViewCell {
     @objc open func reloadData(_ data: Any) {
         /// override by subclass
     }

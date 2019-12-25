@@ -29,7 +29,7 @@ extension SSBaseCollectionViewCell {
 }
 
 extension SSBaseCollectionViewCell {
-    @objc open func reloadCellData(_ data: Any) {
+    @objc open func reloadData(_ data: Any) {
         /// override by subclass
     }
 }
