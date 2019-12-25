@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SSUIKit"
-  s.version      = "0.3.6"
+  s.version      = "0.3.7"
   s.summary      = "Sheng Sheng Huitouche UIKit"
 
   # This description is used to generate tags and improve search results.
@@ -158,9 +158,6 @@ Pod::Spec.new do |s|
    
   # https://github.com/ibireme/YYKit
   s.dependency 'YYText', '~> 1.0.7'
-   
-  # https://github.com/SwiftKickMobile/SwiftMessages
-  s.dependency 'SwiftMessages', '~> 7.0.1'
    
   # 相册选择（仿微信）https://github.com/banchichen/TZImagePickerController
   s.dependency 'TZImagePickerController', '~> 3.2.6'
