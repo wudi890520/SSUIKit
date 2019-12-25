@@ -55,8 +55,6 @@ open class SSBaseViewController: QMUICommonViewController {
         SSAlert.dismiss()
         /// 移除菊花
         SVProgressHUD.dismiss()
-        /// 移除监听
-        bk_removeAllBlockObservers()
         /// 移除通知
         NotificationCenter.default.removeObserverBlocks()
         /// 移除信号
