@@ -7,9 +7,9 @@
 
 import UIKit
 
-public class SSBaseCollectionViewCell: UICollectionViewCell {
+open class SSBaseCollectionViewCell: UICollectionViewCell {
 
-    override public func awakeFromNib() {
+    override open func awakeFromNib() {
         super.awakeFromNib()
         addSubviews()
         makeLayout()

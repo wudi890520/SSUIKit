@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-public class SSBaseTableViewCell: UITableViewCell {
+open class SSBaseTableViewCell: UITableViewCell {
 
     public let line = UIView.line()
     
