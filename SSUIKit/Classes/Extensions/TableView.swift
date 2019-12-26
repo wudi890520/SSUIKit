@@ -125,10 +125,18 @@ public extension SSUITableViewCompatible where Self: UITableView {
     /// - Returns: UITableView
     @discardableResult
     func ss_register(_ className: AnyClass) -> Self {
-        let nibName = "\(className)".replacingOccurrences(of: "SSUIKit.", with: "")
-        let nib = UINib.init(nibName: nibName, bundle: Bundle.ssBundle)
-        register(nib, forCellReuseIdentifier: nibName)
-        return self
+        let nibName = "\(className)".components(separatedBy: ".")
+        if let path = Bundle.init(for: className).path(forResource: nibName.last, ofType: nibName.first) {
+            let bundle = Bundle.init(path: path)
+            let nib = UINib.init(nibName: nibName.last ?? "", bundle: bundle)
+            register(nib, forCellReuseIdentifier: nibName.last ?? "")
+            return self
+        }else{
+            let bundle = Bundle.init(for: className)
+            let nib = UINib.init(nibName: nibName.last ?? "", bundle: bundle)
+            register(nib, forCellReuseIdentifier: nibName.last ?? "")
+            return self
+        }
     }
 
     /// 隐藏多余的分隔线

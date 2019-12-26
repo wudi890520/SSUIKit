@@ -87,7 +87,7 @@ public extension SSCAGradientLayerCompatible where Self: CAGradientLayer {
     /// 设置成黑色渐变
     @discardableResult
     func ss_darkMode() -> Self {
-        self.colors = [UIColor.ss_weChatTint, UIColor(hexString: "#3c4244")!.cgColor]
+        self.colors = [UIColor.ss_weChatTint.cgColor, UIColor(hexString: "#3c4244")!.cgColor]
         return self
     }
 }
