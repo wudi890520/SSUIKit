@@ -125,8 +125,8 @@ public extension SSUITableViewCompatible where Self: UITableView {
     /// - Returns: UITableView
     @discardableResult
     func ss_register(_ className: AnyClass) -> Self {
-        let nibName = "\(className)".components(separatedBy: ".")
-        if let path = Bundle.init(for: className).path(forResource: nibName.last, ofType: nibName.first) {
+        let nibName = "\(className.description())".components(separatedBy: ".")
+        if let path = Bundle.init(for: className).path(forResource: nibName.first, ofType: "bundle") {
             let bundle = Bundle.init(path: path)
             let nib = UINib.init(nibName: nibName.last ?? "", bundle: bundle)
             register(nib, forCellReuseIdentifier: nibName.last ?? "")
