@@ -98,6 +98,22 @@ public extension UIViewController {
             }
         }
     }
+    
+    func removeLeftBarButtonItems() {
+        if let base = self as? SSBaseViewController, base.barStyle.isHidden {
+            base.leftBarButtonItems?.forEach{ $0.isHidden = true }
+        }else{
+            navigationItem.setLeftBarButtonItems(nil, animated: false)
+        }
+    }
+    
+    func removeRightBarButtonItems() {
+        if let base = self as? SSBaseViewController, base.barStyle.isHidden {
+            base.rightBarButtonItems?.forEach{ $0.isHidden = true }
+        }else{
+            navigationItem.setRightBarButtonItems(nil, animated: false)
+        }
+    }
 }
 
 extension UIViewController {
@@ -256,4 +272,5 @@ extension SSBaseViewController {
         leftItemDidTap?.asDriver().drive(rx.pop).disposed(by: dispose)
     }
 
+    
 }
