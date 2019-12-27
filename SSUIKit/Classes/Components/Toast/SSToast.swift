@@ -49,6 +49,7 @@ public extension SSToast {
     static func hide() {
         SSToast.shared.lastView?.hideAllToasts()
         UIApplication.rootViewController?.view.hideAllToasts()
+        UIApplication.visiableController?.view.hideAllToasts()
         UIApplication.rootView?.hideToast()
     }
 }

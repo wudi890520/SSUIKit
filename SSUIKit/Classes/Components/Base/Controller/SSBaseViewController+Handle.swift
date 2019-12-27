@@ -129,7 +129,7 @@ public extension UIViewController {
     public func ss_asModelPopup() -> Self {
         self.view.backgroundColor = .clear
         self.modalPresentationStyle = .overCurrentContext
-        UIApplication.rootViewController?.modalPresentationStyle = .currentContext
+        UIApplication.visiableController?.modalPresentationStyle = .currentContext
         return self
     }
     

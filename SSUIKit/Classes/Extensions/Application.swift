@@ -6,10 +6,16 @@
 //
 
 import UIKit
+import QMUIKit
 
 public extension UIApplication {
     static var rootViewController: UIViewController? {
+        
         return UIApplication.shared.keyWindow?.rootViewController
+    }
+    
+    static var visiableController: UIViewController? {
+        return QMUIHelper.visibleViewController()
     }
     
     static var rootView: UIView? {

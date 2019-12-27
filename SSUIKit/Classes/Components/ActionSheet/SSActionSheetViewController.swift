@@ -127,7 +127,7 @@ public extension SSActionSheet {
         let sheet = SSActionSheet(title)
         sheet.datas.dataSource = buttonItems.map{ $0.data }
         let height = SSActionSheet.height(buttonItems.count, title: title)
-        UIApplication.rootViewController?.presentAsStork(sheet, height: height, swipeToDismissEnabled: false, tapAroundToDismissEnabled: true, complection: nil)
+        UIApplication.visiableController?.presentAsStork(sheet, height: height, swipeToDismissEnabled: false, tapAroundToDismissEnabled: true, complection: nil)
 
         return sheet.datas.selected.map{ buttonItems[$0].extra }
     }

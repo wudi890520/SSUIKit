@@ -66,7 +66,7 @@ extension SSPhotoCamera {
             }
             
             picker.modalPresentationStyle = .fullScreen
-            UIApplication.rootViewController?.present(picker, animated: true, completion: nil)
+            UIApplication.visiableController?.present(picker, animated: true, completion: nil)
             return Disposables.create()
         }).asDriver(onErrorJustReturn: nil)
 
