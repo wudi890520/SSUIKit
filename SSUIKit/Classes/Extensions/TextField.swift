@@ -330,3 +330,18 @@ public extension SSUITextFieldCompatible where Self: TextField {
         return self
     }
 }
+
+public extension SSUITextFieldCompatible where Self: TextField {
+    
+    /// 追加字符串（会将原有的文本和新追加的拼起来）
+    /// - Parameter string: 要追加的文本
+    @discardableResult
+    func ss_append(_ string: String? = nil) -> Self {
+        let originText = (text == nil).ss_ternary("", text!)
+        let appendText = (string == nil).ss_ternary("", string!)
+        let text = "\(originText)\(appendText)"
+        self.text = text
+        return self
+    }
+    
+}

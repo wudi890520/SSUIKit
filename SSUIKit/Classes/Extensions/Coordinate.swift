@@ -43,8 +43,8 @@ internal class SSLocationConverter: NSObject {
     static let pi = 3.14159265358979323846264338327950288
     
     static func gcj02ToBd09(_ coordinate: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
-        let x = coordinate.latitude
-        let y = coordinate.longitude
+        let x = coordinate.longitude
+        let y = coordinate.latitude
         let z = sqrt(x * x + y * y) + 0.00002 * sin(y * pi)
         let theta = atan2(y, x) + 0.000003 * cos(x * pi)
         let lat = z * sin(theta) + 0.006

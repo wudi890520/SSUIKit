@@ -18,9 +18,7 @@ public extension Driver {
     /// 振动反馈
     func impactOccurred() -> Driver<Element> {
         return self.do(onNext: { (_) in
-            if #available(iOS 10.0, *) {
-                UIImpactFeedbackGenerator.ss_impactOccurred()
-            }
+            UIImpactFeedbackGenerator.ss_impactOccurred()
         }) as! SharedSequence<DriverSharingStrategy, Element>
     }
     
