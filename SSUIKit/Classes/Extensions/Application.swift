@@ -31,6 +31,6 @@ public extension UIApplication {
     }
     
     @objc static func endEditing() {
-        rootView?.endEditing(true)
+        visiableController?.view.endEditing(true)
     }
 }
