@@ -98,17 +98,22 @@ public class SSRxPermission: NSObject {
                 if !isNeedOpenSystemSetting {
                     observer.onNext(.denied)
                     observer.onCompleted()
-                }
-                SSAlert.showConfirm(
-                    title: permissionType.alertTitle,
-                    message: permissionType.alertMessage,
-                    cancelButtonTitle: permissionType.cancel ?? "",
-                    confirmButtonTitle: permissionType.confirm ?? ""
-                    ) { (enable) in
-                        if enable { UIApplication.open() }
+                }else{
+                    SSAlert.showConfirm(
+                        title: permissionType.alertTitle,
+                        message: permissionType.alertMessage,
+                        cancelButtonTitle: permissionType.cancel ?? "",
+                        confirmButtonTitle: permissionType.confirm ?? ""
+                        ) { (enable) in
+                            if enable {
+                                UIApplication.open()
+                            }else{
+                                observer.onNext(.denied)
+                                observer.onCompleted()
+                            }
                     }
-                observer.onNext(.denied)
-                observer.onCompleted()
+                }
+          
             }else{
                 observer.onNext(.allowed)
                 observer.onCompleted()
