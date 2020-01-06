@@ -16,7 +16,7 @@ public extension SSCAGradientLayerCompatible where Self: CAGradientLayer {
     /// 默认样式
     static func `default`() -> CAGradientLayer {
         return CAGradientLayer()
-            .ss_frame(CGRect(x: 0, y: 0, width: CGFloat.screenWith, height: CGFloat.unsafeTop))
+            .ss_frame(CGRect(x: 0, y: 0, width: CGFloat.screenWidth, height: CGFloat.unsafeTop))
             .ss_direction(.fromTop)
             .ss_darkMode()
     }

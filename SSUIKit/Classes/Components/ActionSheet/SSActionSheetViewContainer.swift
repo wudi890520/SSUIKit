@@ -18,11 +18,11 @@ class SSActionSheetViewContainer: NSObject {
         .ss_register(SSActionSheetTableViewCell.self)
     
     var tableHeaderView = UIView()
-        .ss_frame(x: 0, y: 0, width: CGFloat.screenWith, height: 0)
+        .ss_frame(x: 0, y: 0, width: CGFloat.screenWidth, height: 0)
         .ss_backgroundColor(.white)
     
     let titleLabel = UILabel()
-        .ss_frame(x: 20, y: 0, width: CGFloat.screenWith-40, height: 0)
+        .ss_frame(x: 20, y: 0, width: CGFloat.screenWidth-40, height: 0)
         .ss_font(.lightDetail)
         .ss_textColor(.lightGray)
         .ss_textAlignment(.center)

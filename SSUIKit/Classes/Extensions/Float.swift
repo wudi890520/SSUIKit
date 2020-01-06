@@ -81,7 +81,7 @@ public extension CGFloat {
 public extension CGFloat {
     
     /// 屏幕宽度
-    static let screenWith = Size.Screen.width
+    static let screenWidth = Size.Screen.width
     
     /// 屏幕高度
     static let screenHeight = Size.Screen.height

@@ -85,7 +85,7 @@ class SSAlertSeparator {
 }
 
 class SSAlertDisplayView {
-    var width: CGFloat = CGFloat.screenWith - 40
+    var width: CGFloat = CGFloat.screenWidth - 40
     var maxHeight: CGFloat = CGFloat.screenHeight
     var cornerRadius: CGFloat = 13
     var backgroundColor: UIColor? = .white
@@ -279,7 +279,7 @@ public extension SSAlertConfiguration {
     struct DisplayView {
         
         /// 内容视图宽度
-        public static var width: CGFloat = CGFloat.screenWith - 40 {
+        public static var width: CGFloat = CGFloat.screenWidth - 40 {
             didSet { SSAlertConfiguration.shared.displayView.width = width }
         }
         

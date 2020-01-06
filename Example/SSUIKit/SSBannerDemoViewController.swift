@@ -134,7 +134,7 @@ class SSBannerNetworkDemoViewController: UIViewController {
 }
 
 class SSBannerTransformDemoViewController: UIViewController {
-    static let bannerWidth = (CGFloat.screenWith - 40)
+    static let bannerWidth = (CGFloat.screenWidth - 40)
     static let bannerHeight = bannerWidth / 2.875
     let banner = SSBannerView(isNeedTransformer: true, itemSize: CGSize(width: bannerWidth, height: bannerHeight))
     

@@ -46,7 +46,7 @@ public class SSAlertProvider: NSObject {
 extension SSAlertProvider {
     fileprivate static func creatContentAttributeView(_ attributeString: NSAttributedString?) -> UIView? {
         guard let attributeString = attributeString else { return nil }
-        let contentWidth = CGFloat.screenWith - 80
+        let contentWidth = CGFloat.screenWidth - 80
         let contentLabel = UILabel()
             .ss_numberOfLines()
             .ss_frame(x: 20, y: 5, width: contentWidth, height: attributeString.size(withMaxWidth: contentWidth).height)

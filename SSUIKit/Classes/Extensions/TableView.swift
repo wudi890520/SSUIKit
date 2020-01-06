@@ -215,7 +215,7 @@ public extension SSUITableViewCompatible where Self: UITableView {
     @discardableResult
     func ss_addEmptyHeader(_ headerViewHeight: CGFloat = 1 / UIScreen.main.scale) -> Self {
         tableHeaderView = UIView()
-            .ss_frame(x: 0, y: 0, width: CGFloat.screenWith, height: headerViewHeight)
+            .ss_frame(x: 0, y: 0, width: CGFloat.screenWidth, height: headerViewHeight)
         return self
     }
 
@@ -248,12 +248,12 @@ public extension SSUITableViewCompatible where Self: UITableView {
         if loadingType == .cell {
 
             let loadingView = UIView()
-                .ss_frame(x: 0, y: 0, width: .screenWith, height: .screenHeight)
+                .ss_frame(x: 0, y: 0, width: .screenWidth, height: .screenHeight)
                 .ss_isEnable(false)
 
             for i in 0 ..< 20 {
                 let subview = T.init()
-                subview.centerX = .screenWith / 2
+                subview.centerX = .screenWidth / 2
                 subview.top = space + (subview.height + space) * i.ss_cgFloat
                 loadingView.addSubview(subview)
                 if subview.bottom > .screenHeight {

@@ -237,7 +237,7 @@ public extension SSUITextFieldCompatible where Self: TextField {
     func ss_showDismissButtonItem(_ enable: Bool = true) -> Self {
         self.ss_dismissKeyboardEnable = enable
         if enable {
-            let inputAccessoryView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.screenWith, height: 44))
+            let inputAccessoryView = UIView(frame: CGRect(x: 0, y: 0, width: CGFloat.screenWidth, height: 44))
             self.inputAccessoryView = inputAccessoryView
             SSKeyboardDoneButtonManager.setup()
         }else{

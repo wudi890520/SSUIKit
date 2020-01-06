@@ -62,7 +62,7 @@ extension SSKeyboardLayoutManager {
         
         children.keyboardBackgroundView.snp.makeConstraints { (make) in
             make.left.top.equalTo(0)
-            make.size.equalTo(CGFloat.screenWith)
+            make.size.equalTo(CGFloat.screenWidth)
             make.height.equalTo(V.Content.height + CGFloat.unsafeBottom)
         }
     
@@ -90,7 +90,7 @@ extension SSKeyboardLayoutManager {
             line.snp.makeConstraints({ (make) in
                 let top = line.tag.ss_cgFloat * V.Item.height
                 make.left.equalTo(0)
-                make.width.equalTo(CGFloat.screenWith)
+                make.width.equalTo(CGFloat.screenWidth)
                 make.height.equalTo(CGFloat.line)
                 make.top.equalTo(top)
             })

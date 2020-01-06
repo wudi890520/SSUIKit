@@ -14,7 +14,7 @@ class SSKeyboardViewContainer: NSObject {
     
     /// 键盘背景视图
     public let keyboardBackgroundView = UIView()
-        .ss_frame(x: 0, y: 0, width: CGFloat.screenWith, height: 0)
+        .ss_frame(x: 0, y: 0, width: CGFloat.screenWidth, height: 0)
         .ss_backgroundColor(.ss_keyboardBackground)
         .ss_add(UIView(frame: UIScreen.main.bounds).ss_backgroundColor(.ss_keyboardBackground))
     
@@ -84,7 +84,7 @@ extension SSKeyboardViewContainer {
     /// 键盘按钮的 高度、大小
     struct Item {
         static let height: CGFloat = 55
-        static let size: CGSize = CGSize(width: CGFloat.screenWith / Style.colume.ss_cgFloat, height: height)
+        static let size: CGSize = CGSize(width: CGFloat.screenWidth / Style.colume.ss_cgFloat, height: height)
     }
     
     /// 键盘的高度

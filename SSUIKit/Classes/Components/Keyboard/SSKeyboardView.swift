@@ -25,7 +25,7 @@ open class SSKeyboardView: UIView {
     
     public init(_ keyboardType: SSKeyboardType, input: UITextInput) {
         let height = SSKeyboardViewContainer.Content.height + CGFloat.unsafeBottom
-        super.init(frame: CGRect(x: 0, y: 0, width: CGFloat.screenWith, height: height))
+        super.init(frame: CGRect(x: 0, y: 0, width: CGFloat.screenWidth, height: height))
         ss_setValues(keyboardType, input: input)
         ss_layoutSubviews()
         ss_bindDataSource()

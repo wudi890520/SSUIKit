@@ -156,7 +156,7 @@ class SSNavigationHiddenDemoViewController: SSBaseViewController, UITableViewDat
         .ss_frame(rect: UIScreen.main.bounds)
     
     lazy var navigationView: UIView = {
-        let view = UIView().ss_backgroundColor(.red).ss_frame(x: 0, y: CGFloat.statusBar, width: CGFloat.screenWith, height: 44)
+        let view = UIView().ss_backgroundColor(.red).ss_frame(x: 0, y: CGFloat.statusBar, width: CGFloat.screenWidth, height: 44)
         return view
     }()
     

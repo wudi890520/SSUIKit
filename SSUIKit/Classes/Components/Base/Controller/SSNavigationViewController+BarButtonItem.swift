@@ -211,7 +211,7 @@ extension SSBaseViewController {
     
     fileprivate func setRightBarButtonItems(_ items: [UIButton]) {
         rightBarButtonItems = items
-        var right: CGFloat = CGFloat.screenWith
+        var right: CGFloat = CGFloat.screenWidth
         for button in items {
             button.top = CGFloat.statusBar
             button.right = right

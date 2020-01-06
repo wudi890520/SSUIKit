@@ -104,7 +104,7 @@ extension SSActionSheetViewController {
     static private func height(_ itemsCount: Int, title: String? = nil) -> CGFloat {
         var titleHeight: CGFloat = 0
         if let title = title {
-            titleHeight = title.ss_nsString.height(for: SSActionSheetConfiguration.shared.titleLabelFont, width: CGFloat.screenWith-40) + 40
+            titleHeight = title.ss_nsString.height(for: SSActionSheetConfiguration.shared.titleLabelFont, width: CGFloat.screenWidth-40) + 40
         }
         
         let tableViewHeight = itemsCount.ss_cgFloat * SSActionSheetConfiguration.shared.rowHeight

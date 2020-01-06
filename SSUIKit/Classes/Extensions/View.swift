@@ -258,7 +258,7 @@ public extension UIView {
     /// - Returns: UIView
     static func line(_ isHidden: Bool = false, tag: Int? = nil) -> UIView {
         return UIView()
-            .ss_frame(x: 0, y: 0, width: CGFloat.screenWith, height: CGFloat.line)
+            .ss_frame(x: 0, y: 0, width: CGFloat.screenWidth, height: CGFloat.line)
             .ss_backgroundColor(.ss_line)
             .ss_isHidden(isHidden)
             .ss_tag(tag.orEmpty)

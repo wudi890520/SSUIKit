@@ -22,7 +22,7 @@ class SSKeyboardDoneButtonManager: NSObject {
     
     /// 收回键盘按钮
     private let hideKeyboardButton = UIButton()
-        .ss_frame(x: CGFloat.screenWith-70, y: 0, width: 60, height: 36)
+        .ss_frame(x: CGFloat.screenWidth-70, y: 0, width: 60, height: 36)
         .ss_image("dismissKeyboard".bundleImage)
         .ss_shadow()
         .ss_layerCornerRadius(18, isOnShadow: true)

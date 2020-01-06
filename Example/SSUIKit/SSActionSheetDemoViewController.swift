@@ -31,7 +31,7 @@ class SSActionSheetDemoViewController: UIViewController {
         view.backgroundColor = .ss_background
         
         view.addSubview(tableView)
-        banner.bannerView.size = CGSize(width: CGFloat.screenWith, height: 200)
+        banner.bannerView.size = CGSize(width: CGFloat.screenWidth, height: 200)
       
         tableView.register(SSDemoTableViewCell.self, forCellReuseIdentifier: "SSDemoTableViewCell")
         tableView.delegate = self
