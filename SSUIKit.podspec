@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SSUIKit"
-  s.version      = "0.5.3"
+  s.version      = "0.5.4"
   s.summary      = "Sheng Sheng Huitouche UIKit"
 
   # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
                       SSUIKit是一个UIKit的扩展
                       DESC
 
-  s.homepage     = "http://192.168.10.174/sshtc/SSUIKit"
+  s.homepage     = "https://github.com/wudi890520/SSUIKit"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => 'http://192.168.10.174/sshtc/SSUIKit.git', :tag => s.version.to_s }
+  s.source       = { :git => 'https://github.com/wudi890520/SSUIKit.git', :tag => s.version.to_s }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
