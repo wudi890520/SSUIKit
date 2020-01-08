@@ -124,7 +124,7 @@ public extension Reactive where Base: UITableView {
         }
     }
     
-    var emptyData: Binder<(UIImage?, String?, String?, String?)?> {
+    public var emptyData: Binder<(UIImage?, String?, String?, String?)?> {
         return Binder(base) { tableView, emptyData in
             guard let (image, title, subtitle, buttonTitle) = emptyData else { return }
             
