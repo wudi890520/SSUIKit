@@ -27,7 +27,7 @@ public struct Color {
     public static let orange: UIColor = UIColor.hex("#ff642b")
     
     /// 分割线颜色
-    public static let line: UIColor = UIColor.hex("#e1e1e0")
+    public static let line: UIColor = UIColor.hex("#c6c6c8")
     
     /// 不可点击
     public static let disable: UIColor = UIColor.hex("#cccccc")

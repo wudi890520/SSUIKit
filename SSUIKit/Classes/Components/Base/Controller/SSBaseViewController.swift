@@ -9,14 +9,36 @@ import UIKit
 import QMUIKit
 import RxCocoa
 import RxSwift
+import HBDNavigationBar
 
-open class SSBaseViewController: QMUICommonViewController {
+open class SSBaseViewController: UIViewController {
   
+    public var navigationBar: HBDNavigationBar? {
+        return navigationController?.navigationBar as? HBDNavigationBar
+    }
+    
     /// 导航栏样式
-    public var barStyle: SSNavigationBarStyle = .white
-
+    public var barStyle: SSNavigationBarStyle = .white {
+        didSet {
+            hbd_barImage = barStyle.barBackgroundImage
+            hbd_barStyle = barStyle.statusBarStyle
+            hbd_tintColor = barStyle.barTintColor
+            hbd_barAlpha = barStyle.barAlpha
+            hbd_barShadowHidden = true
+            hbd_titleTextAttributes = [
+                NSAttributedString.Key.foregroundColor: barStyle.barTintColor
+            ]
+        }
+    }
+    
     /// 是否允许滑动返回
-    public var popGestureEnable: Bool = true
+    public var popGestureEnable: Bool = true {
+        didSet {
+            hbd_backInteractive = popGestureEnable
+        }
+    }
+    
+    internal var shadowImageView = UIView.line()
     
     /// 导航栏位置左侧的items（仅当barStyle == .hidden的时候生效）
     internal var leftBarButtonItems: [UIButton]?

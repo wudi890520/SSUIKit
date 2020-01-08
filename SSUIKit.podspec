@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SSUIKit"
-  s.version      = "0.5.2"
+  s.version      = "0.5.3"
   s.summary      = "Sheng Sheng Huitouche UIKit"
 
   # This description is used to generate tags and improve search results.
@@ -186,6 +186,9 @@ Pod::Spec.new do |s|
   # 获取设备信息 https://github.com/devicekit/DeviceKit
   s.dependency 'DeviceKit', '~> 2.3.0'
 
+  # 导航栏管理 https://github.com/listenzz/HBDNavigationBar
+  s.dependency 'HBDNavigationBar', '~> 1.7.2'
+  
 #  # 日期管理 https://github.com/malcommac/SwiftDate
 #  s.dependency 'SwiftDate', '~> 6.1.0'
 

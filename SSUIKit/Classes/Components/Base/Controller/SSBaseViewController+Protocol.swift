@@ -28,7 +28,7 @@ extension SSBaseViewController: SSBaseViewControllerFlow {
     }
     
     open func ss_setNavigation() {
-        
+        barStyle = .white
     }
     
     open func ss_layoutSubviews() {

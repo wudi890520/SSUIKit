@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import QMUIKit
 
 /// UIBarButtonItem在导航栏中的位置
 public enum SSNavigationBarButtonItemDirection {
@@ -29,9 +30,12 @@ public enum SSBarButtonItem {
     /// 返回
     case back
     
+    /// 带阴影的白色返回按钮
+    case shadowBack(size: CGSize?)
+    
     /// 关闭
     case close
-    
+ 
     /// 活动
     case active
     
@@ -52,6 +56,15 @@ public enum SSBarButtonItem {
         switch self {
         case .nil: return " "
         case .back: return "back".bundleImage
+        case .shadowBack(let size):
+            let newSize = size ?? CGSize(width: 36, height: 36)
+            let button = UIButton()
+                .ss_backgroundColor(.white)
+                .ss_frame(size: newSize)
+                .ss_layerCornerRadius(newSize.height/2, isOnShadow: true)
+                .ss_shadow()
+                .ss_image("back".bundleImage?.byTintColor(.black))
+            return button
         case .close: return "close".bundleImage
         case .active: return "active".bundleImage
         case .more: return "more".bundleImage
@@ -74,28 +87,23 @@ public extension UIViewController {
     /// - Parameter fontSize: 文本字体大小
     func addBarButtonItem(with content: Any?, at direction: SSNavigationBarButtonItemDirection? = .right, animated: Bool = false, tintColor: UIColor? = nil, fontSize: CGFloat? = nil) {
 
-        if let base = self as? SSBaseViewController, base.barStyle.isHidden {
-            let items = UIViewController.mapToButtons(content: content, tintColor: tintColor, fontSize: fontSize)
-            switch direction {
-            case .left?:
-                base.setLeftBarButtonItems(items)
-            case .right?:
-                base.setRightBarButtonItems(items)
-            default:
-                break
-            }
-        }else{
-            let items = UIViewController.mapToItems(content: content, tintColor: tintColor, fontSize: fontSize)
-            switch direction {
-            case .left?:
-                navigationItem.setLeftBarButtonItems(items, animated: animated)
-            case .center?:
-                navigationItem.titleView = items.first?.customView
-            case .right?:
-                navigationItem.setRightBarButtonItems(items, animated: animated)
-            case .none:
-                break
-            }
+        let items = UIViewController.mapToItems(content: content, tintColor: tintColor, fontSize: fontSize)
+        switch direction {
+        case .left?:
+            navigationItem.setLeftBarButtonItems(items, animated: animated)
+        case .center?:
+            navigationItem.titleView = items.first?.customView
+        case .right?:
+            navigationItem.setRightBarButtonItems(items, animated: animated)
+        case .none:
+            break
+        }
+        
+        if let customView = items.first?.customView, direction == .left && items.count == 1 && customView.tag < 10 {
+            customView.isUserInteractionEnabled = true
+            customView.addGestureRecognizer(UITapGestureRecognizer(actionBlock: {[weak self] (_) in
+                self?.navigationController?.popViewController(animated: true)
+            }))
         }
     }
     

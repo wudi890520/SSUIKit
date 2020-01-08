@@ -39,7 +39,7 @@ class SSNavigationIgnoreDemoViewController: SSBaseViewController {
         
         let barBackgroundColor = UIColor.qmui_random()
         let barTintColor = barBackgroundColor.qmui_inverse()
-        barStyle = .custom(statusBarStyle: .lightContent, barBackgroundColor: barBackgroundColor, barTintColor: barTintColor)
+        barStyle = .custom(statusBarStyle: .black, barBackgroundColor: barBackgroundColor, barTintColor: barTintColor)
         
         addBarButtonItem(with: "下一页")
         

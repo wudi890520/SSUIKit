@@ -187,7 +187,7 @@ class SSNavigationHiddenDemoViewController: SSBaseViewController, UITableViewDat
     override func ss_setNavigation() {
         title = "隐藏"
         barStyle = .hidden
-        
+        addBarButtonItem(with: SSBarButtonItem.shadowBack(size: nil), at: .left)
         if showIntroduction {
             addBarButtonItem(with: UIImage(named: "QMUI_previewImage_checkbox_checked"))
             rightItemDidTap?.asObservable()
@@ -243,7 +243,7 @@ fileprivate class SSNavigationCustomDemoViewController: SSBaseViewController {
         super.viewDidLoad()
         title = "自定义"
         view.backgroundColor = .white
-        barStyle = .custom(statusBarStyle: .lightContent, barBackgroundColor: .red, barTintColor: .blue)
+        barStyle = .custom(statusBarStyle: .black, barBackgroundColor: .red, barTintColor: .blue)
     }
 }
 

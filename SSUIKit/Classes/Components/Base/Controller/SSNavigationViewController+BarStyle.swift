@@ -7,6 +7,7 @@
 
 import UIKit
 import QMUIKit
+import HBDNavigationBar
 
 /// 导航栏风格
 public enum SSNavigationBarStyle {
@@ -30,20 +31,20 @@ public enum SSNavigationBarStyle {
     /// - Parameter statusBarStyle: 状态栏风格
     /// - Parameter barBackgroundColor: 导航栏颜色
     /// - Parameter barTintColor: 导航栏上item的颜色
-    case custom(statusBarStyle: UIStatusBarStyle, barBackgroundColor: UIColor, barTintColor: UIColor)
+    case custom(statusBarStyle: UIBarStyle, barBackgroundColor: UIColor, barTintColor: UIColor)
 }
 
 extension SSNavigationBarStyle {
     
     /// 状态栏颜色
-    var statusBarStyle: UIStatusBarStyle {
+    var statusBarStyle: UIBarStyle {
         switch self {
         case .default:
             return .default
         case .white:
             return .default
         case .black:
-            return .lightContent
+            return .black
         case .clear:
             return .default
         case .hidden:
@@ -89,6 +90,16 @@ extension SSNavigationBarStyle {
         }
     }
     
+    var barAlpha: Float {
+        switch self {
+        case .hidden, .clear:
+            return 0
+        default:
+            return 1
+        }
+    }
+    
+    
     var isHidden: Bool {
         switch self {
         case .hidden:
@@ -99,8 +110,13 @@ extension SSNavigationBarStyle {
     }
     
     /// 导航栏底部线条颜色
-    var shadowImage: UIImage? {
-        return UIImage(color: .clear)
+    var shadowImageHidden: Bool {
+        switch self {
+        case .white, .default:
+            return true
+        default:
+            return false
+        }
     }
     
     /// 转场动画的key
@@ -120,52 +136,52 @@ extension SSNavigationBarStyle {
     }
 }
 
-extension SSBaseViewController {
-    /// 导航栏背景颜色
-    open override func navigationBarBackgroundImage() -> UIImage? {
-        return barStyle.barBackgroundImage
-    }
-    
-    /// 导航栏上BarButtonItem的颜色
-    open override func navigationBarTintColor() -> UIColor? {
-        return barStyle.barTintColor
-    }
-    
-    /// 导航栏底部分割线颜色
-    open override func navigationBarShadowImage() -> UIImage? {
-        return barStyle.shadowImage
-    }
-    
-    /// 状态栏样式
-    open override var preferredStatusBarStyle: UIStatusBarStyle {
-        return barStyle.statusBarStyle ?? .default
-    }
-    
-    /// 转场时的动画Key
-    open override func customNavigationBarTransitionKey() -> String? {
-        return barStyle.barTransitionKey
-    }
-    
-    /// 导航栏是否需要隐藏
-    open override func preferredNavigationBarHidden() -> Bool {
-        return barStyle.isHidden
-    }
-    
-    open override func shouldCustomizeNavigationBarTransitionIfHideable() -> Bool {
-        return true
-    }
-    
-    /// 是否允许手势返回
-    /// - Parameter byPopGesture: 手势返回
-    open override func shouldPopViewController(byBackButtonOrPopGesture byPopGesture: Bool) -> Bool {
-        if byPopGesture {
-            return popGestureEnable
-        }else{
-            return true
-        }
-    }
-    
-    open override func forceEnableInteractivePopGestureRecognizer() -> Bool {
-        return true
-    }
-}
+//extension SSBaseViewController {
+//    /// 导航栏背景颜色
+//    open override func navigationBarBackgroundImage() -> UIImage? {
+//        return barStyle.barBackgroundImage
+//    }
+//    
+//    /// 导航栏上BarButtonItem的颜色
+//    open override func navigationBarTintColor() -> UIColor? {
+//        return barStyle.barTintColor
+//    }
+//    
+//    /// 导航栏底部分割线颜色
+//    open override func navigationBarShadowImage() -> UIImage? {
+//        return barStyle.shadowImage
+//    }
+//    
+//    /// 状态栏样式
+//    open override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return barStyle.statusBarStyle ?? .default
+//    }
+//    
+//    /// 转场时的动画Key
+//    open override func customNavigationBarTransitionKey() -> String? {
+//        return barStyle.barTransitionKey
+//    }
+//    
+//    /// 导航栏是否需要隐藏
+//    open override func preferredNavigationBarHidden() -> Bool {
+//        return barStyle.isHidden
+//    }
+//    
+//    open override func shouldCustomizeNavigationBarTransitionIfHideable() -> Bool {
+//        return true
+//    }
+//    
+//    /// 是否允许手势返回
+//    /// - Parameter byPopGesture: 手势返回
+//    open override func shouldPopViewController(byBackButtonOrPopGesture byPopGesture: Bool) -> Bool {
+//        if byPopGesture {
+//            return popGestureEnable
+//        }else{
+//            return true
+//        }
+//    }
+//    
+//    open override func forceEnableInteractivePopGestureRecognizer() -> Bool {
+//        return true
+//    }
+//}

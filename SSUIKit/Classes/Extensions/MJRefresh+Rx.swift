@@ -38,6 +38,18 @@ public extension Reactive where Base: UITableView {
         }
     }
     
+    /// 停止刷新(下一页)
+    public var isHaveNextPage: Binder<Bool?> {
+        return Binder(base) { tableView, next in
+            tableView.endRefreshing()
+            if let next = next, next == true {
+                tableView.mj_footer.isHidden = false
+            }else{
+                tableView.mj_footer.isHidden = true
+            }
+        }
+    }
+    
     /// 停止刷新（没有更多数据）
     public var noMoreData: Binder<Bool> {
         return Binder(base) { tableView, isNoMoreData in

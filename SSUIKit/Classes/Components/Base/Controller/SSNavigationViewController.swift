@@ -7,8 +7,9 @@
 
 import UIKit
 import QMUIKit
+import HBDNavigationBar
 
-public class SSNavigationViewController: QMUINavigationController {
+public class SSNavigationViewController: HBDNavigationController {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
