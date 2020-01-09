@@ -64,7 +64,8 @@ open class SSBaseViewController: UIViewController {
             ss_bindDataSource()
         }
         
-        /// 设置导航栏
+        /// 设置导航栏(默认是白色)
+        barStyle = .white
         ss_setNavigation()
         setBackOrCloseBarButtonItem()
         
