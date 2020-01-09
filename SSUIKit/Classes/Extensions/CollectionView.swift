@@ -7,9 +7,9 @@
 
 import UIKit
 
-extension UICollectionView {
+public extension UICollectionView {
     @discardableResult
-    func ss_register(_ className: AnyClass) -> Self {
+    public func ss_register(_ className: AnyClass) -> Self {
         let nibName = "\(className.description())".components(separatedBy: ".")
         if let path = Bundle.init(for: className).path(forResource: nibName.first, ofType: "bundle") {
             let bundle = Bundle.init(path: path)
