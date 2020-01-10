@@ -123,6 +123,9 @@ public extension String {
         return nil
     }
 
+    var asNotificationName: Notification.Name {
+        return Notification.Name.init(self)
+    }
 }
 
 public extension String {
