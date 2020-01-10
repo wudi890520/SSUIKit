@@ -155,7 +155,7 @@ public extension SSActionSheet {
         let sheet = SSActionSheet(nil)
         sheet.datas.dataSource = items.map{ $0.data }
         let height = SSActionSheet.height(items.count, title: nil)
-        UIApplication.shared.keyWindow?.rootViewController?.presentAsStork(sheet, height: height, swipeToDismissEnabled: false, tapAroundToDismissEnabled: true, complection: nil)
+        UIApplication.visiableController?.presentAsStork(sheet, height: height, swipeToDismissEnabled: false, tapAroundToDismissEnabled: true, complection: nil)
 
         return sheet.datas.selected
             .map{ items[$0] }
