@@ -43,14 +43,21 @@ public extension SSToast {
         SSToast.setStyle()
         hide()
         SSToast.shared.lastView = UIApplication.rootView
-        UIApplication.rootView?.makeToast(message, duration: 2, position: position)
+        if let delegate = UIApplication.shared.delegate, let window = delegate.window {
+            window?.makeToast(message, duration: 2, position: position)
+        }else{
+            UIApplication.visiableController?.view?.makeToast(message, duration: 2, position: position)
+        }
     }
     
     static func hide() {
         SSToast.shared.lastView?.hideAllToasts()
         UIApplication.rootViewController?.view.hideAllToasts()
         UIApplication.visiableController?.view.hideAllToasts()
-        UIApplication.rootView?.hideToast()
+        UIApplication.visiableController?.navigationController?.view?.hideToast()
+        if let delegate = UIApplication.shared.delegate, let window = delegate.window {
+            window?.hideToast()
+        }
     }
 }
 
