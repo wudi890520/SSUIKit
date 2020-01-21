@@ -22,7 +22,8 @@ class SSNavigationIgnoreDemoViewController: SSBaseViewController {
         "移除《导航栏的使用》控制器 - SSNavigationDemoViewController",
         "移除所有控制器",
         "移除前一个控制器",
-        "移除前N个控制器"
+        "移除前N个控制器",
+        "移除某类型控制器后面所有的控制器"
     ]
     
     let disposeBag = DisposeBag()
@@ -70,7 +71,7 @@ extension SSNavigationIgnoreDemoViewController: UITableViewDataSource {
         switch dataSource[indexPath.row] {
 
         case "移除《导航栏的使用》控制器 - SSNavigationDemoViewController":
-            ignore(.just(class: SSNavigationDemoViewController.self))
+            ignore(.just(class: SSNavigationIgnoreDemoViewController.self))
 
         case "移除所有控制器":
             ignore(.all)
@@ -95,6 +96,9 @@ extension SSNavigationIgnoreDemoViewController: UITableViewDataSource {
             }
             
             SSAlert.showElements([textField, cancel, confirm])
+            
+        case "移除某类型控制器后面所有的控制器":
+            ignore(.fromFirstOf(class: SSNavigationIgnoreDemoViewController.self))
             
         default:
             break

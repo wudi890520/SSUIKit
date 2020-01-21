@@ -9,8 +9,11 @@ import UIKit
 
 public enum SSViewControllerIgnoredStrategy {
     
-    /// 移除控制器下所有该类型的控制器
+    /// 移除控制器下所有该类型的控制器(保留current)
     case just(class: UIViewController.Type)
+    
+    /// 移除第一个该类型控制及其后面的所有控制器（保留current）
+    case fromFirstOf(class: UIViewController.Type)
     
     /// 移除中间的所有控制器（保留root+current）
     case all
@@ -20,6 +23,7 @@ public enum SSViewControllerIgnoredStrategy {
     
     /// 从当前控制器向前移除指定数量的控制器（如果max越界，至少会保留root+current）
     case collectionFromCurrent(max: Int)
+    
 }
 
 extension UIViewController {
@@ -67,8 +71,22 @@ public extension UIViewController {
         
         switch strategy {
         case let .just(cls):
-            navigationController?.viewControllers = navigationViewControllers
+            if self.isKind(of: cls) {
+                var viewControllers: [UIViewController] = navigationViewControllers.filter{ $0.isKind(of: cls) == false }
+                viewControllers.append(self)
+                navigationController?.viewControllers = viewControllers
+            }else{
+                navigationController?.viewControllers = navigationViewControllers
                 .filter{ $0.isKind(of: cls) == false }
+            }
+            
+        case let .fromFirstOf(cls):
+            if navigationViewControllersCount <= 2 { return }
+            for (index, vc) in navigationViewControllers.enumerated() where vc.isKind(of: cls) {
+                let count = navigationViewControllersCount - 1 - index
+                ignore(.collectionFromCurrent(max: count))
+                break
+            }
             
         case .all:
             if navigationViewControllersCount <= 2 { return }
