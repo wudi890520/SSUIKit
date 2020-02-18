@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SSUIKit"
-  s.version      = "0.6.0"
+  s.version      = "0.6.2"
   s.summary      = "Sheng Sheng Huitouche UIKit"
 
   # This description is used to generate tags and improve search results.
@@ -145,7 +145,7 @@ Pod::Spec.new do |s|
   # https://github.com/ReactiveX/RxSwift
   s.dependency 'RxSwift', '~> 5.0.1'
   s.dependency 'RxCocoa', '~> 5.0.1'
-  s.dependency 'RxGesture', '~> 3.0.0'
+  s.dependency 'RxGesture', '~> 3.0.1'
   s.dependency 'RxKeyboard', '~> 1.0.0'
   s.dependency 'RxOptional', '~> 4.1.0'
   s.dependency 'RxViewController', '~> 1.0.0'
@@ -157,34 +157,34 @@ Pod::Spec.new do |s|
   s.dependency 'YYText', '~> 1.0.7'
    
   # 相册选择（仿微信）https://github.com/banchichen/TZImagePickerController
-  s.dependency 'TZImagePickerController', '~> 3.2.6'
+  s.dependency 'TZImagePickerController', '~> 3.3.1'
    
   # 空数据 https://github.com/dzenbot/DZNEmptyDataSet
   s.dependency 'DZNEmptyDataSet', '~> 1.8.1'
    
   # 图片下载 https://github.com/onevcat/Kingfisher
-  s.dependency 'Kingfisher', '~> 5.11.0'
+  s.dependency 'Kingfisher', '~> 5.13.1'
    
   # 弹出视图，类似微信首页右上角“+” https://github.com/liufengting/FTPopOverMenu_Swift
-  s.dependency 'FTPopOverMenu_Swift', '~> 0.2.1'
+  s.dependency 'FTPopOverMenu_Swift', '~> 0.3.1'
    
   # 显示器 https://github.com/search?q=NVActivityIndicatorView
   s.dependency 'NVActivityIndicatorView', '~> 4.8.0'
    
   # 提示 https://github.com/scalessec/Toast-Swift
-  s.dependency 'Toast-Swift', '~> 5.0.0'
+  s.dependency 'Toast-Swift', '~> 5.0.1'
    
   # 警示框（alertViewController）https://github.com/HJaycee/JCAlertController
   s.dependency 'JCAlertController', '~> 3.0.4'
    
   # 下拉刷新 https://github.com/CoderMJLee/MJRefresh
-  s.dependency 'MJRefresh', '~> 3.1.15.7'
+  s.dependency 'MJRefresh', '~> 3.3.1'
    
   # 广告视图 https://github.com/WenchaoD/FSPagerView
-  s.dependency 'FSPagerView', '~> 0.8.2'
+  s.dependency 'FSPagerView', '~> 0.8.3'
    
   # 获取设备信息 https://github.com/devicekit/DeviceKit
-  s.dependency 'DeviceKit', '~> 2.3.0'
+  s.dependency 'DeviceKit', '~> 3.0.0'
 
   # 导航栏管理 https://github.com/listenzz/HBDNavigationBar
   s.dependency 'HBDNavigationBar', '~> 1.7.2'

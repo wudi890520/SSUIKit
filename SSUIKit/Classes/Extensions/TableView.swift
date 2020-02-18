@@ -298,25 +298,24 @@ public extension SSUITableViewCompatible where Self: UITableView {
 public extension SSUITableViewCompatible where Self: UITableView {
     /// 添加刷新
     func addRefreshHeader() {
-        let header = MJRefreshGifHeader(refreshingBlock: nil)
-
-        header?.setIdleImages()
-        header?.setRefreshingImages()
-        header?.stateLabel.isHidden = true
-        header?.lastUpdatedTimeLabel.isHidden = true
+        let header = MJRefreshGifHeader {}
+        header.setIdleImages()
+        header.setRefreshingImages()
+        header.stateLabel?.isHidden = true
+        header.lastUpdatedTimeLabel?.isHidden = true
         mj_header = header
     }
 
     /// 添加加载更多
     func addRefreshFooter() {
-        let footer = MJRefreshAutoNormalFooter(refreshingBlock: nil)
-        footer?.activityIndicatorViewStyle = .gray
-        footer?.setTitle("正在加载...", for: .refreshing)
-        footer?.setTitle("", for: .noMoreData)
-        footer?.setTitle("", for: .idle)
-        footer?.stateLabel.font = UIFont.systemFont(ofSize: 15)
-        footer?.labelLeftInset = 20
-        footer?.isHidden = true
+        let footer = MJRefreshAutoNormalFooter{}
+        footer.activityIndicatorViewStyle = .gray
+        footer.setTitle("正在加载...", for: .refreshing)
+        footer.setTitle("", for: .noMoreData)
+        footer.setTitle("", for: .idle)
+        footer.stateLabel?.font = UIFont.systemFont(ofSize: 15)
+        footer.labelLeftInset = 20
+        footer.isHidden = true
         mj_footer = footer
     }
 

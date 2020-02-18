@@ -25,18 +25,18 @@ extension MJRefreshGifHeader {
                 
                 guard let stateImages = value(forKey: "stateImages") as? [NSNumber: Any] else { return }
                 guard let images = stateImages[stateKey] as? [UIImage], !images.isEmpty else { return }
-                gifView.stopAnimating()
+                gifView?.stopAnimating()
                 if images.count == 1 {
-                    gifView.image = images.last
+                    gifView?.image = images.last
                 }else{
-                    gifView.animationImages = images
+                    gifView?.animationImages = images
                     let stateDurations = value(forKey: "stateImages") as? [NSNumber: String] ?? [:]
                     let duration = stateDurations[stateKey] ?? "1.2"
-                    gifView.animationDuration = Double(duration) ?? 1.2
-                    gifView.startAnimating()
+                    gifView?.animationDuration = Double(duration) ?? 1.2
+                    gifView?.startAnimating()
                 }
             }else if state == .idle {
-                gifView.stopAnimating()
+                gifView?.stopAnimating()
             }
         }
     }

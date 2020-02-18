@@ -18,17 +18,25 @@ public extension Reactive where Base: UITableView {
     
     /// 正在刷新
     public var headerRefreshing: Driver<Int> {
-        return base.mj_header.rx.refreshing.asDriver()
-            .do(onNext: { [weak control = self.base] _ in control?.ss_page = 1 })
-            .map{ 1 }
+        if let header = base.mj_header {
+            return header.rx.refreshing.asDriver()
+                .do(onNext: { [weak control = self.base] _ in control?.ss_page = 1 })
+                .map{ 1 }
+        }else{
+            return Driver<Int?>.just(nil).filterNil()
+        }
     }
     
     /// 正在加载更多
     public var footerRefreshing: Driver<Int> {
-        return base.mj_footer.rx.refreshing.asDriver()
-            .do(onNext: { [weak control = self.base] _ in control?.ss_page = (control?.ss_page ?? 1) + 1 })
-            .map{ [weak control = self.base] _ in control?.ss_page }
-            .filterNil()
+        if let footer = base.mj_footer {
+            return footer.rx.refreshing.asDriver()
+                .do(onNext: { [weak control = self.base] _ in control?.ss_page = (control?.ss_page ?? 1) + 1 })
+                .map{ [weak control = self.base] _ in control?.ss_page }
+                .filterNil()
+        }else{
+            return Driver<Int?>.just(nil).filterNil()
+        }
     }
     
     /// 停止刷新
@@ -43,9 +51,9 @@ public extension Reactive where Base: UITableView {
         return Binder(base) { tableView, next in
             tableView.endRefreshing()
             if let next = next, next == true {
-                tableView.mj_footer.isHidden = false
+                tableView.mj_footer?.isHidden = false
             }else{
-                tableView.mj_footer.isHidden = true
+                tableView.mj_footer?.isHidden = true
             }
         }
     }
